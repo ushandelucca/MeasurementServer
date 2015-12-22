@@ -63,6 +63,9 @@ public class MeasurementQueryComposer {
 
         StringBuilder query = new StringBuilder();
 
+
+        //  { "sensor": "Temperature"}
+
         query.append("SELECT * FROM measurement ");
 
         if ((beginDate != null) && (endDate != null)) {
