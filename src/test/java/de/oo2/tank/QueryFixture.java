@@ -1,4 +1,4 @@
-package de.oo2.tank.server;
+package de.oo2.tank;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
@@ -13,6 +13,7 @@ public class QueryFixture {
     public static final MultivaluedMap<String, String> QUERY_MAP_1;
     public static final MultivaluedMap<String, String> QUERY_MAP_2;
     public static final MultivaluedMap<String, String> QUERY_MAP_3;
+    public static final MultivaluedMap<String, String> QUERY_MAP_4;
 
     static {
         // according to the URL .../temperatures?query=return&begin=2013-01-13&end=2014-01-20&sort=-date&max_result=10
@@ -35,6 +36,9 @@ public class QueryFixture {
         QUERY_MAP_3 = new MultivaluedHashMap<>();
         QUERY_MAP_3.put("query", Arrays.asList("return"));
         QUERY_MAP_3.put("max_result", Arrays.asList("30"));
+
+        // according to the URL .../temperatures?
+        QUERY_MAP_4 = new MultivaluedHashMap<>();
 
     }
 

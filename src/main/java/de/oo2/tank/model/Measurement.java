@@ -1,8 +1,7 @@
-package de.oo2.tank.server;
+package de.oo2.tank.model;
 
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -160,10 +159,9 @@ public class Measurement {
 
     @Override
     public String toString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy' 'HH:mm:ss.SSS");
         return "Measurement{" +
-                "id=" + _id +
-                ", timestamp=" + sdf.format(timestamp) +
+                "_id='" + _id + '\'' +
+                ", timestamp=" + timestamp +
                 ", sensor='" + sensor + '\'' +
                 ", value=" + value +
                 ", unit='" + unit + '\'' +
