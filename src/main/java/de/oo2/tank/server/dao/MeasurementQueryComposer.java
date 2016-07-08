@@ -37,56 +37,78 @@ public class MeasurementQueryComposer {
      * Constructor for the search criteria object.
      *
      * @param criteria the search criteria
+     * @throws MeasurementDataAccessException
      */
-    public MeasurementQueryComposer(MultivaluedMap<String, String> criteria) {
+    public MeasurementQueryComposer(MultivaluedMap<String, String> criteria) throws MeasurementDataAccessException {
         this.criteria = criteria;
+        isSyntaxCorrect();
     }
 
     /**
      * Set the search criteria.
      *
      * @param criteria the search criteria
+     * @throws MeasurementDataAccessException
      */
-    public void setCriteria(MultivaluedMap<String, String> criteria) {
+    public void setCriteria(MultivaluedMap<String, String> criteria) throws MeasurementDataAccessException {
         this.criteria = criteria;
+        isSyntaxCorrect();
     }
 
     /**
-     * Returns the SQL search query for the given search criteria.
+     * Returns the query string for the given search criteria.
      *
-     * @return the SQL query
-     * @throws MeasurementDataAccessException
+     * @return the query string
      */
-    public String getSearchQuery() throws MeasurementDataAccessException {
-
-        isQuerySyntaxCorrect();
-
+    public String getQuery() {
         StringBuilder query = new StringBuilder();
 
+        // { "timestamp": { $lt: new Date("2015-12-10T08:11:30.058Z") } }
 
-        //  { "sensor": "Temperature"}
-
-        query.append("SELECT * FROM measurement ");
+        query.append("{ ");
 
         if ((beginDate != null) && (endDate != null)) {
-            query.append("WHERE ");
-            query.append("datetime > '" + beginDate + "' and datetime < '" + endDate + "' ");
+            query.append("\"timestamp\": { $gt: new Date(\"" + beginDate + "\") }, \"timestamp\": { $lt: new Date(\"" + beginDate + "\") } ");
         }
 
-        if (PARAM_DATE_ASC.equals(sort)) {
-            query.append("order by date(datetime) ASC ");
-        } else if (PARAM_DATE_DESC.equals(sort)) {
-            query.append("order by date(datetime) DESC ");
-        }
-
-        if (maxResult != null) {
-            query.append("LIMIT " + maxResult);
-        }
-
-        query.append(" ;");
-
+        query.append(" }");
 
         return query.toString();
+    }
+
+    /**
+     * Returns the sort string for the given search criteria.
+     *
+     * @return the sort string
+     */
+    public String getSort() throws MeasurementDataAccessException {
+        StringBuilder sort = new StringBuilder();
+
+        sort.append("{ ");
+
+        if (PARAM_DATE_ASC.equals(this.sort)) {
+            sort.append("\"timestamp\": 1 ");
+        } else if (PARAM_DATE_DESC.equals(this.sort)) {
+            sort.append("\"timestamp\": 0 ");
+        }
+
+        sort.append(" }");
+
+        return sort.toString();
+    }
+
+    /**
+     * Returns the limit parameter for the given search criteria.
+     *
+     * @return the limit string
+     */
+    public int getLimit() {
+        if (maxResult != null) {
+            return maxResult;
+        }
+        else {
+            return 0;
+        }
     }
 
     /**
@@ -95,10 +117,10 @@ public class MeasurementQueryComposer {
      * @return <code>true</code> if the syntax is correct, otherwise <code>false</code>
      * @throws MeasurementDataAccessException
      */
-    private boolean isQuerySyntaxCorrect() throws MeasurementDataAccessException {
+    private boolean isSyntaxCorrect() throws MeasurementDataAccessException {
         // check the query parameter combination
         if (!criteria.containsKey(PARAM_QUERY)) {
-            return false;
+            throw new MeasurementDataAccessException("Syntax Error in the search criterias: 'query' wrong format or not defined!");
         } else {
             if (!criteria.getFirst(PARAM_QUERY).equals(PARAM_RETURN)) {
                 throw new MeasurementDataAccessException("Syntax Error in the search criteria: query without 'return'!");
@@ -153,6 +175,11 @@ public class MeasurementQueryComposer {
                 maxResult = null;
                 throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'max_result' wrong format or not a positive number!");
             }
+        }
+
+
+        if ((beginDate == null) && (endDate == null) && (sort == null) && (maxResult == null)) {
+            throw new MeasurementDataAccessException("No search criterias defined!");
         }
 
         return true;

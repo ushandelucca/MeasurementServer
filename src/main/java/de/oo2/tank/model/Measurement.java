@@ -30,23 +30,6 @@ public class Measurement {
     }
 
     /**
-     * Constructor for a <code>Measurement</code> object.
-     *
-     * @param timestamp the timestamp of the measurement
-     * @param sensor the sensor of the measurement
-     * @param value the measured value of the measurement
-     * @param unit the unit of the value
-     * @param valid <code>true</code> if the measurement is consistent, otherwise <code>false</code>.
-     */
-    public Measurement(Date timestamp, String sensor, Float value, String unit, Boolean valid) {
-        this.timestamp = timestamp;
-        this.sensor = sensor;
-        this.value = value;
-        this.unit = unit;
-        this.valid = valid;
-    }
-
-    /**
      * Returns the unique id (primary key) of the measurement.
      * @return the id if the measuremst is stored in the db. If the id == <code>null</code> the measurememt is not
      * stored in the db.

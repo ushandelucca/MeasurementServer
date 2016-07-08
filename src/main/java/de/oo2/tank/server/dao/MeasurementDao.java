@@ -3,8 +3,9 @@ package de.oo2.tank.server.dao;
 import com.google.common.collect.Lists;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import de.oo2.tank.server.Configurator;
-import de.oo2.tank.server.Measurement;
+import de.oo2.tank.model.Measurement;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -12,9 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.UnknownHostException;
-import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.jongo.Oid.withOid;
@@ -70,7 +69,9 @@ public class MeasurementDao {
     public Measurement createMeasurement(Measurement measurement) throws MeasurementDataAccessException {
         MongoCollection measurements = getMeasurements();
 
-        measurements.save(measurement);
+        WriteResult result = measurements.save(measurement);
+
+        // Measurement savedMeasurement = measurements.findOne("{ _id: " + result.getUpsertedId() + " })").as(Measurement.class);
 
         return measurement;
     }
@@ -93,21 +94,21 @@ public class MeasurementDao {
     /**
      * Read a measurement by a given begin and end of a time period.
      *
-     * @param query the query
+     * @param query the query string
+     * @param sort the sort string
+     * @param limit the result limit
      * @return An array of the matching <code>Measurement</code> objects. If no <code>Measurement</code> matches
      * the period an empty array will be returned.
      * @throws MeasurementDataAccessException
      */
-    public Measurement[] readMeasurementsWithQuery(String query) throws MeasurementDataAccessException {
+    public Measurement[] readMeasurementsWithQuery(String query, String sort, int limit) throws MeasurementDataAccessException {
         MongoCollection measurements = getMeasurements();
         MongoCursor<Measurement> all = null;
 
-        // TODO
         // http://jongo.org/#querying
-        // integrate the MeasurementQueryComposer in this method
 
         try {
-            all = measurements.find(query).as(Measurement.class);
+            all = measurements.find(query).sort(sort).limit(limit).as(Measurement.class);
         }
         catch (Exception e) {
             handleException("Error while selecting the measurements!", e);

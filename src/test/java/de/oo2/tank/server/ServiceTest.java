@@ -1,6 +1,7 @@
 package de.oo2.tank.server;
 
 import de.oo2.tank.server.dao.MeasurementDataAccessException;
+import de.oo2.tank.model.Measurement;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,8 +11,8 @@ import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.List;
 
-import static de.oo2.tank.server.QueryFixture.QUERY_MAP_3;
-import static de.oo2.tank.server.MeasurementFixture.*;
+import static de.oo2.tank.QueryFixture.*;
+import static de.oo2.tank.model.MeasurementFixture.*;
 
 
 public class ServiceTest {
@@ -29,13 +30,13 @@ public class ServiceTest {
 
     @Test
     public void testCreateMeasurement() throws Exception {
-        Measurement measurement = service.createMeasurement(TEMP_MEASUREMENT_1);
+        Measurement measurement = service.createMeasurement(MEASUREMENT_1);
         Assert.assertNotNull(measurement.getId());
     }
 
     @Test
     public void testGetTemperature() throws Exception {
-        Measurement createdMeasurement = service.createMeasurement(TEMP_MEASUREMENT_1);
+        Measurement createdMeasurement = service.createMeasurement(MEASUREMENT_1);
         String newId = createdMeasurement.getId();
 
         Measurement retrievedMeasurement = service.getTemperature(newId);
@@ -46,7 +47,7 @@ public class ServiceTest {
     public void testGetTemperatureFail() throws Exception {
 
         try {
-            service.getTemperatures(new MyUriInfo());
+            service.getTemperatures(new MyUriInfo(QUERY_MAP_4));
         }
         catch (MeasurementDataAccessException e) {
             return;
@@ -57,15 +58,21 @@ public class ServiceTest {
 
     @Test
     public void testGetTemperatures() throws Exception {
-        Measurement createdMeasurement_1 = service.createMeasurement(TEMP_MEASUREMENT_1);
+        Measurement createdMeasurement_1 = service.createMeasurement(MEASUREMENT_1);
 
-        Measurement[] measurements = service.getTemperatures(new MyUriInfo());
+        Measurement[] measurements = service.getTemperatures(new MyUriInfo(QUERY_MAP_3));
 
-        Assert.assertEquals(4, measurements.length);
+        Assert.assertEquals(1, measurements.length);
     }
 
 
     class MyUriInfo implements UriInfo {
+        private MultivaluedMap<String, String> params;
+
+        public MyUriInfo(MultivaluedMap<String, String> params) {
+            this.params = params;
+        }
+
         @Override
         public String getPath() {
             return null;
@@ -128,7 +135,7 @@ public class ServiceTest {
 
         @Override
         public MultivaluedMap<String, String> getQueryParameters() {
-            return QUERY_MAP_3;
+            return params;
         }
 
         @Override

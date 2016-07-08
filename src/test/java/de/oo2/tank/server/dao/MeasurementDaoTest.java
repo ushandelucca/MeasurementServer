@@ -1,13 +1,12 @@
 package de.oo2.tank.server.dao;
 
-import de.oo2.tank.server.Measurement;
+import de.oo2.tank.model.Measurement;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static de.oo2.tank.server.QueryFixture.*;
-import static de.oo2.tank.server.MeasurementFixture.*;
+import static de.oo2.tank.model.MeasurementFixture.*;
 
 public class MeasurementDaoTest {
 
@@ -31,16 +30,16 @@ public class MeasurementDaoTest {
 
     @Test
     public void testCreateMeasurement() throws Exception {
-        Measurement result = dao.createMeasurement(TEMP_MEASUREMENT_1);
+        Measurement result = dao.createMeasurement(MEASUREMENT_1);
         String id_1 = result.getId();
         Assert.assertNotEquals("", id_1);
 
-        result = dao.createMeasurement(TEMP_MEASUREMENT_2);
+        result = dao.createMeasurement(MEASUREMENT_2);
         String id_2 = result.getId();
         Assert.assertNotEquals("", id_2);
         Assert.assertNotEquals(id_1, id_2);
 
-        result = dao.createMeasurement(TEMP_MEASUREMENT_3);
+        result = dao.createMeasurement(MEASUREMENT_3);
         String id_3 = result.getId();
         Assert.assertNotEquals("", id_3);
         Assert.assertNotEquals(id_2, id_3);
@@ -49,27 +48,27 @@ public class MeasurementDaoTest {
 
     @Test
     public void testReadMeasurementById() throws Exception {
-        String id1 = dao.createMeasurement(TEMP_MEASUREMENT_1).getId();
-        String id2 = dao.createMeasurement(TEMP_MEASUREMENT_2).getId();
-        String id3 = dao.createMeasurement(TEMP_MEASUREMENT_3).getId();
+        String id1 = dao.createMeasurement(MEASUREMENT_1).getId();
+        String id2 = dao.createMeasurement(MEASUREMENT_2).getId();
+        String id3 = dao.createMeasurement(MEASUREMENT_3).getId();
 
         Measurement measurement = dao.readMeasurementById(id3);
-        Assert.assertEquals(TEMP_MEASUREMENT_3, measurement);
+        Assert.assertEquals(MEASUREMENT_3, measurement);
 
         measurement = dao.readMeasurementById(id1);
-        Assert.assertEquals(TEMP_MEASUREMENT_1, measurement);
+        Assert.assertEquals(MEASUREMENT_1, measurement);
 
         measurement = dao.readMeasurementById(id2);
-        Assert.assertEquals(TEMP_MEASUREMENT_2, measurement);
+        Assert.assertEquals(MEASUREMENT_2, measurement);
     }
 
     @Test
     public void testReadMeasurementsWithQuery() throws Exception {
-        dao.createMeasurement(TEMP_MEASUREMENT_1);
-        dao.createMeasurement(TEMP_MEASUREMENT_2);
-        dao.createMeasurement(TEMP_MEASUREMENT_3);
+        dao.createMeasurement(MEASUREMENT_1);
+        dao.createMeasurement(MEASUREMENT_2);
+        dao.createMeasurement(MEASUREMENT_3);
 
-        Measurement[] measurements = dao.readMeasurementsWithQuery("{sensor: 'Temperature'}");
+        Measurement[] measurements = dao.readMeasurementsWithQuery("{sensor: 'Temperature'}", "{}", 0);
 
         Assert.assertEquals(3, measurements.length);
     }
@@ -78,7 +77,7 @@ public class MeasurementDaoTest {
     public void testReadMeasurementsWithQueryFail() throws Exception {
 
         try {
-            dao.readMeasurementsWithQuery("toFail");
+            dao.readMeasurementsWithQuery("toFail", "", 0);
         }
         catch (MeasurementDataAccessException e) {
             return;

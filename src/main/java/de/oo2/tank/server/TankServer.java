@@ -26,6 +26,15 @@ public class TankServer {
     }
 
     /**
+     * a better solution could be:
+     *
+     * - http://www.pippo.ro/
+     * - http://intercoolerjs.org
+     * - https://github.com/jakerella/jquery-mockjax
+     */
+
+
+    /**
      * This method deploys the services and applications and starts the server.
      */
     public void startServer() {
@@ -40,18 +49,18 @@ public class TankServer {
         server.setHandler(context);
 
         // deploying the REST Service for the water tank
-        // http://localhost:8180/webapi/water/temperatures
-        // http://raspberrypi.local:8180/webapi/water/temperatures
+        // http://localhost:8080/webapi/water/temperatures
+        // http://raspberrypi.local:8080/webapi/water/temperatures
         ServletHolder jerseyServlet = context.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/webapi/*");
         jerseyServlet.setInitOrder(1);
-        jerseyServlet.setInitParameter("jersey.config.server.provider.packages", "org.ioserver.service");
+        jerseyServlet.setInitParameter("jersey.config.server.provider.packages", "de.oo2.tank.server");
         jerseyServlet.setInitParameter("de.oo2a.database.name", configurator.getDatabaseName());
         jerseyServlet.setInitParameter("de.oo2a.database.user", configurator.getDatabaseUser());
         jerseyServlet.setInitParameter("de.oo2a.database.password", configurator.getDatabasePassword());
 
 
         // deploying the web client
-        // http://localhost:8180/index.html
+        // http://localhost:8080/index.html
         ServletHolder staticServlet = context.addServlet(DefaultServlet.class, "/*");
         staticServlet.setInitParameter("resourceBase", configurator.getResourceBase());
         staticServlet.setInitParameter("pathInfoOnly", "true");

@@ -3,16 +3,14 @@ package de.oo2.tank.server;
 import de.oo2.tank.server.dao.MeasurementDao;
 import de.oo2.tank.server.dao.MeasurementDataAccessException;
 import de.oo2.tank.server.dao.MeasurementQueryComposer;
+import de.oo2.tank.model.Measurement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.util.Date;
 
 
 /**
@@ -36,6 +34,7 @@ public class Service {
     @POST
     @Path("/temperatures")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Measurement createMeasurement(Measurement measurement) throws Exception {
         Measurement createdMeasurement = dao.createMeasurement(measurement);
         return createdMeasurement;
@@ -73,9 +72,11 @@ public class Service {
     public Measurement[] getTemperatures(@Context UriInfo uriInfo) throws Exception {
 
         MeasurementQueryComposer queryComposer = new MeasurementQueryComposer(uriInfo.getQueryParameters());
-        String query = queryComposer.getSearchQuery();
+        String query = queryComposer.getQuery();
+        String sort = queryComposer.getSort();
+        int limit = queryComposer.getLimit();
 
-        Measurement[] measurements = dao.readMeasurementsWithQuery(query);
+        Measurement[] measurements = dao.readMeasurementsWithQuery(query, sort, limit);
 
         if (measurements.length < 1) {
             return new Measurement[0];
