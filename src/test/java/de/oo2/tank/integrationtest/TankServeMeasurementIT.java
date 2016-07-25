@@ -19,7 +19,7 @@ import java.util.List;
  * Resource dependent test for the TankServer
  * (excluded in surefire report)
  */
-public class TankServeMeasueremtRdTest {
+public class TankServeMeasurementIT {
 
     private Client client;
 
@@ -33,8 +33,9 @@ public class TankServeMeasueremtRdTest {
         client = null;
     }
 
-   @Test
+    @Test
     public void testSampleTemperature() throws Exception {
+
 
         WebTarget target = client.target("http://localhost:8080/webapi/water/temperatures");
 

@@ -14,7 +14,7 @@ public class MeasurementDaoTest {
 
     @Before
     public void setUp() throws Exception {
-        dao = new MeasurementDao();
+        dao = new MeasurementDao("test");
         dao.getMeasurements().drop();
     }
 

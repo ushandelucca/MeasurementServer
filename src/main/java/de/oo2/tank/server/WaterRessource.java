@@ -1,17 +1,19 @@
 package de.oo2.tank.server;
 
+import de.oo2.tank.model.Measurement;
 import de.oo2.tank.server.dao.MeasurementDao;
 import de.oo2.tank.server.dao.MeasurementDataAccessException;
 import de.oo2.tank.server.dao.MeasurementQueryComposer;
-import de.oo2.tank.model.Measurement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import static de.oo2.tank.server.Configurator.KEY_DATABASE_NAME;
 
 /**
  *
@@ -25,11 +27,13 @@ import javax.ws.rs.core.UriInfo;
 
 
 @Path("/water")
-public class Service {
-    private static final Logger logger = LoggerFactory.getLogger(Service.class.getName());
+public class WaterRessource {
+    private static final Logger logger = LoggerFactory.getLogger(WaterRessource.class.getName());
 
-    // TODO: Lazy initialisation
-    private MeasurementDao dao = new MeasurementDao();
+    private MeasurementDao dao = null;
+
+    @Context
+    private Application app;
 
     @POST
     @Path("/temperatures")
@@ -83,6 +87,21 @@ public class Service {
         }
 
         return measurements;
+    }
+
+    /**
+     * Returns the Data Access Object.
+     *
+     * @return the DAO
+     */
+    private MeasurementDao getMeasurementDao() {
+
+        if (dao == null) {
+            String dbNamne = (String) app.getProperties().getOrDefault(KEY_DATABASE_NAME, "test");
+            dao = new MeasurementDao(dbNamne);
+        }
+
+       return dao;
     }
 
     /**

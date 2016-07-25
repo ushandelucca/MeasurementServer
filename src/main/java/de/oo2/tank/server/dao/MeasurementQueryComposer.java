@@ -21,7 +21,7 @@ public class MeasurementQueryComposer {
 
     private SimpleDateFormat dateParser = new SimpleDateFormat("YYYY-MM-dd");
 
-    private MultivaluedMap<String, String> criteria = new MultivaluedHashMap<>();
+    private MultivaluedMap<String, String> criteria = new MultivaluedHashMap<String, String>();
     private String beginDate;
     private String endDate;
     private String sort;

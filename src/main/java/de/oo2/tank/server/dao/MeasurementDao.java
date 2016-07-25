@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
-import de.oo2.tank.server.Configurator;
 import de.oo2.tank.model.Measurement;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
@@ -25,6 +24,17 @@ public class MeasurementDao {
     private static final Logger logger = LoggerFactory.getLogger(MeasurementDao.class.getName());
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
+    private String dbName;
+
+    /**
+     * Constructor.
+     *
+     * @param dbName the name for the database
+     */
+    public MeasurementDao (String dbName) {
+        this.dbName = dbName;
+    }
+
     /**
      * Returns the database.
      *
@@ -39,9 +49,7 @@ public class MeasurementDao {
             logger.error("Error while connecting to the database.", e);
         }
 
-        String dataBaseName = new Configurator().getDatabaseName();
-
-        return mongoClient.getDB(dataBaseName);
+        return mongoClient.getDB(dbName);
     }
 
     /**
