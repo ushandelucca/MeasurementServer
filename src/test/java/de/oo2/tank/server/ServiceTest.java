@@ -20,30 +20,30 @@ import static de.oo2.tank.model.MeasurementFixture.MEASUREMENT_1;
 
 
 public class ServiceTest {
-    private WaterRessource service;
+    private WaterRessource ressource;
 
     @Before
     public void setUp() throws Exception {
-        service = new WaterRessource();
+        ressource = new WaterRessource();
     }
 
     @After
     public void tearDown() throws Exception {
-        service = null;
+        ressource = null;
     }
 
     @Test
     public void testCreateMeasurement() throws Exception {
-        Measurement measurement = service.createMeasurement(MEASUREMENT_1);
+        Measurement measurement = ressource.createMeasurement(MEASUREMENT_1);
         Assert.assertNotNull(measurement.getId());
     }
 
     @Test
     public void testGetTemperature() throws Exception {
-        Measurement createdMeasurement = service.createMeasurement(MEASUREMENT_1);
+        Measurement createdMeasurement = ressource.createMeasurement(MEASUREMENT_1);
         String newId = createdMeasurement.getId();
 
-        Measurement retrievedMeasurement = service.getTemperature(newId);
+        Measurement retrievedMeasurement = ressource.getTemperature(newId);
         Assert.assertEquals(createdMeasurement, retrievedMeasurement);
     }
 
@@ -51,7 +51,7 @@ public class ServiceTest {
     public void testGetTemperatureFail() throws Exception {
 
         try {
-            service.getTemperatures(new MyUriInfo(QUERY_MAP_4));
+            ressource.getTemperatures(new MyUriInfo(QUERY_MAP_4));
         }
         catch (MeasurementDataAccessException e) {
             return;
@@ -62,9 +62,9 @@ public class ServiceTest {
 
     @Test
     public void testGetTemperatures() throws Exception {
-        Measurement createdMeasurement_1 = service.createMeasurement(MEASUREMENT_1);
+        Measurement createdMeasurement_1 = ressource.createMeasurement(MEASUREMENT_1);
 
-        Measurement[] measurements = service.getTemperatures(new MyUriInfo(QUERY_MAP_3));
+        Measurement[] measurements = ressource.getTemperatures(new MyUriInfo(QUERY_MAP_3));
 
         Assert.assertEquals(1, measurements.length);
     }

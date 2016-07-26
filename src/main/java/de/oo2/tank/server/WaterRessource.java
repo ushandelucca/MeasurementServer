@@ -17,7 +17,6 @@ import static de.oo2.tank.server.Configurator.KEY_DATABASE_NAME;
 
 /**
  *
-
  Choose between PUT and POST based on idempotence of the action:
  PUT implies putting a resource - completely replacing whatever is available at the given URL with a different thing.
  By definition, a PUT is idempotent. Do it as many times as you like, and the result is the same. x=5 is idempotent.
@@ -40,7 +39,8 @@ public class WaterRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Measurement createMeasurement(Measurement measurement) throws Exception {
-        Measurement createdMeasurement = dao.createMeasurement(measurement);
+
+        Measurement createdMeasurement = getMeasurementDao().createMeasurement(measurement);
         return createdMeasurement;
     }
 
@@ -52,7 +52,7 @@ public class WaterRessource {
      * http://localhost:8180/webapi/water/temperature?id=1234
      */
     public Measurement getTemperature(@PathParam("id") String identifier) throws Exception {
-        Measurement measurement = dao.readMeasurementById(identifier);
+        Measurement measurement = getMeasurementDao().readMeasurementById(identifier);
 
         return measurement;
     }
@@ -80,7 +80,7 @@ public class WaterRessource {
         String sort = queryComposer.getSort();
         int limit = queryComposer.getLimit();
 
-        Measurement[] measurements = dao.readMeasurementsWithQuery(query, sort, limit);
+        Measurement[] measurements = getMeasurementDao().readMeasurementsWithQuery(query, sort, limit);
 
         if (measurements.length < 1) {
             return new Measurement[0];
