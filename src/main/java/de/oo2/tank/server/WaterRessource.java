@@ -98,7 +98,7 @@ public class WaterRessource {
 
         if (dao == null) {
             String dbNamne = (String) app.getProperties().getOrDefault(KEY_DATABASE_NAME, "test");
-            dao = new MeasurementDao(dbNamne);
+            dao = new MeasurementDao(dbNamne, "docker.local", 21017);
         }
 
        return dao;

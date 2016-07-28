@@ -25,14 +25,18 @@ public class MeasurementDao {
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
     private String dbName;
+    private String host;
+    private int port;
 
     /**
      * Constructor.
      *
      * @param dbName the name for the database
      */
-    public MeasurementDao (String dbName) {
+    public MeasurementDao (String dbName, String host, int port) {
         this.dbName = dbName;
+        this.host = host;
+        this.port = port;
     }
 
     /**
@@ -44,7 +48,7 @@ public class MeasurementDao {
         MongoClient mongoClient = null;
 
         try {
-            mongoClient = new MongoClient();
+            mongoClient = new MongoClient(host, port);
         } catch (UnknownHostException e) {
             logger.error("Error while connecting to the database.", e);
         }

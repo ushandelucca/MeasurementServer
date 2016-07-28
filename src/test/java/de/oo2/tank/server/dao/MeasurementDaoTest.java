@@ -14,7 +14,7 @@ public class MeasurementDaoTest {
 
     @Before
     public void setUp() throws Exception {
-        dao = new MeasurementDao("test");
+        dao = new MeasurementDao("test", "docker.local", 21017);
         dao.getMeasurements().drop();
     }
 
