@@ -19,7 +19,7 @@ import static de.oo2.tank.server.JsonUtil.map;
 /**
  * Created by Peter on 29.07.2016.
  */
-public class TankControllerTest {
+public class TankServerrTest {
     private static Client client;
 
     @BeforeClass
