@@ -1,7 +1,6 @@
 package de.oo2.tank.server;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import de.oo2.tank.model.Measurement;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -43,7 +42,7 @@ public class TankControllerTest {
         Measurement param = MeasurementFixture.MEASUREMENT_1;
 
 
-        GsonBuilder builder = new GsonBuilder();
+        // GsonBuilder builder = new GsonBuilder();
 /*
         // Register an adapter to manage the date types as long values
         builder.registerTypeAdapter(Date.class, new JsonDeserializer() {
@@ -52,10 +51,10 @@ public class TankControllerTest {
             }
         });
 */
-        Gson gson = builder.create();
-
+        // Gson gson = builder.create();
+        Gson gson = new Gson();
         String jsonString = gson.toJson(MeasurementFixture.MEASUREMENT_1);
-
+        // Country[] countryArray = gson.fromJson(myJsonString, Country[].class);
 
         Response result =
                 target.request(MediaType.APPLICATION_JSON)
