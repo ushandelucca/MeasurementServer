@@ -56,6 +56,7 @@ public class TankControllerTest {
         String jsonString = gson.toJson(MeasurementFixture.MEASUREMENT_1);
         // Country[] countryArray = gson.fromJson(myJsonString, Country[].class);
 
+
         Response result =
                 target.request(MediaType.APPLICATION_JSON)
                         .post(Entity.entity(jsonString, MediaType.APPLICATION_JSON),
@@ -118,5 +119,7 @@ public class TankControllerTest {
 
         Assert.assertNotNull(result);
     }
+
+    // Test with invalid JSON
 
 }
