@@ -31,7 +31,9 @@ public class MeasurementDao {
     /**
      * Constructor.
      *
-     * @param dbName the name for the database
+     * @param dbName the name for the database     *
+     * @param host
+     * @param port
      */
     public MeasurementDao (String dbName, String host, int port) {
         this.dbName = dbName;

@@ -1,10 +1,9 @@
 package de.oo2.tank.server;
 
-import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wildfly.swarm.Swarm;
-import org.wildfly.swarm.jaxrs.JAXRSArchive;
+
+import static spark.Spark.port;
 
 /**
  * This is the main application class.
@@ -17,26 +16,23 @@ public class TankServer {
      *
      * @param args command line arguments
      */
-    public static void main(String[] args) throws Exception {
-
+    public static void main(String[] args) {
         logger.info("Starting the server.");
 
-        Swarm swarm = new Swarm(args);
+        port(8080);
 
-        JAXRSArchive archive = ShrinkWrap.create(JAXRSArchive.class);
-        archive.addAsResource("logback.xml");
-
-        archive.addPackages(true, "de/oo2/tank");
-        archive.addAllDependencies();
-
-        swarm.start().deploy( archive );
+        new TankController(new TemperatureService());
     }
 
     /**
-     * a better solution could be:
-     *
      * - http://intercoolerjs.org
      * - https://github.com/jakerella/jquery-mockjax
+     *
+     * - http://www.mscharhag.com/java/building-rest-api-with-spark
+     * - https://github.com/mscharhag/blog-examples/tree/master/sparkdemo/src
+     * - https://srlk.github.io/posts/2016/swagger_sparkjava/
+     * - https://github.com/cahtisroo/jschema-example/blob/master/src/main/java/org/jschema/sample/App.java
+     *
      */
 
 }
