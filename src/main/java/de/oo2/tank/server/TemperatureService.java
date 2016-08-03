@@ -1,7 +1,6 @@
 package de.oo2.tank.server;
 
 import de.oo2.tank.server.dao.MeasurementDao;
-import de.oo2.tank.server.dao.MeasurementQueryComposer;
 
 /**
  * This class provides the functionality for the management of the temperature measurements.
@@ -17,7 +16,6 @@ public class TemperatureService {
      * @param dao the data access object
      */
     public TemperatureService(MeasurementDao dao) {
-        // inject the doa dependency
         this.dao = dao;
     }
 
@@ -61,12 +59,7 @@ public class TemperatureService {
      */
     public Measurement[] selectTemperatures(String queryParameters) throws Exception {
 
-        MeasurementQueryComposer queryComposer = new MeasurementQueryComposer(queryParameters);
-        String query = queryComposer.getQuery();
-        String sort = queryComposer.getSort();
-        int limit = queryComposer.getLimit();
-
-        Measurement[] measurements = dao.readMeasurementsWithQuery(query, sort, limit);
+        Measurement[] measurements = dao.readMeasurementsWithQuery(queryParameters);
 
         return measurements;
     }

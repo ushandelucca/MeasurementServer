@@ -57,13 +57,13 @@ public class TemperatureServiceTest {
     @Test
     public void testGetTemperatures() throws Exception {
         // setup the mock
-        Measurement measurementToRaw = getMeasurement2();
-        Measurement[] measurementFromDb = null; // setRandomId(measurementToRaw);
-        when(daoMock.readMeasurementsWithQuery("", "", 0)).thenReturn(measurementFromDb);
+        Measurement[] measurementsFromDb = new Measurement[]{setRandomId(getMeasurement3()), setRandomId(getMeasurement2())};
+        when(daoMock.readMeasurementsWithQuery("query=return&&max_result=30")).thenReturn(measurementsFromDb);
 
         // test
         Measurement[] measurements = service.selectTemperatures("query=return&&max_result=30");
 
-        // Assert.assertEquals(measurementFromDb.getId(), measurement.getId());
+        Assert.assertNotNull(measurements);
+        Assert.assertTrue(measurements.length > 0);
     }
 }

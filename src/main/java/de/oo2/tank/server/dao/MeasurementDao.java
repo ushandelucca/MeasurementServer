@@ -108,14 +108,18 @@ public class MeasurementDao {
     /**
      * Read a measurement by a given begin and end of a time period.
      *
-     * @param query the query string
-     * @param sort the sort string
-     * @param limit the result limit
+     * @param queryParameters the parameters for the query
      * @return An array of the matching <code>Measurement</code> objects. If no <code>Measurement</code> matches
      * the period an empty array will be returned.
      * @throws MeasurementDataAccessException
      */
-    public Measurement[] readMeasurementsWithQuery(String query, String sort, int limit) throws MeasurementDataAccessException {
+    public Measurement[] readMeasurementsWithQuery(String queryParameters) throws MeasurementDataAccessException {
+        MeasurementQueryComposer queryComposer = new MeasurementQueryComposer(queryParameters);
+
+        String query = queryComposer.getQuery();
+        String sort = queryComposer.getSort();
+        int limit = queryComposer.getLimit();
+
         MongoCollection measurements = getMeasurements();
         MongoCursor<Measurement> all = null;
 

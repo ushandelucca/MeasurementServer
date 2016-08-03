@@ -68,7 +68,7 @@ public class MeasurementDaoTest {
         dao.createMeasurement(getMeasurement2());
         dao.createMeasurement(getMeasurement3());
 
-        Measurement[] measurements = dao.readMeasurementsWithQuery("{sensor: 'Temperature'}", "{}", 0);
+        Measurement[] measurements = dao.readMeasurementsWithQuery("query=return&max_result=3");
 
         Assert.assertEquals(3, measurements.length);
     }
@@ -77,7 +77,7 @@ public class MeasurementDaoTest {
     public void testReadMeasurementsWithQueryFail() throws Exception {
 
         try {
-            dao.readMeasurementsWithQuery("toFail", "", 0);
+            dao.readMeasurementsWithQuery("toFail");
         }
         catch (MeasurementDataAccessException e) {
             return;
