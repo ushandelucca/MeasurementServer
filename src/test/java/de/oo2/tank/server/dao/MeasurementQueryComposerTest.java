@@ -5,14 +5,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static de.oo2.tank.QueryFixture.*;
-
 public class MeasurementQueryComposerTest {
     private MeasurementQueryComposer composer;
 
     @Before
     public void setUp() throws Exception {
-        composer = new MeasurementQueryComposer();
+        // nothing to do
     }
 
     @After
@@ -22,7 +20,8 @@ public class MeasurementQueryComposerTest {
 
     @Test
     public void testGetQuery1() throws Exception {
-        composer.setCriteria(QUERY_MAP_1);
+        composer = new MeasurementQueryComposer("query=return&begin=2013-01-13&end=2014-01-20&sort=-date&max_result=10");
+
         String query = composer.getQuery();
         System.out.println(query);
         Assert.assertEquals("{ \"timestamp\": { $gt: new Date(\"2013-01-13\") }, \"timestamp\": { $lt: new Date(\"2013-01-13\") }  }", query);
@@ -38,7 +37,8 @@ public class MeasurementQueryComposerTest {
 
     @Test
     public void testGetQuery2() throws Exception {
-        composer.setCriteria(QUERY_MAP_2);
+        composer = new MeasurementQueryComposer("query=return&begin=2013-01-13&end=2014-01-20&sort=+date&max_result=20");
+
         String query = composer.getQuery();
         System.out.println(query);
         Assert.assertEquals("{ \"timestamp\": { $gt: new Date(\"2013-01-13\") }, \"timestamp\": { $lt: new Date(\"2013-01-13\") }  }", query);
@@ -54,7 +54,8 @@ public class MeasurementQueryComposerTest {
 
     @Test
     public void testGetQuery3() throws Exception {
-        composer.setCriteria(QUERY_MAP_3);
+        composer = new MeasurementQueryComposer("query=return&max_result=30");
+
         String query = composer.getQuery();
         System.out.println(query);
         Assert.assertEquals("{  }", query);

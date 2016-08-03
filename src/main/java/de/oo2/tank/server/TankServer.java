@@ -1,5 +1,6 @@
 package de.oo2.tank.server;
 
+import de.oo2.tank.server.dao.MeasurementDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +22,11 @@ public class TankServer {
 
         port(8080);
 
-        new TankController(new TemperatureService());
+        // String dbNamne = (String) app.getProperties().getOrDefault(KEY_DATABASE_NAME, "test");
+        MeasurementDao dao = new MeasurementDao("test", "docker.local", 21017);
+
+
+        new TankController(new TemperatureService(dao));
     }
 
     /**

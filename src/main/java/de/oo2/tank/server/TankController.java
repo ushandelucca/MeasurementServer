@@ -15,7 +15,7 @@ public class TankController {
         // http://localhost:8080/webapi/water/temperature/1
         get("/webapi/water/temperature/:id", (req, res) -> {
             String id = req.params(":id");
-            Measurement measurement = temperatureService.getTemperature(id);
+            Measurement measurement = temperatureService.readTemperature(id);
             if (measurement != null) {
                 return measurement;
             }

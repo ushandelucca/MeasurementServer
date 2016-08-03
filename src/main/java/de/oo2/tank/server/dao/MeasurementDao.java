@@ -130,6 +130,10 @@ public class MeasurementDao {
 
         List<Measurement> myList = Lists.newArrayList(all.iterator());
 
+        if (myList == null) {
+            return new Measurement[0];
+        }
+
         return myList.toArray(new Measurement[myList.size()]);
     }
 

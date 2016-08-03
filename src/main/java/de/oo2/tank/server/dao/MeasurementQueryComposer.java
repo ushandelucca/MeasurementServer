@@ -1,9 +1,10 @@
 package de.oo2.tank.server.dao;
 
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * This class creates the search query for the measurements based on the
@@ -21,11 +22,14 @@ public class MeasurementQueryComposer {
 
     private SimpleDateFormat dateParser = new SimpleDateFormat("YYYY-MM-dd");
 
-    private MultivaluedMap<String, String> criteria = new MultivaluedHashMap<String, String>();
+    private String urlParameters = "";
+    private String query;
     private String beginDate;
     private String endDate;
     private String sort;
     private Integer maxResult;
+
+    private boolean checked;
 
     /**
      * Constructor for the search criteria object.
@@ -36,31 +40,21 @@ public class MeasurementQueryComposer {
     /**
      * Constructor for the search criteria object.
      *
-     * @param criteria the search criteria
-     * @throws MeasurementDataAccessException
+     * @param query the search query
      */
-    public MeasurementQueryComposer(MultivaluedMap<String, String> criteria) throws MeasurementDataAccessException {
-        this.criteria = criteria;
-        isSyntaxCorrect();
-    }
-
-    /**
-     * Set the search criteria.
-     *
-     * @param criteria the search criteria
-     * @throws MeasurementDataAccessException
-     */
-    public void setCriteria(MultivaluedMap<String, String> criteria) throws MeasurementDataAccessException {
-        this.criteria = criteria;
-        isSyntaxCorrect();
+    public MeasurementQueryComposer(String query) {
+        this.urlParameters = query;
     }
 
     /**
      * Returns the query string for the given search criteria.
      *
      * @return the query string
+     * @throws MeasurementDataAccessException
      */
-    public String getQuery() {
+    public String getQuery() throws MeasurementDataAccessException {
+        checkQuery();
+
         StringBuilder query = new StringBuilder();
 
         // { "timestamp": { $lt: new Date("2015-12-10T08:11:30.058Z") } }
@@ -82,6 +76,8 @@ public class MeasurementQueryComposer {
      * @return the sort string
      */
     public String getSort() throws MeasurementDataAccessException {
+        checkQuery();
+
         StringBuilder sort = new StringBuilder();
 
         sort.append("{ ");
@@ -101,8 +97,11 @@ public class MeasurementQueryComposer {
      * Returns the limit parameter for the given search criteria.
      *
      * @return the limit string
+     * @throws MeasurementDataAccessException
      */
-    public int getLimit() {
+    public int getLimit() throws MeasurementDataAccessException {
+        checkQuery();
+
         if (maxResult != null) {
             return maxResult;
         }
@@ -112,77 +111,107 @@ public class MeasurementQueryComposer {
     }
 
     /**
-     * Checks the syntax of the query map.
+     * Checks the syntax of the query.
      *
      * @return <code>true</code> if the syntax is correct, otherwise <code>false</code>
      * @throws MeasurementDataAccessException
      */
-    private boolean isSyntaxCorrect() throws MeasurementDataAccessException {
-        // check the query parameter combination
-        if (!criteria.containsKey(PARAM_QUERY)) {
-            throw new MeasurementDataAccessException("Syntax Error in the search criterias: 'query' wrong format or not defined!");
-        } else {
-            if (!criteria.getFirst(PARAM_QUERY).equals(PARAM_RETURN)) {
-                throw new MeasurementDataAccessException("Syntax Error in the search criteria: query without 'return'!");
+    private boolean checkQuery() throws MeasurementDataAccessException {
+
+        if (!checked) {
+
+            if (urlParameters.length() < 1) {
+                throw new MeasurementDataAccessException("No search query defined!");
             }
+
+            Map<String, String> criterias = new HashMap<String, String>();
+
+            StringTokenizer stp = new StringTokenizer(urlParameters, "&", false);
+            while (stp.hasMoreTokens()) {
+                String parameter = stp.nextToken();
+                String key = null;
+                String value = null;
+
+                StringTokenizer stc = new StringTokenizer(parameter, "=", false);
+                if (stc.hasMoreTokens()) {
+                    key = stc.nextToken();
+                }
+                if (stc.hasMoreTokens()) {
+                    value = stc.nextToken();
+                }
+
+                if ((key != null) && (!key.equals("") && (value != null) && (!value.equals("")))) {
+                    criterias.put(key, value);
+                }
+            }
+
+            // check the query parameter combination
+            if (!criterias.containsKey(PARAM_QUERY)) {
+                throw new MeasurementDataAccessException("Syntax Error in the search criterias: 'query' wrong format or not defined!");
+            } else {
+                if (!criterias.get(PARAM_QUERY).equals(PARAM_RETURN)) {
+                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: query without 'return'!");
+                }
+            }
+
+            // check begin and end
+            if (criterias.containsKey(PARAM_BEGIN)) {
+                if (!criterias.containsKey(PARAM_END)) {
+                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'begin' without 'end'!");
+                }
+                try {
+                    beginDate = criterias.get(PARAM_BEGIN);
+                    dateParser.parse(beginDate); // check the format
+                } catch (ParseException e) {
+                    beginDate = null;
+                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'begin' wrong format!", e);
+                }
+            }
+
+            if (criterias.containsKey(PARAM_END)) {
+                if (!criterias.containsKey(PARAM_BEGIN)) {
+                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'end' without 'begin'!");
+                }
+                try {
+                    endDate = criterias.get(PARAM_END);
+                    dateParser.parse(endDate); // check the format
+                } catch (ParseException e) {
+                    endDate = null;
+                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'end' wrong 'format'!", e);
+                }
+            }
+
+            // check sorting parameters
+            if (criterias.containsKey(PARAM_SORT)) {
+
+                sort = criterias.get(PARAM_SORT);
+
+                if ((!PARAM_DATE_ASC.equals(sort)) && (!PARAM_DATE_DESC.equals(sort))) {
+                    sort = null;
+                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'sort' wrong format!");
+                }
+            }
+
+            // check max_result
+            if (criterias.containsKey(PARAM_MAX_RESULT)) {
+                String number = criterias.get(PARAM_MAX_RESULT);
+
+                maxResult = Integer.parseInt(number);
+
+                if (maxResult < 1) {
+                    maxResult = null;
+                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'max_result' wrong format or not a positive number!");
+                }
+            }
+
+            if ((beginDate == null) && (endDate == null) && (sort == null) && (maxResult == null)) {
+                throw new MeasurementDataAccessException("No search criterias defined!");
+            }
+
+            checked = true;
         }
 
-        // check begin and end
-        if (criteria.containsKey(PARAM_BEGIN)) {
-            if (!criteria.containsKey(PARAM_END)) {
-                throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'begin' without 'end'!");
-            }
-            try {
-                beginDate = criteria.getFirst(PARAM_BEGIN);
-                dateParser.parse(beginDate); // check the format
-            } catch (ParseException e) {
-                beginDate = null;
-                throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'begin' wrong format!", e);
-            }
-        }
-
-        if (criteria.containsKey(PARAM_END)) {
-            if (!criteria.containsKey(PARAM_BEGIN)) {
-                throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'end' without 'begin'!");
-            }
-            try {
-                endDate = criteria.getFirst(PARAM_END);
-                dateParser.parse(endDate); // check the format
-            } catch (ParseException e) {
-                endDate = null;
-                throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'end' wrong 'format'!", e);
-            }
-        }
-
-        // check sorting parameters
-        if (criteria.containsKey(PARAM_SORT)) {
-
-            sort = criteria.getFirst(PARAM_SORT);
-
-            if ((!PARAM_DATE_ASC.equals(sort)) && (!PARAM_DATE_DESC.equals(sort))) {
-                sort = null;
-                throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'sort' wrong format!");
-            }
-        }
-
-        // check max_result
-        if (criteria.containsKey(PARAM_MAX_RESULT)) {
-            String number = criteria.getFirst(PARAM_MAX_RESULT);
-
-            maxResult = Integer.parseInt(number);
-
-            if (maxResult < 1) {
-                maxResult = null;
-                throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'max_result' wrong format or not a positive number!");
-            }
-        }
-
-
-        if ((beginDate == null) && (endDate == null) && (sort == null) && (maxResult == null)) {
-            throw new MeasurementDataAccessException("No search criterias defined!");
-        }
-
-        return true;
+        return checked;
     }
 
 }

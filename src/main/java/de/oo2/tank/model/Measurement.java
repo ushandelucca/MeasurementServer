@@ -39,6 +39,14 @@ public class Measurement {
     }
 
     /**
+     * Set the id of the measurement
+     * @param id the timestamp
+     */
+    void setId(String id) {
+        this._id = id;
+    }
+
+    /**
      * Returns the timestamp of the measurement
      * @return the timestamp
      */

@@ -2,24 +2,47 @@ package de.oo2.tank.server;
 
 import de.oo2.tank.model.Measurement;
 import de.oo2.tank.server.dao.MeasurementDao;
+import de.oo2.tank.server.dao.MeasurementQueryComposer;
 
 /**
- * Created by Peter on 29.07.2016.
+ * This class provides the functionality for the management of the temperature measurements.
  */
 public class TemperatureService {
 
+    // the data access
     private MeasurementDao dao = null;
 
-    public Measurement createMeasurement(Measurement measurement) throws Exception {
-        Measurement createdMeasurement = getMeasurementDao().createMeasurement(measurement);
+    /**
+     * Constructor for the service.
+     *
+     * @param dao the data access object
+     */
+    public TemperatureService(MeasurementDao dao) {
+        // inject the doa dependency
+        this.dao = dao;
+    }
+
+    /**
+     * Save a temperature measurement to the database.
+     *
+     * @param measurement the measurement
+     * @return the measuremt saved in the database
+     * @throws Exception
+     */
+    public Measurement saveTemperatue(Measurement measurement) throws Exception {
+        Measurement createdMeasurement = dao.createMeasurement(measurement);
         return createdMeasurement;
     }
 
     /**
-     * Returns a measurement
+     * Read a temperature measurement from the database.
+     *
+     * @param id of temperature measurement
+     * @return the temperature measurement
+     * @throws Exception
      */
-    public Measurement getTemperature(String id) throws Exception {
-        Measurement measurement = getMeasurementDao().readMeasurementById(id);
+    public Measurement readTemperature(String id) throws Exception {
+        Measurement measurement = dao.readMeasurementById(id);
 
         return measurement;
     }
@@ -37,35 +60,16 @@ public class TemperatureService {
      *                     not set, then the maximum number of measurements is set to 101
      * </pre>
      */
-    public Measurement[] getTemperatures(String queryParameters) throws Exception {
+    public Measurement[] selectTemperatures(String queryParameters) throws Exception {
 
-        // MeasurementQueryComposer queryComposer = new MeasurementQueryComposer(queryParameters);
-        String query = ""; // queryComposer.getQuery();
-        String sort = ""; // queryComposer.getSort();
-        int limit = 0; // queryComposer.getLimit();
+        MeasurementQueryComposer queryComposer = new MeasurementQueryComposer(queryParameters);
+        String query = queryComposer.getQuery();
+        String sort = queryComposer.getSort();
+        int limit = queryComposer.getLimit();
 
-        Measurement[] measurements = getMeasurementDao().readMeasurementsWithQuery(query, sort, limit);
-
-        if (measurements.length < 1) {
-            return new Measurement[0];
-        }
+        Measurement[] measurements = dao.readMeasurementsWithQuery(query, sort, limit);
 
         return measurements;
     }
 
-    /**
-     * Returns the Data Access Object.
-     *
-     * @return the DAO
-     */
-    private MeasurementDao getMeasurementDao() {
-
-        if (dao == null) {
-            // String dbNamne = (String) app.getProperties().getOrDefault(KEY_DATABASE_NAME, "test");
-            dao = new MeasurementDao("test", "docker.local", 21017);
-        }
-
-        return dao;
-
-    }
 }
