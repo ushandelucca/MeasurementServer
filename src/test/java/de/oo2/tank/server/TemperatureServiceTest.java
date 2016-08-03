@@ -1,13 +1,12 @@
 package de.oo2.tank.server;
 
-import de.oo2.tank.model.Measurement;
 import de.oo2.tank.server.dao.MeasurementDao;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static de.oo2.tank.model.MeasurementFixture.*;
+import static de.oo2.tank.server.MeasurementFixture.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

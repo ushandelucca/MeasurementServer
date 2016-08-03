@@ -1,6 +1,5 @@
 package de.oo2.tank.server;
 
-import de.oo2.tank.model.Measurement;
 import de.oo2.tank.server.dao.MeasurementDao;
 import de.oo2.tank.server.dao.MeasurementQueryComposer;
 

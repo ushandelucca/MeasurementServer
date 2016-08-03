@@ -4,6 +4,9 @@ import de.oo2.tank.server.dao.MeasurementDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
+import static de.oo2.tank.server.Configurator.*;
 import static spark.Spark.port;
 
 /**
@@ -27,6 +30,13 @@ public class TankServer {
 
 
         new TankController(new TemperatureService(dao));
+
+        Map<String, String> env = System.getenv();
+        env.getOrDefault(KEY_CLIENT_RESSOURCE_BASE, DEFAULT_CLIENT_RESSOURCE_BASE);
+        env.getOrDefault(KEY_SERVER_PORT, DEFAULT_SERVER_PORT);
+        env.getOrDefault(KEY_DATABASE_NAME, DEFAULT_DATABASE_NAME);
+        env.getOrDefault(KEY_DATABASE_USER, DEFAULT_DATABASE_USER);
+        env.getOrDefault(KEY_DATABASE_PASSWORD, DEFAULT_DATABASE_PASSWORD);
     }
 
     /**

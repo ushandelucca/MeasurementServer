@@ -1,12 +1,13 @@
 package de.oo2.tank.server;
 
-import de.oo2.tank.model.Measurement;
+import com.google.gson.Gson;
 
-import static de.oo2.tank.server.JsonUtil.*;
+import static de.oo2.tank.server.JsonUtil.json;
+import static de.oo2.tank.server.JsonUtil.toJson;
 import static spark.Spark.*;
 
 /**
- * Created by Peter on 29.07.2016.
+ * This class routes the requests from the server to the service.
  */
 public class TankController {
 
@@ -27,7 +28,7 @@ public class TankController {
 
             System.out.println(req.body());
 
-            Measurement m = map2(req.body());
+            Measurement m = new Gson().fromJson(req.body(), Measurement.class);
 
             return m;
 

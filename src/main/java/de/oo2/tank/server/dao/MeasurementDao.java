@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
-import de.oo2.tank.model.Measurement;
+import de.oo2.tank.server.Measurement;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;

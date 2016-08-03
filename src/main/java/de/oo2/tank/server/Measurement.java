@@ -1,4 +1,4 @@
-package de.oo2.tank.model;
+package de.oo2.tank.server;
 
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 

@@ -1,7 +1,6 @@
 package de.oo2.tank.server;
 
 import com.google.gson.Gson;
-import de.oo2.tank.model.Measurement;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -14,12 +13,12 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static de.oo2.tank.server.JsonUtil.map;
+import static de.oo2.tank.server.MeasurementFixture.getMeasurement1;
 
 /**
  * Created by Peter on 29.07.2016.
  */
-public class TankServerrTest {
+public class TankServerTest {
     private static Client client;
 
     @BeforeClass
@@ -39,7 +38,7 @@ public class TankServerrTest {
 
         WebTarget target = client.target("http://localhost:8080/webapi/water/temperatures");
 
-        Measurement param = MeasurementFixture.MEASUREMENT_1;
+        Measurement param = getMeasurement1();
 
 
         // GsonBuilder builder = new GsonBuilder();
@@ -53,7 +52,7 @@ public class TankServerrTest {
 */
         // Gson gson = builder.create();
         Gson gson = new Gson();
-        String jsonString = gson.toJson(MeasurementFixture.MEASUREMENT_1);
+        String jsonString = gson.toJson(param);
         // Country[] countryArray = gson.fromJson(myJsonString, Country[].class);
 
 
@@ -78,7 +77,7 @@ public class TankServerrTest {
 
         WebTarget target = client.target("http://localhost:8080/webapi/water/temperatures");
 
-        Measurement param = MeasurementFixture.MEASUREMENT_1;
+        Measurement param = getMeasurement1();
 
         Measurement result =
                 target.request(MediaType.APPLICATION_JSON_TYPE)
@@ -104,7 +103,7 @@ public class TankServerrTest {
                 .request(MediaType.APPLICATION_JSON)
                 .get(String.class);
 
-        Measurement[] resi = map(result);
+        Measurement[] resi = new Gson().fromJson(result, Measurement[].class);
 
         System.out.println("Result GET Temperature");
 
