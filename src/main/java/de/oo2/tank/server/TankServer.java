@@ -11,12 +11,13 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 import static de.oo2.tank.server.Configurator.*;
+import static spark.Spark.get;
 import static spark.Spark.port;
 
 /**
  * This is the main application class.
  */
-@SwaggerDefinition(host = "localhost:4567", //
+@SwaggerDefinition(// host = "localhost:8080", //
         info = @Info(description = "DonateAPP API", //
                 version = "V1.0", //
                 title = "Some random api for testing", //
@@ -36,6 +37,13 @@ public class TankServer {
     public static void main(String[] args) {
         logger.info("Starting the server.");
 
+        Map<String, String> env = System.getenv();
+        env.getOrDefault(KEY_CLIENT_RESSOURCE_BASE, DEFAULT_CLIENT_RESSOURCE_BASE);
+        env.getOrDefault(KEY_SERVER_PORT, DEFAULT_SERVER_PORT);
+        env.getOrDefault(KEY_DATABASE_NAME, DEFAULT_DATABASE_NAME);
+        env.getOrDefault(KEY_DATABASE_USER, DEFAULT_DATABASE_USER);
+        env.getOrDefault(KEY_DATABASE_PASSWORD, DEFAULT_DATABASE_PASSWORD);
+
         port(8080);
 
         // String dbNamne = (String) app.getProperties().getOrDefault(KEY_DATABASE_NAME, "test");
@@ -44,12 +52,18 @@ public class TankServer {
 
         new TankController(new TemperatureService(dao));
 
-        Map<String, String> env = System.getenv();
-        env.getOrDefault(KEY_CLIENT_RESSOURCE_BASE, DEFAULT_CLIENT_RESSOURCE_BASE);
-        env.getOrDefault(KEY_SERVER_PORT, DEFAULT_SERVER_PORT);
-        env.getOrDefault(KEY_DATABASE_NAME, DEFAULT_DATABASE_NAME);
-        env.getOrDefault(KEY_DATABASE_USER, DEFAULT_DATABASE_USER);
-        env.getOrDefault(KEY_DATABASE_PASSWORD, DEFAULT_DATABASE_PASSWORD);
+
+        try {
+            // Build swagger json description
+            final String swaggerJson = SwaggerParser.getSwaggerJson(TankController.class.getPackage().getName());
+            get("/swagger", (req, res) -> {
+                return swaggerJson;
+            });
+
+        } catch (Exception e) {
+            System.err.println(e);
+            e.printStackTrace();
+        }
     }
 
     /**
