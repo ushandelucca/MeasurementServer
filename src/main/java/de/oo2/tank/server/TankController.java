@@ -7,7 +7,7 @@ import static de.oo2.tank.server.JsonUtil.toJson;
 import static spark.Spark.*;
 
 /**
- * This class routes the requests from the server to the service.
+ * This class adds the routes from the server to the service and handles the REST API data.
  */
 public class TankController {
 
