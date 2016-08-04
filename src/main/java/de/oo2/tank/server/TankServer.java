@@ -1,6 +1,10 @@
 package de.oo2.tank.server;
 
 import de.oo2.tank.server.dao.MeasurementDao;
+import io.swagger.annotations.Contact;
+import io.swagger.annotations.Info;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +16,15 @@ import static spark.Spark.port;
 /**
  * This is the main application class.
  */
+@SwaggerDefinition(host = "localhost:4567", //
+        info = @Info(description = "DonateAPP API", //
+                version = "V1.0", //
+                title = "Some random api for testing", //
+                contact = @Contact(name = "Serol", url = "https://srlk.github.io")), //
+        schemes = {SwaggerDefinition.Scheme.HTTP, SwaggerDefinition.Scheme.HTTPS}, //
+        consumes = {"application/json"}, //
+        produces = {"application/json"}, //
+        tags = {@Tag(name = "swagger")})
 public class TankServer {
     private static final Logger logger = LoggerFactory.getLogger(TankServer.class.getName());
 
@@ -45,7 +58,12 @@ public class TankServer {
      *
      * - http://www.mscharhag.com/java/building-rest-api-with-spark
      * - https://github.com/mscharhag/blog-examples/tree/master/sparkdemo/src
+     *
+     *
+     * - https://github.com/fabiomaffioletti/jsondoc-samples/blob/master/jsondoc-sample-spark/src/main/java/org/jsondoc/sample/spark/controller/CityController.java
      * - https://srlk.github.io/posts/2016/swagger_sparkjava/
+     *
+     *
      * - https://github.com/cahtisroo/jschema-example/blob/master/src/main/java/org/jschema/sample/App.java
      *
      */
