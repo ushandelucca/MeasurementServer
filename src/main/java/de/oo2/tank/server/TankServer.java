@@ -11,21 +11,20 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 import static de.oo2.tank.server.Configurator.*;
-import static spark.Spark.get;
-import static spark.Spark.port;
+import static spark.Spark.*;
 
 /**
  * This is the main application class.
  */
 @SwaggerDefinition(// host = "localhost:8080", //
-        info = @Info(description = "DonateAPP API", //
+        info = @Info(description = "REST API for the tank in OO2a", //
                 version = "V1.0", //
-                title = "Some random api for testing", //
-                contact = @Contact(name = "Serol", url = "https://srlk.github.io")), //
-        schemes = {SwaggerDefinition.Scheme.HTTP, SwaggerDefinition.Scheme.HTTPS}, //
+                title = "Tank API", //
+                contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/TankServer")), //
+        schemes = {SwaggerDefinition.Scheme.HTTP /*, SwaggerDefinition.Scheme.HTTPS*/}, //
         consumes = {"application/json"}, //
         produces = {"application/json"}, //
-        tags = {@Tag(name = "swagger")})
+        tags = {@Tag(name = "Description")})
 public class TankServer {
     private static final Logger logger = LoggerFactory.getLogger(TankServer.class.getName());
 
@@ -46,9 +45,10 @@ public class TankServer {
 
         port(8080);
 
+        staticFiles.location("/dist");
+
         // String dbNamne = (String) app.getProperties().getOrDefault(KEY_DATABASE_NAME, "test");
         MeasurementDao dao = new MeasurementDao("test", "docker.local", 21017);
-
 
         new TankController(new TemperatureService(dao));
 
@@ -64,6 +64,8 @@ public class TankServer {
             System.err.println(e);
             e.printStackTrace();
         }
+
+
     }
 
     /**

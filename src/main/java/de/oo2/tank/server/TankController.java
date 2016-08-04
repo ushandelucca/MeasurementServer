@@ -3,10 +3,9 @@ package de.oo2.tank.server;
 import com.google.gson.Gson;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 
 import static de.oo2.tank.server.JsonUtil.json;
 import static de.oo2.tank.server.JsonUtil.toJson;
@@ -15,9 +14,9 @@ import static spark.Spark.*;
 /**
  * This class adds the routes from the server to the service and handles the REST API data.
  */
-@Path("/pet")
-@Api(value = "/pet", description = "Operations about pets")
-@Produces({"application/json", "application/xml"})
+@Path("/api/tank/temperatures")
+@Api(value = "/api/tank/temperatures", description = "Operations for the tank temperatures.")
+@Produces({"application/json"})
 public class TankController {
 
     private final TemperatureService temperatureService;
@@ -25,19 +24,11 @@ public class TankController {
     public TankController(final TemperatureService temperatureService) {
         this.temperatureService = temperatureService;
 
-        registerReadTemperatureWithId();
+        getTemperature("");
+        postTemperature(null);
 
-        post("/webapi/water/temperatures", (req, res) -> {
 
-            System.out.println(req.body());
-
-            Measurement m = new Gson().fromJson(req.body(), Measurement.class);
-
-            return m;
-
-        }, json());
-
-        put("/webapi/water/temperature/:id", (req, res) -> {
+        put("/api/water/temperatures/:id", (req, res) -> {
             return null;
 
 
@@ -54,23 +45,38 @@ public class TankController {
 
     }
 
+    @POST
+    @ApiOperation(value = "Save a temperature measurement.",
+            response = Measurement.class)
+    @ApiParam(value = "The measurement to save.", required = true)
+    public void postTemperature(Measurement measurement) {
+
+        post("/api/tank/temperatures", (req, res) -> {
+
+            System.out.println(req.body());
+
+            Measurement m = new Gson().fromJson(req.body(), Measurement.class);
+
+            return m;
+
+        }, json());
+    }
+
     @GET
-    @Path("/findByStatus")
-    @ApiOperation(value = "Finds Pets by status",
-            notes = "Multiple status values can be provided with comma seperated strings",
+    @Path("/{id}")
+    @ApiOperation(value = "Find temperature measurements by id.",
             response = Measurement.class,
             responseContainer = "List")
+    public void getTemperature(@ApiParam(value = "Id of the temperature measurement", required = true) @PathParam("id") String id) {
 
-    public void registerReadTemperatureWithId() {
-        // http://localhost:8080/webapi/water/temperature/1
-        get("/webapi/water/temperature/:id", (req, res) -> {
-            String id = req.params(":id");
-            Measurement measurement = temperatureService.readTemperature(id);
+        get("/api/tank/temperatures/:id", (req, res) -> {
+            String tid = req.params(":id");
+            Measurement measurement = temperatureService.readTemperature(tid);
             if (measurement != null) {
                 return measurement;
             }
             res.status(400);
-            return new ResponseError("No user with id '%s' found", id);
+            return new ResponseError("No user with id '%s' found", tid);
         }, json());
     }
 
