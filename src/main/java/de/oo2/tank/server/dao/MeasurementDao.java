@@ -95,8 +95,13 @@ public class MeasurementDao {
      */
     public Measurement readMeasurementById(String id) throws PersistenceException {
         MongoCollection measurements = getMeasurements();
+        Measurement m = null;
 
-        Measurement m = measurements.findOne(withOid(id)).as(Measurement.class);
+        try {
+            m = measurements.findOne(withOid(id)).as(Measurement.class);
+        } catch (Exception e) {
+            handleException("Error while searching for id '" + id + "' the measurements!", e);
+        }
 
         return m;
     }

@@ -25,17 +25,15 @@ public class TemperatureRoutes {
         // annotations used for the swagger documentation
         postTemperature(null);
         getTemperature("");
-        putTemperature("");
+        putTemperature(null);
     }
 
     @POST
-    @ApiOperation(value = "Save a temperature measurement.",
-            response = Measurement.class)
-    @ApiParam(value = "The measurement to save.", required = true)
+    @ApiOperation(value = "Save a temperature measurement.", consumes = "application/json")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = Measurement.class),
+            @ApiResponse(code = 200, message = "Success, the saved temperature measurement", response = Measurement.class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
-    public void postTemperature(Measurement measurement) {
+    public void postTemperature(@ApiParam(value = "The measurement to save.", required = true) Measurement measurement) {
 
         post("/api/tank/temperatures", (req, res) -> {
             Measurement m = new Gson().fromJson(req.body(), Measurement.class);
@@ -48,11 +46,9 @@ public class TemperatureRoutes {
 
     @GET
     @Path("/{id}")
-    @ApiOperation(value = "Find temperature measurements by id.",
-            response = Measurement.class,
-            responseContainer = "List")
+    @ApiOperation(value = "Find a temperature measurement by id.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = Measurement.class),
+            @ApiResponse(code = 200, message = "Success, the temperature measurement", response = Measurement.class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
     public void getTemperature(@ApiParam(value = "Id of the temperature measurement", required = true) @PathParam("id") String id) {
 
@@ -72,16 +68,13 @@ public class TemperatureRoutes {
     }
 
     @PUT
-    @Path("/{id}")
-    @ApiOperation(value = "Update a temperature measurements by id.",
-            response = Measurement.class,
-            responseContainer = "List")
+    @ApiOperation(value = "Update a temperature measurement.", consumes = "application/json")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = Measurement.class),
+            @ApiResponse(code = 200, message = "Success, the updated temperature measurement", response = Measurement.class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
-    public void putTemperature(@ApiParam(value = "Id of the temperature measurement", required = true) @PathParam("id") String id) {
+    public void putTemperature(@ApiParam(value = "The temperature measurement to update.", required = true) Measurement measurement) {
 
-        put("/api/water/temperatures/:id", (req, res) -> {
+        put("/api/water/temperatures", (req, res) -> {
             return null;
 
         }, json());

@@ -69,7 +69,6 @@ public class ServerTest {
                 .returnContent();
 
         Measurement savedMeasurement = gson.fromJson(content.asString(), Measurement.class);
-        content = null;
 
         Assert.assertNotSame("", savedMeasurement.getId());
 

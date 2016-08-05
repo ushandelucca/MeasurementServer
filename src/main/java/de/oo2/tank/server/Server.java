@@ -74,10 +74,10 @@ public class Server {
 
         // handle the exceptions during routing
         exception(Exception.class, (e, req, res) -> {
-            logger.error(e.getMessage());
+            logger.error(e.getMessage(), e);
             res.status(400);
             res.type("application/json");
-            res.body(toJson(new ResponseError(e)));
+            res.body(toJson(new ResponseError("Error while processing the request!")));
         });
 
 
