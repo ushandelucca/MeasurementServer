@@ -13,9 +13,6 @@ import java.util.Map;
 import static de.oo2.tank.server.Configurator.*;
 import static spark.Spark.*;
 
-/**
- * This is the main application class.
- */
 @SwaggerDefinition(// host = "localhost:8080", //
         info = @Info(description = "REST API for the tank in OO2a", //
                 version = "V1.0", //
@@ -25,6 +22,9 @@ import static spark.Spark.*;
         consumes = {"application/json"}, //
         produces = {"application/json"}, //
         tags = {@Tag(name = "Description")})
+/**
+ * This is the main application class.
+ */
 public class TankServer {
     private static final Logger logger = LoggerFactory.getLogger(TankServer.class.getName());
 

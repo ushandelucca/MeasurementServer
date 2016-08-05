@@ -38,7 +38,7 @@ public class TankController {
             res.type("application/json");
         });
 
-        exception(IllegalArgumentException.class, (e, req, res) -> {
+        exception(Exception.class, (e, req, res) -> {
             res.status(400);
             res.body(toJson(new ResponseError(e)));
         });
