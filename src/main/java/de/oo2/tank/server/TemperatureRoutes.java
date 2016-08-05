@@ -66,7 +66,7 @@ public class TemperatureRoutes {
             }
 
             res.status(400);
-            return new ResponseError("No user with id '%s' found", tid);
+            return new ResponseError("No temperature measurement with id '%s' found!", tid);
 
         }, json());
     }

@@ -67,14 +67,16 @@ public class Server {
             e.printStackTrace();
         }
 
-
+        // after each route
         after((req, res) -> {
             res.type("application/json");
         });
 
+        // handle the exceptions during routing
         exception(Exception.class, (e, req, res) -> {
             logger.error(e.getMessage());
             res.status(400);
+            res.type("application/json");
             res.body(toJson(new ResponseError(e)));
         });
 

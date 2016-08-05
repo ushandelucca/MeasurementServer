@@ -34,7 +34,7 @@ public class ServerTest {
     }
 
     @Test
-    public void testPostTemperature() throws Exception {
+    public void testPostTemperature_200() throws Exception {
         Measurement param = getMeasurement1();
         String jsonString = gson.toJson(param);
 
@@ -58,7 +58,7 @@ public class ServerTest {
     }
 
     @Test
-    public void testGetTemperature() throws Exception {
+    public void testGetTemperature_200() throws Exception {
         // first save a temperature
         Measurement param = getMeasurement2();
         String jsonString = gson.toJson(param);
@@ -84,20 +84,24 @@ public class ServerTest {
     }
 
     @Test
-    public void testGetTemperatureFail() throws Exception {
-        HttpResponse httpResponse = Request.Get("http://localhost:8080/api/tank/temperatures/1")
+    public void testGetTemperature_400() throws Exception {
+        HttpResponse httpResponse = Request.Get("http://localhost:8080/api/tank/temperatures/54651022bffebc03098b4567")
                 .execute()
                 .returnResponse();
 
         int code = httpResponse.getStatusLine().getStatusCode();
 
+        Assert.assertEquals(400, code);
+
         Content content = new ContentResponseHandler().handleEntity(httpResponse.getEntity());
         ResponseError errorMessage = gson.fromJson(content.toString(), ResponseError.class);
 
-        Assert.assertEquals(400, code);
-        Assert.assertEquals("No user with id '1' found", errorMessage.getMessage());
+        Assert.assertEquals("No temperature measurement with id '54651022bffebc03098b4567' found!", errorMessage.getMessage());
     }
 
-    // Test with invalid JSON
+    // TODO
+    // Test with invalid JSON (POST 400)
+    // Test PUT (200 and 400)
+    // Test query for measurements (200 and 400)
 
 }
