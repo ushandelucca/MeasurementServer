@@ -29,7 +29,7 @@ public class MeasurementQueryComposer {
     private String sort;
     private Integer maxResult;
 
-    private boolean checked;
+    private boolean checked = false;
 
     /**
      * Constructor for the search criteria object.
@@ -50,9 +50,9 @@ public class MeasurementQueryComposer {
      * Returns the query string for the given search criteria.
      *
      * @return the query string
-     * @throws MeasurementDataAccessException
+     * @throws PersistenceException
      */
-    public String getQuery() throws MeasurementDataAccessException {
+    public String getQuery() throws PersistenceException {
         checkQuery();
 
         StringBuilder query = new StringBuilder();
@@ -62,7 +62,7 @@ public class MeasurementQueryComposer {
         query.append("{ ");
 
         if ((beginDate != null) && (endDate != null)) {
-            query.append("\"timestamp\": { $gt: new Date(\"" + beginDate + "\") }, \"timestamp\": { $lt: new Date(\"" + beginDate + "\") } ");
+            query.append("\"timestamp\": { $gt: new Date(\"").append(beginDate).append("\") }, \"timestamp\": { $lt: new Date(\"").append(beginDate).append("\") } ");
         }
 
         query.append(" }");
@@ -75,7 +75,7 @@ public class MeasurementQueryComposer {
      *
      * @return the sort string
      */
-    public String getSort() throws MeasurementDataAccessException {
+    public String getSort() throws PersistenceException {
         checkQuery();
 
         StringBuilder sort = new StringBuilder();
@@ -97,9 +97,9 @@ public class MeasurementQueryComposer {
      * Returns the limit parameter for the given search criteria.
      *
      * @return the limit string
-     * @throws MeasurementDataAccessException
+     * @throws PersistenceException
      */
-    public int getLimit() throws MeasurementDataAccessException {
+    public int getLimit() throws PersistenceException {
         checkQuery();
 
         if (maxResult != null) {
@@ -114,17 +114,17 @@ public class MeasurementQueryComposer {
      * Checks the syntax of the query.
      *
      * @return <code>true</code> if the syntax is correct, otherwise <code>false</code>
-     * @throws MeasurementDataAccessException
+     * @throws PersistenceException
      */
-    private boolean checkQuery() throws MeasurementDataAccessException {
+    private boolean checkQuery() throws PersistenceException {
 
         if (!checked) {
 
             if (urlParameters.length() < 1) {
-                throw new MeasurementDataAccessException("No search query defined!");
+                throw new PersistenceException("No search query defined!");
             }
 
-            Map<String, String> criterias = new HashMap<String, String>();
+            Map<String, String> criteriaMap = new HashMap<>();
 
             StringTokenizer stp = new StringTokenizer(urlParameters, "&", false);
             while (stp.hasMoreTokens()) {
@@ -141,71 +141,71 @@ public class MeasurementQueryComposer {
                 }
 
                 if ((key != null) && (!key.equals("") && (value != null) && (!value.equals("")))) {
-                    criterias.put(key, value);
+                    criteriaMap.put(key, value);
                 }
             }
 
             // check the query parameter combination
-            if (!criterias.containsKey(PARAM_QUERY)) {
-                throw new MeasurementDataAccessException("Syntax Error in the search criterias: 'query' wrong format or not defined!");
+            if (!criteriaMap.containsKey(PARAM_QUERY)) {
+                throw new PersistenceException("Syntax Error in the search criteria: 'query' wrong format or not defined!");
             } else {
-                if (!criterias.get(PARAM_QUERY).equals(PARAM_RETURN)) {
-                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: query without 'return'!");
+                if (!criteriaMap.get(PARAM_QUERY).equals(PARAM_RETURN)) {
+                    throw new PersistenceException("Syntax Error in the search criteria: query without 'return'!");
                 }
             }
 
             // check begin and end
-            if (criterias.containsKey(PARAM_BEGIN)) {
-                if (!criterias.containsKey(PARAM_END)) {
-                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'begin' without 'end'!");
+            if (criteriaMap.containsKey(PARAM_BEGIN)) {
+                if (!criteriaMap.containsKey(PARAM_END)) {
+                    throw new PersistenceException("Syntax Error in the search criteria: 'begin' without 'end'!");
                 }
                 try {
-                    beginDate = criterias.get(PARAM_BEGIN);
+                    beginDate = criteriaMap.get(PARAM_BEGIN);
                     dateParser.parse(beginDate); // check the format
                 } catch (ParseException e) {
                     beginDate = null;
-                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'begin' wrong format!", e);
+                    throw new PersistenceException("Syntax Error in the search criteria: 'begin' wrong format!", e);
                 }
             }
 
-            if (criterias.containsKey(PARAM_END)) {
-                if (!criterias.containsKey(PARAM_BEGIN)) {
-                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'end' without 'begin'!");
+            if (criteriaMap.containsKey(PARAM_END)) {
+                if (!criteriaMap.containsKey(PARAM_BEGIN)) {
+                    throw new PersistenceException("Syntax Error in the search criteria: 'end' without 'begin'!");
                 }
                 try {
-                    endDate = criterias.get(PARAM_END);
+                    endDate = criteriaMap.get(PARAM_END);
                     dateParser.parse(endDate); // check the format
                 } catch (ParseException e) {
                     endDate = null;
-                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'end' wrong 'format'!", e);
+                    throw new PersistenceException("Syntax Error in the search criteria: 'end' wrong 'format'!", e);
                 }
             }
 
             // check sorting parameters
-            if (criterias.containsKey(PARAM_SORT)) {
+            if (criteriaMap.containsKey(PARAM_SORT)) {
 
-                sort = criterias.get(PARAM_SORT);
+                sort = criteriaMap.get(PARAM_SORT);
 
                 if ((!PARAM_DATE_ASC.equals(sort)) && (!PARAM_DATE_DESC.equals(sort))) {
                     sort = null;
-                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'sort' wrong format!");
+                    throw new PersistenceException("Syntax Error in the search criteria: 'sort' wrong format!");
                 }
             }
 
             // check max_result
-            if (criterias.containsKey(PARAM_MAX_RESULT)) {
-                String number = criterias.get(PARAM_MAX_RESULT);
+            if (criteriaMap.containsKey(PARAM_MAX_RESULT)) {
+                String number = criteriaMap.get(PARAM_MAX_RESULT);
 
                 maxResult = Integer.parseInt(number);
 
                 if (maxResult < 1) {
                     maxResult = null;
-                    throw new MeasurementDataAccessException("Syntax Error in the search criteria: 'max_result' wrong format or not a positive number!");
+                    throw new PersistenceException("Syntax Error in the search criteria: 'max_result' wrong format or not a positive number!");
                 }
             }
 
             if ((beginDate == null) && (endDate == null) && (sort == null) && (maxResult == null)) {
-                throw new MeasurementDataAccessException("No search criterias defined!");
+                throw new PersistenceException("No search criterias defined!");
             }
 
             checked = true;

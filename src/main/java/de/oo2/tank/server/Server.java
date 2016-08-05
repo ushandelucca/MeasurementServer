@@ -11,13 +11,14 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 import static de.oo2.tank.server.Configurator.*;
+import static de.oo2.tank.server.JsonUtil.toJson;
 import static spark.Spark.*;
 
 @SwaggerDefinition(// host = "localhost:8080", //
         info = @Info(description = "REST API for the tank in OO2a", //
                 version = "V1.0", //
                 title = "Tank API", //
-                contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/TankServer")), //
+                contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/Server")), //
         schemes = {SwaggerDefinition.Scheme.HTTP /*, SwaggerDefinition.Scheme.HTTPS*/}, //
         consumes = {"application/json"}, //
         produces = {"application/json"}, //
@@ -25,8 +26,8 @@ import static spark.Spark.*;
 /**
  * This is the main application class.
  */
-public class TankServer {
-    private static final Logger logger = LoggerFactory.getLogger(TankServer.class.getName());
+public class Server {
+    private static final Logger logger = LoggerFactory.getLogger(Server.class.getName());
 
     /**
      * main() Method as the application entry point
@@ -48,14 +49,15 @@ public class TankServer {
         staticFiles.location("/dist");
 
         // String dbNamne = (String) app.getProperties().getOrDefault(KEY_DATABASE_NAME, "test");
-        MeasurementDao dao = new MeasurementDao("test", "docker.local", 21017);
+        // MeasurementDao dao = new MeasurementDao("test", "docker.local", 21017);
+        MeasurementDao dao = new MeasurementDao("test", "localhost", 27017);
 
-        new TankController(new TemperatureService(dao));
+        new TemperatureRoutes(new TemperatureService(dao));
 
 
         try {
             // Build swagger json description
-            final String swaggerJson = SwaggerParser.getSwaggerJson(TankController.class.getPackage().getName());
+            final String swaggerJson = SwaggerParser.getSwaggerJson(TemperatureRoutes.class.getPackage().getName());
             get("/swagger", (req, res) -> {
                 return swaggerJson;
             });
@@ -64,6 +66,17 @@ public class TankServer {
             System.err.println(e);
             e.printStackTrace();
         }
+
+
+        after((req, res) -> {
+            res.type("application/json");
+        });
+
+        exception(Exception.class, (e, req, res) -> {
+            logger.error(e.getMessage());
+            res.status(400);
+            res.body(toJson(new ResponseError(e)));
+        });
 
 
     }

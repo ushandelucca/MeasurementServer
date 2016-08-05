@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * Fixture for the unit tests.
+ * Fixture of some measurement data for the tests.
  */
 public class MeasurementFixture {
     private static LocalDate today = LocalDate.now();

@@ -22,13 +22,6 @@ public class Measurement {
 
     private Boolean valid;
 
-    /*
-     * Zero argument constructor is needed from JAXB.
-     */
-    // TODO create a factory for the temperature and water level measurements
-    public Measurement() {
-    }
-
     /**
      * Returns the unique id (primary key) of the measurement.
      * @return the id if the measuremst is stored in the db. If the id == <code>null</code> the measurememt is not

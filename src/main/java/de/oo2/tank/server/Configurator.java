@@ -1,7 +1,7 @@
 package de.oo2.tank.server;
 
 /**
- * This class provides the TankServer configuration.
+ * This class provides the Server configuration.
  */
 public final class Configurator {
 

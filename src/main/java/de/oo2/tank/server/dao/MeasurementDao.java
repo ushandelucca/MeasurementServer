@@ -78,15 +78,11 @@ public class MeasurementDao {
      *
      * @param measurement data to store
      * @return the stored measurement
-     * @throws MeasurementDataAccessException
+     * @throws PersistenceException
      */
-    public Measurement createMeasurement(Measurement measurement) throws MeasurementDataAccessException {
+    public Measurement createMeasurement(Measurement measurement) throws PersistenceException {
         MongoCollection measurements = getMeasurements();
-
         WriteResult result = measurements.save(measurement);
-
-        // Measurement savedMeasurement = measurements.findOne("{ _id: " + result.getUpsertedId() + " })").as(Measurement.class);
-
         return measurement;
     }
 
@@ -95,9 +91,9 @@ public class MeasurementDao {
      *
      * @param id of the measurement
      * @return the measurement if the measurement is not found in the db the return value is <code>null</code>.
-     * @throws MeasurementDataAccessException
+     * @throws PersistenceException
      */
-    public Measurement readMeasurementById(String id) throws MeasurementDataAccessException {
+    public Measurement readMeasurementById(String id) throws PersistenceException {
         MongoCollection measurements = getMeasurements();
 
         Measurement m = measurements.findOne(withOid(id)).as(Measurement.class);
@@ -111,9 +107,9 @@ public class MeasurementDao {
      * @param queryParameters the parameters for the query
      * @return An array of the matching <code>Measurement</code> objects. If no <code>Measurement</code> matches
      * the period an empty array will be returned.
-     * @throws MeasurementDataAccessException
+     * @throws PersistenceException
      */
-    public Measurement[] readMeasurementsWithQuery(String queryParameters) throws MeasurementDataAccessException {
+    public Measurement[] readMeasurementsWithQuery(String queryParameters) throws PersistenceException {
         MeasurementQueryComposer queryComposer = new MeasurementQueryComposer(queryParameters);
 
         String query = queryComposer.getQuery();
@@ -162,11 +158,11 @@ public class MeasurementDao {
      *
      * @param message   the exception message
      * @param throwable the original exception
-     * @throws MeasurementDataAccessException
+     * @throws PersistenceException the exception that will be thrown
      */
-    private void handleException(String message, Throwable throwable) throws MeasurementDataAccessException {
+    private void handleException(String message, Throwable throwable) throws PersistenceException {
         logger.error(message, throwable);
-        throw new MeasurementDataAccessException(message, throwable);
+        throw new PersistenceException(message, throwable);
     }
 
 }

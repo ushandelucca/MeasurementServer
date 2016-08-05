@@ -78,8 +78,7 @@ public class MeasurementDaoTest {
 
         try {
             dao.readMeasurementsWithQuery("toFail");
-        }
-        catch (MeasurementDataAccessException e) {
+        } catch (PersistenceException e) {
             return;
         }
 
