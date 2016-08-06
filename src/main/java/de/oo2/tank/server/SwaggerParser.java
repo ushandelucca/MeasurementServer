@@ -44,6 +44,12 @@ public class SwaggerParser {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         String json = objectMapper.writeValueAsString(swagger);
+
+        // Workaround for the missing "Security" in the @SwaggerDefinition annotation
+        String securityDefinition = "\"securityDefinitions\": {\"tankauth\": {\"type\": \"apiKey\", \"in\": \"header\", \"name\": \"key\"}},";
+        int beforePathSection = json.indexOf("\"paths\":");
+        json = json.substring(0, beforePathSection) + securityDefinition + json.substring(beforePathSection, json.length());
+
         return json;
     }
 

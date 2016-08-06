@@ -18,7 +18,7 @@ import static spark.Spark.*;
         info = @Info(description = "REST API for the tank in OO2a", //
                 version = "V1.0", //
                 title = "Tank API", //
-                contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/Server")), //
+                contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/TankServer")), //
         schemes = {SwaggerDefinition.Scheme.HTTP /*, SwaggerDefinition.Scheme.HTTPS*/}, //
         consumes = {"application/json"}, //
         produces = {"application/json"}, //
@@ -46,11 +46,11 @@ public class Server {
 
         port(8080);
 
-        staticFiles.location("/dist");
+        staticFiles.location("/www");
 
         // String dbNamne = (String) app.getProperties().getOrDefault(KEY_DATABASE_NAME, "test");
-        // MeasurementDao dao = new MeasurementDao("test", "docker.local", 21017);
-        MeasurementDao dao = new MeasurementDao("test", "localhost", 27017);
+        MeasurementDao dao = new MeasurementDao("test", "docker.local", 27017);
+        // MeasurementDao dao = new MeasurementDao("test", "localhost", 27017);
 
         new TemperatureRoutes(new TemperatureService(dao));
 
@@ -70,6 +70,11 @@ public class Server {
         // after each route
         after((req, res) -> {
             res.type("application/json");
+
+            // https://github.com/brsanthu/google-analytics-java
+            // GoogleAnalytics ga = new GoogleAnalytics("UA-12345678-1");
+            // ga.postAsync(new PageViewHit("https://www.xxx.com", "api"));
+
         });
 
         // handle the exceptions during routing

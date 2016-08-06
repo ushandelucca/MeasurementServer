@@ -12,7 +12,8 @@ import static spark.Spark.*;
  * This class adds the routes for the temperature service and handles the REST requests an responses.
  */
 @Path("/api/tank/temperatures")
-@Api(value = "/api/tank/temperatures", description = "Operations for the tank temperatures.")
+@Api(value = "/api/tank/temperatures",
+        description = "Operations for the tank temperatures.")
 @Produces({"application/json"})
 public class TemperatureRoutes {
 
@@ -29,7 +30,7 @@ public class TemperatureRoutes {
     }
 
     @POST
-    @ApiOperation(value = "Save a temperature measurement.", consumes = "application/json")
+    @ApiOperation(value = "Save a temperature measurement.", consumes = "application/json", authorizations = {@Authorization(value = "tankauth")})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success, the saved temperature measurement", response = Measurement.class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
