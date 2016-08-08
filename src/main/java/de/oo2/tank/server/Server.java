@@ -46,7 +46,7 @@ public class Server {
 
         port(8080);
 
-        staticFiles.location("/www");
+        staticFiles.location("/public");
 
         // String dbNamne = (String) app.getProperties().getOrDefault(KEY_DATABASE_NAME, "test");
         MeasurementDao dao = new MeasurementDao("test", "docker.local", 27017);

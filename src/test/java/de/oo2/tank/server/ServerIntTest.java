@@ -16,9 +16,9 @@ import static de.oo2.tank.server.MeasurementFixture.getMeasurement2;
 import static spark.Spark.stop;
 
 /**
- * Tests for the server. Prerequisite: the database must be accessible.
+ * Integration tests for the <code>Server</code>. Prerequisite: the database must be accessible.
  */
-public class ServerTest {
+public class ServerIntTest {
     private Gson gson = new Gson();
 
     @BeforeClass

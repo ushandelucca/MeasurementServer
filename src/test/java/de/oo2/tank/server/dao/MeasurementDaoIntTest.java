@@ -8,7 +8,10 @@ import org.junit.Test;
 
 import static de.oo2.tank.server.MeasurementFixture.*;
 
-public class MeasurementDaoTest {
+/**
+ * Integration tests for the dao.
+ */
+public class MeasurementDaoIntTest {
 
     private MeasurementDao dao;
 

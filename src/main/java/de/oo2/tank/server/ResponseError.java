@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * This class handles the error messages in the response.
  */
-@ApiModel(description = "Error messages in the response")
+@ApiModel(description = "Error message in the response")
 public class ResponseError {
 
     // the error message

@@ -151,8 +151,8 @@
                 <version>2.16</version>
                 <configuration>
                     <excludes>
-                        <!-- Exclude all resource dependent tests *RdTest.* -->
-                        <exclude>%regex[.*RdTest.*]</exclude>
+                        <!-- Exclude all integration tests *IntTest.* -->
+                        <exclude>%regex[.*IntTest.*]</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -180,6 +180,30 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>attached</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <finalName>${artifactId}_${version}</finalName>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <archive>
+                                <manifest>
+                                    <mainClass>de.oo2.tank.server.Server</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
