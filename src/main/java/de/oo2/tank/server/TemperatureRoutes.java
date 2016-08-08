@@ -37,6 +37,10 @@ public class TemperatureRoutes {
     public void postTemperature(@ApiParam(value = "The measurement to save.", required = true) Measurement measurement) {
 
         post("/api/tank/temperatures", (req, res) -> {
+
+            // check authorisation
+            String apiKey = req.headers("key");
+
             Measurement m = new Gson().fromJson(req.body(), Measurement.class);
 
             m = temperatureService.saveTemperatue(m);
