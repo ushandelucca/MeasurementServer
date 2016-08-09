@@ -14,7 +14,6 @@
         </encoder>
     </appender>
 
-
     <!--
     https://www.loggly.com/docs/java-logback/
     -->

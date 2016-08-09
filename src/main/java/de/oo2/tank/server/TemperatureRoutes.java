@@ -23,7 +23,7 @@ public class TemperatureRoutes {
         this.temperatureService = temperatureService;
 
         // the method parameters are irrelevant for the execution. They are solely used to place the
-        // annotations used for the swagger documentation
+        // annotations for the swagger documentation
         postTemperature(null);
         getTemperature("");
         putTemperature(null);

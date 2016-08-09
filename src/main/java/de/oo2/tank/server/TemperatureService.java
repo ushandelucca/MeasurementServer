@@ -1,6 +1,7 @@
 package de.oo2.tank.server;
 
 import de.oo2.tank.server.dao.MeasurementDao;
+import de.oo2.tank.server.dao.PersistenceException;
 
 /**
  * This class provides the functionality for the management of the temperature measurements.
@@ -9,6 +10,15 @@ public class TemperatureService {
 
     // the data access
     private MeasurementDao dao = null;
+
+    /**
+     * Constructor for the service.
+     *
+     * @param config the configuration
+     */
+    public TemperatureService(Configurator config) {
+        this.dao = new MeasurementDao(config.getDbName(), config.getDbHost(), config.getDbPort());
+    }
 
     /**
      * Constructor for the service.
@@ -24,9 +34,9 @@ public class TemperatureService {
      *
      * @param measurement the measurement
      * @return the measuremt saved in the database
-     * @throws Exception
+     * @throws PersistenceException
      */
-    public Measurement saveTemperatue(Measurement measurement) throws Exception {
+    public Measurement saveTemperatue(Measurement measurement) throws PersistenceException {
         Measurement createdMeasurement = dao.createMeasurement(measurement);
         return createdMeasurement;
     }
@@ -36,9 +46,9 @@ public class TemperatureService {
      *
      * @param id of temperature measurement
      * @return the temperature measurement
-     * @throws Exception
+     * @throws PersistenceException
      */
-    public Measurement readTemperature(String id) throws Exception {
+    public Measurement readTemperature(String id) throws PersistenceException {
         Measurement measurement = dao.readMeasurementById(id);
 
         return measurement;
@@ -56,8 +66,11 @@ public class TemperatureService {
      *     - max_result  : select the maximum number of measurements. If this parameter ist
      *                     not set, then the maximum number of measurements is set to 101
      * </pre>
+     * @param queryParameters the query parameters
+     * @return the queried measurements
+     * @throws PersistenceException
      */
-    public Measurement[] selectTemperatures(String queryParameters) throws Exception {
+    public Measurement[] selectTemperatures(String queryParameters) throws PersistenceException {
 
         Measurement[] measurements = dao.readMeasurementsWithQuery(queryParameters);
 

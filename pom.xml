@@ -151,8 +151,8 @@
                 <version>2.16</version>
                 <configuration>
                     <excludes>
-                        <!-- Exclude all resource dependent tests *RdTest.* -->
-                        <exclude>%regex[.*Test.*]</exclude>
+                        <!-- Exclude all integration tests *IntTest.* -->
+                        <exclude>%regex[.*IntTest.*]</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -192,7 +192,7 @@
                         </goals>
                         <phase>package</phase>
                         <configuration>
-                            <finalName>${artifactId}_${version}</finalName>
+                            <finalName>tankserver</finalName>
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
@@ -206,7 +206,10 @@
                 </executions>
             </plugin>
 
+<<<<<<<<< Temporary merge branch 1
 
+=========
+>>>>>>>>> Temporary merge branch 2
         </plugins>
     </build>
 

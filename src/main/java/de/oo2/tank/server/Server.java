@@ -7,9 +7,7 @@ import io.swagger.annotations.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-
-import static de.oo2.tank.server.Configurator.*;
+import static de.oo2.tank.server.JsonUtil.toJson;
 import static spark.Spark.*;
 
 @SwaggerDefinition(// host = "localhost:8080", //
@@ -17,7 +15,7 @@ import static spark.Spark.*;
                 version = "V1.0", //
                 title = "Tank API", //
                 contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/TankServer")), //
-        schemes = {SwaggerDefinition.Scheme.HTTP /*, SwaggerDefinition.Scheme.HTTPS*/}, //
+        schemes = {SwaggerDefinition.Scheme.HTTPS}, //
         consumes = {"application/json"}, //
         produces = {"application/json"}, //
         tags = {@Tag(name = "Description")})
@@ -28,34 +26,20 @@ public class Server {
     private static final Logger logger = LoggerFactory.getLogger(Server.class.getName());
 
     /**
-     * main() Method as the application entry point
+     * Main method as the application entry point.
      *
      * @param args command line arguments
      */
     public static void main(String[] args) {
+        Configurator config = new Configurator();
+
         logger.info("Starting the server.");
 
-        Map<String, String> env = System.getenv();
-        env.getOrDefault(KEY_CLIENT_RESSOURCE_BASE, DEFAULT_CLIENT_RESSOURCE_BASE);
-        env.getOrDefault(KEY_SERVER_PORT, DEFAULT_SERVER_PORT);
-        env.getOrDefault(KEY_DATABASE_NAME, DEFAULT_DATABASE_NAME);
-        env.getOrDefault(KEY_DATABASE_USER, DEFAULT_DATABASE_USER);
-        env.getOrDefault(KEY_DATABASE_PASSWORD, DEFAULT_DATABASE_PASSWORD);
-
-        port(8080);
+        port(config.getServerPort());
 
         staticFiles.location("/public");
 
-        get("/hello", (request, response) -> {
-            return "Hello World!";
-        });
-        /*
-
-        // String dbNamne = (String) app.getProperties().getOrDefault(KEY_DATABASE_NAME, "test");
-        MeasurementDao dao = new MeasurementDao("test", "docker.local", 27017);
-        // MeasurementDao dao = new MeasurementDao("test", "localhost", 27017);
-
-        new TemperatureRoutes(new TemperatureService(dao));
+        new TemperatureRoutes(new TemperatureService(config));
 
 
         try {
@@ -66,17 +50,18 @@ public class Server {
             });
 
         } catch (Exception e) {
-            System.err.println(e);
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         // after each route
         after((req, res) -> {
             res.type("application/json");
 
-            // https://github.com/brsanthu/google-analytics-java
-            // GoogleAnalytics ga = new GoogleAnalytics("UA-12345678-1");
-            // ga.postAsync(new PageViewHit("https://www.xxx.com", "api"));
+            if (config.getGoogleAnalyticsKey() != null) {
+                // https://github.com/brsanthu/google-analytics-java
+                // GoogleAnalytics ga = new GoogleAnalytics("UA-12345678-1");
+                // ga.postAsync(new PageViewHit("https://www.xxx.com", "api"));
+            }
 
         });
 
@@ -88,7 +73,6 @@ public class Server {
             res.body(toJson(new ResponseError("Error while processing the request!")));
         });
 
-        */
     }
 
     /**
