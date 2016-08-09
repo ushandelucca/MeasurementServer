@@ -192,7 +192,7 @@
                         </goals>
                         <phase>package</phase>
                         <configuration>
-                            <finalName>tankserver</finalName>
+                            <finalName>${artifactId}_${version}</finalName>
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
