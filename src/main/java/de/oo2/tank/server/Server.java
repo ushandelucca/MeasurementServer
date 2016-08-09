@@ -1,6 +1,5 @@
 package de.oo2.tank.server;
 
-import de.oo2.tank.server.dao.MeasurementDao;
 import io.swagger.annotations.Contact;
 import io.swagger.annotations.Info;
 import io.swagger.annotations.SwaggerDefinition;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 import static de.oo2.tank.server.Configurator.*;
-import static de.oo2.tank.server.JsonUtil.toJson;
 import static spark.Spark.*;
 
 @SwaggerDefinition(// host = "localhost:8080", //
@@ -47,6 +45,11 @@ public class Server {
         port(8080);
 
         staticFiles.location("/public");
+
+        get("/hello", (request, response) -> {
+            return "Hello World!";
+        });
+        /*
 
         // String dbNamne = (String) app.getProperties().getOrDefault(KEY_DATABASE_NAME, "test");
         MeasurementDao dao = new MeasurementDao("test", "docker.local", 27017);
@@ -85,7 +88,7 @@ public class Server {
             res.body(toJson(new ResponseError("Error while processing the request!")));
         });
 
-
+        */
     }
 
     /**
