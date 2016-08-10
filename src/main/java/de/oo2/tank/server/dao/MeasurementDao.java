@@ -37,7 +37,7 @@ public class MeasurementDao {
      */
     public MeasurementDao (String dbName, String host, int port) {
         this.dbName = dbName;
-        this.host = host;
+        this.host = "db"; //  host;
         this.port = port;
     }
 
