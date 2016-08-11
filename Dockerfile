@@ -2,10 +2,10 @@ FROM java:8
 
 # setting the variables
 ENV TANK_SERVER_PORT=80
-    TANK_DATABASE_HOST=mongodb
-    TANK_DATABASE_PORT=27017
-    TANK_DATABASE_NAME=test
-    TANK_API_KEY=ABC123
+ENV TANK_DATABASE_HOST=mongodb
+ENV TANK_DATABASE_PORT=27017
+ENV TANK_DATABASE_NAME=test
+ENV TANK_API_KEY=ABC123
 
 # Adding the server as a fat jar
 ADD ./target/server_1.0-SNAPSHOT-jar-with-dependencies.jar server_1.0-SNAPSHOT-jar-with-dependencies.jar
