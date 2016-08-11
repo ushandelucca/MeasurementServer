@@ -55,7 +55,7 @@ public class Server {
 
         // after each route
         after((req, res) -> {
-            res.type("application/json");
+            // res.type("application/json");
 
             if (config.getGoogleAnalyticsKey() != null) {
                 // https://github.com/brsanthu/google-analytics-java

@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static org.jongo.Oid.withOid;
@@ -22,7 +21,7 @@ import static org.jongo.Oid.withOid;
  */
 public class MeasurementDao {
     private static final Logger logger = LoggerFactory.getLogger(MeasurementDao.class.getName());
-    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+    // private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
     private String dbName;
     private String host;
@@ -31,14 +30,16 @@ public class MeasurementDao {
     /**
      * Constructor.
      *
-     * @param dbName the name for the database     *
-     * @param host
-     * @param port
+     * @param dbName the name of the database
+     * @param host the host of the database
+     * @param port the port of the database
      */
     public MeasurementDao (String dbName, String host, int port) {
         this.dbName = dbName;
-        this.host = "db"; //  host;
+        this.host = host;
         this.port = port;
+
+        logger.info("Creating DAO for host: " + host + ", port: " + port + ", db name: " + dbName + ".");
     }
 
     /**
@@ -47,15 +48,16 @@ public class MeasurementDao {
      * @return the db
      */
     private DB getDatabase() {
-        MongoClient mongoClient = null;
+        DB db = null;
 
         try {
-            mongoClient = new MongoClient(host, port);
+            MongoClient mongoClient = new MongoClient(host, port);
+            db = mongoClient.getDB(dbName);
         } catch (UnknownHostException e) {
             logger.error("Error while connecting to the database.", e);
         }
 
-        return mongoClient.getDB(dbName);
+        return db;
     }
 
     /**

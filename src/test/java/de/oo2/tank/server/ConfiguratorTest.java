@@ -1,6 +1,5 @@
-package de.oo2.tank.server.dao;
+package de.oo2.tank.server;
 
-import de.oo2.tank.server.Configurator;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -24,7 +23,12 @@ public class ConfiguratorTest {
 
     @Test
     public void testServerPort() {
-        Assert.assertEquals(new Integer(8080), config.getServerPort());
+        Assert.assertEquals(new Integer(80), config.getServerPort());
+    }
+
+    @Test
+    public void testDbType() {
+        Assert.assertEquals("MongoDb", config.getDbType());
     }
 
     @Test

@@ -10,6 +10,7 @@ public final class Configurator {
     // keys for the environment variables
     public static final String ENV_SERVER_PORT = "TANK_SERVER_PORT";
 
+    public static final String ENV_DATABASE_TYPE = "TANK_DATABASE_TYPE";
     public static final String ENV_DATABASE_HOST = "TANK_DATABASE_HOST";
     public static final String ENV_DATABASE_PORT = "TANK_DATABASE_PORT";
     public static final String ENV_DATABASE_NAME = "TANK_DATABASE_NAME";
@@ -24,6 +25,7 @@ public final class Configurator {
 
     private Integer serverPort = null;
 
+    private String dbType = null;
     private String dbHost = null;
     private Integer dbPort = null;
     private String dbName = null;
@@ -48,6 +50,19 @@ public final class Configurator {
         }
 
         return serverPort;
+    }
+
+    /**
+     * Returns the type of the db server. Default: "MongoDb".
+     *
+     * @return the hostname
+     */
+    public String getDbType() {
+        if (dbType == null) {
+            dbType = env.getOrDefault(ENV_DATABASE_TYPE, "MongoDb");
+        }
+
+        return dbType;
     }
 
     /**
