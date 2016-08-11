@@ -3,7 +3,6 @@ package de.oo2.tank.server.dao;
 import com.google.common.collect.Lists;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
-import com.mongodb.WriteResult;
 import de.oo2.tank.server.Measurement;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
@@ -17,10 +16,12 @@ import java.util.List;
 import static org.jongo.Oid.withOid;
 
 /**
- * Data Access Object for the measurements.
+ * Data Access Object for the measurements in a mongo db.
+ * See: https://www.mongodb.com/
+ * Implemented with http://jongo.org
  */
-public class MeasurementDao {
-    private static final Logger logger = LoggerFactory.getLogger(MeasurementDao.class.getName());
+public class MongoDao {
+    private static final Logger logger = LoggerFactory.getLogger(MongoDao.class.getName());
     // private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
     private String dbName;
@@ -34,12 +35,12 @@ public class MeasurementDao {
      * @param host the host of the database
      * @param port the port of the database
      */
-    public MeasurementDao (String dbName, String host, int port) {
+    public MongoDao(String dbName, String host, int port) {
         this.dbName = dbName;
         this.host = host;
         this.port = port;
 
-        logger.info("Creating DAO for host: " + host + ", port: " + port + ", db name: " + dbName + ".");
+        logger.info("Creating DAO for host: '" + host + "', port: '" + port + "', db name: '" + dbName + "'.");
     }
 
     /**
@@ -69,9 +70,8 @@ public class MeasurementDao {
         DB db = getDatabase();
 
         Jongo jongo = new Jongo(db);
-        MongoCollection measurements = jongo.getCollection("measurements");
 
-        return measurements;
+        return jongo.getCollection("measurements");
     }
 
     /**
@@ -84,7 +84,7 @@ public class MeasurementDao {
      */
     public Measurement createMeasurement(Measurement measurement) throws PersistenceException {
         MongoCollection measurements = getMeasurements();
-        WriteResult result = measurements.save(measurement);
+        measurements.save(measurement);
         return measurement;
     }
 
@@ -110,7 +110,7 @@ public class MeasurementDao {
 
     /**
      * Read a measurement by a given begin and end of a time period.
-     *
+     * See: http://jongo.org/#querying
      * @param queryParameters the parameters for the query
      * @return An array of the matching <code>Measurement</code> objects. If no <code>Measurement</code> matches
      * the period an empty array will be returned.
@@ -124,18 +124,15 @@ public class MeasurementDao {
         int limit = queryComposer.getLimit();
 
         MongoCollection measurements = getMeasurements();
-        MongoCursor<Measurement> all = null;
-
-        // http://jongo.org/#querying
+        List<Measurement> myList = null;
 
         try {
-            all = measurements.find(query).sort(sort).limit(limit).as(Measurement.class);
+            MongoCursor<Measurement> all = measurements.find(query).sort(sort).limit(limit).as(Measurement.class);
+            myList = Lists.newArrayList(all.iterator());
         }
         catch (Exception e) {
             handleException("Error while selecting the measurements!", e);
         }
-
-        List<Measurement> myList = Lists.newArrayList(all.iterator());
 
         if (myList == null) {
             return new Measurement[0];

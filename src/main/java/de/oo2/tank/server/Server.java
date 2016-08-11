@@ -40,22 +40,11 @@ public class Server {
         staticFiles.location("/public");
 
         new TemperatureRoutes(new TemperatureService(config));
-
-
-        try {
-            // Build swagger json description
-            final String swaggerJson = SwaggerParser.getSwaggerJson(TemperatureRoutes.class.getPackage().getName());
-            get("/swagger", (req, res) -> {
-                return swaggerJson;
-            });
-
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
+        new DocumentationRoutes();
 
         // after each route
         after((req, res) -> {
-            // res.type("application/json");
+            res.type("application/json");
 
             if (config.getGoogleAnalyticsKey() != null) {
                 // https://github.com/brsanthu/google-analytics-java

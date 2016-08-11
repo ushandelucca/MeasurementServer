@@ -11,13 +11,13 @@ import static de.oo2.tank.server.MeasurementFixture.*;
 /**
  * Integration tests for the dao.
  */
-public class MeasurementDaoIntTest {
+public class MongoDaoIntTest {
 
-    private MeasurementDao dao;
+    private MongoDao dao;
 
     @Before
     public void setUp() throws Exception {
-        dao = new MeasurementDao("test", "localhost", 27017);
+        dao = new MongoDao("test", "localhost", 27017);
         dao.getMeasurements().drop();
     }
 

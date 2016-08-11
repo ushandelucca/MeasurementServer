@@ -1,6 +1,6 @@
 package de.oo2.tank.server;
 
-import de.oo2.tank.server.dao.MeasurementDao;
+import de.oo2.tank.server.dao.MongoDao;
 import de.oo2.tank.server.dao.PersistenceException;
 
 /**
@@ -9,7 +9,7 @@ import de.oo2.tank.server.dao.PersistenceException;
 public class TemperatureService {
 
     // the data access
-    private MeasurementDao dao = null;
+    private MongoDao dao = null;
 
     /**
      * Constructor for the service.
@@ -17,7 +17,7 @@ public class TemperatureService {
      * @param config the configuration
      */
     public TemperatureService(Configurator config) {
-        this.dao = new MeasurementDao(config.getDbName(), config.getDbHost(), config.getDbPort());
+        this.dao = new MongoDao(config.getDbName(), config.getDbHost(), config.getDbPort());
     }
 
     /**
@@ -25,7 +25,7 @@ public class TemperatureService {
      *
      * @param dao the data access object
      */
-    public TemperatureService(MeasurementDao dao) {
+    public TemperatureService(MongoDao dao) {
         this.dao = dao;
     }
 

@@ -1,6 +1,6 @@
 package de.oo2.tank.server;
 
-import de.oo2.tank.server.dao.MeasurementDao;
+import de.oo2.tank.server.dao.MongoDao;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,11 +15,11 @@ import static org.mockito.Mockito.when;
  */
 public class TemperatureServiceTest {
     private TemperatureService service = null;
-    private MeasurementDao daoMock = null;
+    private MongoDao daoMock = null;
 
     @Before
     public void setUp() throws Exception {
-        daoMock = mock(MeasurementDao.class);
+        daoMock = mock(MongoDao.class);
         service = new TemperatureService(daoMock);
     }
 
