@@ -1,6 +1,8 @@
 package de.oo2.tank.server;
 
 import com.google.gson.Gson;
+import de.oo2.tank.server.model.Measurement;
+import de.oo2.tank.server.model.ResponseError;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.ContentResponseHandler;
@@ -11,8 +13,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static de.oo2.tank.server.MeasurementFixture.getMeasurement1;
-import static de.oo2.tank.server.MeasurementFixture.getMeasurement2;
+import static de.oo2.tank.server.model.MeasurementFixture.getMeasurement1;
+import static de.oo2.tank.server.model.MeasurementFixture.getMeasurement2;
 import static spark.Spark.stop;
 
 /**
@@ -98,9 +100,6 @@ public class ServerIntTest {
         Assert.assertEquals("No temperature measurement with id '54651022bffebc03098b4567' found!", errorMessage.getMessage());
     }
 
-    // TODO
-    // Test with invalid JSON (POST 400)
-    // Test PUT (200 and 400)
-    // Test query for measurements (200 and 400)
+    // TODO: Test with invalid JSON (POST 400), test PUT (200 and 400), test query for measurements (200 and 400)
 
 }

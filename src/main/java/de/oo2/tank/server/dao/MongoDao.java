@@ -3,7 +3,7 @@ package de.oo2.tank.server.dao;
 import com.google.common.collect.Lists;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
-import de.oo2.tank.server.Measurement;
+import de.oo2.tank.server.model.Measurement;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -19,6 +19,8 @@ import static org.jongo.Oid.withOid;
  * Data Access Object for the measurements in a mongo db.
  * See: https://www.mongodb.com/
  * Implemented with http://jongo.org
+ *
+ * TODO: lazy create and release of the db connection
  */
 public class MongoDao {
     private static final Logger logger = LoggerFactory.getLogger(MongoDao.class.getName());

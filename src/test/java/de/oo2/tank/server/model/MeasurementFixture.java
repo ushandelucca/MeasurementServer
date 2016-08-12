@@ -1,4 +1,4 @@
-package de.oo2.tank.server;
+package de.oo2.tank.server.model;
 
 import java.time.LocalDate;
 import java.time.ZoneId;

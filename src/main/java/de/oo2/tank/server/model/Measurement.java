@@ -1,4 +1,4 @@
-package de.oo2.tank.server;
+package de.oo2.tank.server.model;
 
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
@@ -6,6 +6,7 @@ import java.util.Date;
 
 /**
  * Value object for the measurements.
+ * TODO: validation of the properties
  */
 public class Measurement {
 

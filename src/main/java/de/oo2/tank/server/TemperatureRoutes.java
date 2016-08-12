@@ -1,11 +1,13 @@
 package de.oo2.tank.server;
 
 import com.google.gson.Gson;
+import de.oo2.tank.server.model.Measurement;
+import de.oo2.tank.server.model.ResponseError;
 import io.swagger.annotations.*;
 
 import javax.ws.rs.*;
 
-import static de.oo2.tank.server.JsonUtil.json;
+import static de.oo2.tank.server.util.JsonUtil.json;
 import static spark.Spark.*;
 
 /**

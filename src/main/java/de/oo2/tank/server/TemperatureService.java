@@ -2,6 +2,7 @@ package de.oo2.tank.server;
 
 import de.oo2.tank.server.dao.MongoDao;
 import de.oo2.tank.server.dao.PersistenceException;
+import de.oo2.tank.server.model.Measurement;
 
 /**
  * This class provides the functionality for the management of the temperature measurements.

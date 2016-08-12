@@ -1,5 +1,6 @@
 package de.oo2.tank.server;
 
+import de.oo2.tank.server.model.ResponseError;
 import io.swagger.annotations.Contact;
 import io.swagger.annotations.Info;
 import io.swagger.annotations.SwaggerDefinition;
@@ -7,7 +8,7 @@ import io.swagger.annotations.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static de.oo2.tank.server.JsonUtil.toJson;
+import static de.oo2.tank.server.util.JsonUtil.toJson;
 import static spark.Spark.*;
 
 @SwaggerDefinition(// host = "localhost:8080", //
