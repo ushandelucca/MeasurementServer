@@ -25,31 +25,42 @@ public class DocumentationRoutes {
     private static final Logger logger = LoggerFactory.getLogger(DocumentationRoutes.class.getName());
     private String swaggerJson = "";
 
+    /**
+     * Constructor.
+     */
     public DocumentationRoutes() {
 
         try {
             // Build swagger json description
             swaggerJson = getSwaggerJson(TemperatureRoutes.class.getPackage().getName());
-            get("/swagger", (req, res) -> {
-                return swaggerJson;
-            });
+            get("/swagger", (req, res) -> swaggerJson);
 
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
 
-        get("/apidoc/swagger", (req, res) -> {
-            return swaggerJson;
-        });
+        get("/apidoc/swagger", (req, res) -> swaggerJson);
     }
 
-    public static String getSwaggerJson(String packageName) throws JsonProcessingException {
+    /**
+     * Returns the swagger json string.
+     *
+     * @param packageName the package
+     * @return the swagger json
+     * @throws JsonProcessingException
+     */
+    private static String getSwaggerJson(String packageName) throws JsonProcessingException {
         Swagger swagger = getSwagger(packageName);
-        String json = swaggerToJson(swagger);
-        return json;
+        return swaggerToJson(swagger);
     }
 
-    public static Swagger getSwagger(String packageName) {
+    /**
+     * Returns the swagger object.
+     *
+     * @param packageName the package
+     * @return the swagger object
+     */
+    private static Swagger getSwagger(String packageName) {
         Reflections reflections = new Reflections(packageName);
         BeanConfig beanConfig = new BeanConfig();
         beanConfig.setResourcePackage(packageName);
@@ -63,7 +74,14 @@ public class DocumentationRoutes {
         return reader.read(apiClasses);
     }
 
-    public static String swaggerToJson(Swagger swagger) throws JsonProcessingException {
+    /**
+     * Returns the swagger json string.
+     *
+     * @param swagger the swagger object
+     * @return the swagger json
+     * @throws JsonProcessingException
+     */
+    private static String swaggerToJson(Swagger swagger) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         String json = objectMapper.writeValueAsString(swagger);
