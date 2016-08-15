@@ -69,6 +69,13 @@ public class MongoDao {
      * @return the DB connection
      */
     protected MongoCollection getMeasurements() {
+
+        // TODO: getDatabase -->  getMeasurements
+        // TODO: add mongoClient.close();
+        // https://github.com/bguerout/jongo/issues/162
+        // Well Jongo owns only a DB instance and so is not responsible of closing mongo connections (should be done through MongoClient instance)
+
+
         DB db = getDatabase();
 
         Jongo jongo = new Jongo(db);

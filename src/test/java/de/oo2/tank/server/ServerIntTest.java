@@ -40,7 +40,7 @@ public class ServerIntTest {
         Measurement param = getMeasurement1();
         String jsonString = gson.toJson(param);
 
-        Content content = Request.Post("http://localhost:8080/api/tank/temperatures")
+        Content content = Request.Post("http://localhost:80/api/tank/temperatures")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnContent();
@@ -65,7 +65,7 @@ public class ServerIntTest {
         Measurement param = getMeasurement2();
         String jsonString = gson.toJson(param);
 
-        Content content = Request.Post("http://localhost:8080/api/tank/temperatures")
+        Content content = Request.Post("http://localhost:80/api/tank/temperatures")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnContent();
@@ -75,7 +75,7 @@ public class ServerIntTest {
         Assert.assertNotSame("", savedMeasurement.getId());
 
         // then read it again
-        content = Request.Get("http://localhost:8080/api/tank/temperatures/" + savedMeasurement.getId())
+        content = Request.Get("http://localhost:80/api/tank/temperatures/" + savedMeasurement.getId())
                 .execute()
                 .returnContent();
 
@@ -86,7 +86,7 @@ public class ServerIntTest {
 
     @Test
     public void testGetTemperature_400() throws Exception {
-        HttpResponse httpResponse = Request.Get("http://localhost:8080/api/tank/temperatures/54651022bffebc03098b4567")
+        HttpResponse httpResponse = Request.Get("http://localhost:80/api/tank/temperatures/54651022bffebc03098b4567")
                 .execute()
                 .returnResponse();
 
@@ -101,5 +101,6 @@ public class ServerIntTest {
     }
 
     // TODO: Test with invalid JSON (POST 400), test PUT (200 and 400), test query for measurements (200 and 400)
+    // TODO: http://stackoverflow.com/questions/2606572/junit-splitting-integration-test-and-unit-tests
 
 }
