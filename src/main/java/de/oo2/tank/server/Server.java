@@ -47,9 +47,11 @@ public class Server {
 
         // after each route
         after((req, res) -> {
+
+            //
             if (config.getGoogleAnalyticsKey() != null) {
-                GoogleAnalytics ga = new GoogleAnalytics("UA-12345678-1");
-                ga.postAsync(new PageViewHit(req.url(), req.userAgent()));
+                GoogleAnalytics ga = new GoogleAnalytics(config.getGoogleAnalyticsKey());
+                ga.postAsync(new PageViewHit(req.url(), req.requestMethod()));
             }
 
         });
