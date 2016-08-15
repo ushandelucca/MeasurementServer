@@ -23,7 +23,6 @@ public class MeasurementQueryComposer {
     private SimpleDateFormat dateParser = new SimpleDateFormat("YYYY-MM-dd");
 
     private String urlParameters = "";
-    private String query;
     private String beginDate;
     private String endDate;
     private String sort;

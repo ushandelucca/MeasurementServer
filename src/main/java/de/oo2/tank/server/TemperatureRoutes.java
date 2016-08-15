@@ -39,14 +39,22 @@ public class TemperatureRoutes {
     public void postTemperature(@ApiParam(value = "The measurement to save.", required = true) Measurement measurement) {
 
         post("/api/tank/temperatures", (req, res) -> {
+            res.type("application/json");
 
-            // check authorisation
-            String apiKey = req.headers("key");
+            // TODO: check authorisation in POST request
+            // String apiKey = req.headers("key");
 
-            Measurement m = new Gson().fromJson(req.body(), Measurement.class);
+            Measurement _measurement = null;
 
-            m = temperatureService.saveTemperatue(m);
-            return m;
+            try {
+                _measurement = new Gson().fromJson(req.body(), Measurement.class);
+                _measurement = temperatureService.saveTemperatue(_measurement);
+            } catch (Exception e) {
+                res.status(400);
+                return new ResponseError(e.getMessage());
+            }
+
+            return _measurement;
 
         }, json());
     }
@@ -60,6 +68,8 @@ public class TemperatureRoutes {
     public void getTemperature(@ApiParam(value = "Id of the temperature measurement", required = true) @PathParam("id") String id) {
 
         get("/api/tank/temperatures/:id", (req, res) -> {
+            res.type("application/json");
+
             String tid = req.params(":id");
 
             Measurement measurement = temperatureService.readTemperature(tid);
@@ -82,7 +92,10 @@ public class TemperatureRoutes {
     public void putTemperature(@ApiParam(value = "The temperature measurement to update.", required = true) Measurement measurement) {
 
         put("/api/water/temperatures", (req, res) -> {
-            return null;
+            res.type("application/json");
+
+            res.status(400);
+            return new ResponseError("Not implemented yet!");
 
         }, json());
     }

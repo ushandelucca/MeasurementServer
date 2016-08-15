@@ -1,5 +1,7 @@
 package de.oo2.tank.server;
 
+import com.brsanthu.googleanalytics.GoogleAnalytics;
+import com.brsanthu.googleanalytics.PageViewHit;
 import de.oo2.tank.server.model.ResponseError;
 import io.swagger.annotations.Contact;
 import io.swagger.annotations.Info;
@@ -45,12 +47,9 @@ public class Server {
 
         // after each route
         after((req, res) -> {
-            res.type("application/json");
-
             if (config.getGoogleAnalyticsKey() != null) {
-                // https://github.com/brsanthu/google-analytics-java
-                // GoogleAnalytics ga = new GoogleAnalytics("UA-12345678-1");
-                // ga.postAsync(new PageViewHit("https://www.xxx.com", "api"));
+                GoogleAnalytics ga = new GoogleAnalytics("UA-12345678-1");
+                ga.postAsync(new PageViewHit(req.url(), req.userAgent()));
             }
 
         });
