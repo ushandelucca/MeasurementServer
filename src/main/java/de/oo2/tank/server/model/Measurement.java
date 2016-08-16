@@ -2,6 +2,10 @@ package de.oo2.tank.server.model;
 
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 /**
@@ -44,6 +48,7 @@ public class Measurement {
      * Returns the timestamp of the measurement
      * @return the timestamp
      */
+    @NotNull(message = "Timestamp is mandatory.")
     public Date getTimestamp() {
         return timestamp;
     }
@@ -60,6 +65,8 @@ public class Measurement {
      * Returns the sensor name of the measurement. E. g. Temperature, Waterlevel, stc.
      * @return the name of the sensor
      */
+    @NotNull(message = "Sensor name is mandatory.")
+    @Pattern(regexp = "[a-z-A-Z]*", message = "Sensor name is mandatory.")
     public String getSensor() {
         return sensor;
     }
@@ -76,6 +83,8 @@ public class Measurement {
      * Returns the measured value of this measurement.
      * @return the value of the measurement
      */
+    @Min(value = -1000, message = "Value must be greater than or equal to -1000")
+    @Max(value = 1000, message = "Value must be less than or equal to 1000")
     public Float getValue() {
         return value;
     }

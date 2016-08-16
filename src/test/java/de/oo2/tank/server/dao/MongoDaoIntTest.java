@@ -17,17 +17,18 @@ public class MongoDaoIntTest {
 
     @Before
     public void setUp() throws Exception {
-        dao = new MongoDao("test", "localhost", 27017);
-        dao.getMeasurements().drop();
+        dao = new MongoDao("intTest", "localhost", 27017);
     }
 
     @After
     public void tearDown() throws Exception {
+        dao.getMeasurements().drop();
+        dao.closeMeasurements();
         dao = null;
     }
 
     @Test
-    public void testGetInstance() throws Exception {
+    public void testInstance() throws Exception {
         Assert.assertNotNull(dao);
     }
 
