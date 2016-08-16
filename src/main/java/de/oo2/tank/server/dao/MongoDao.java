@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.Objects;
 
 import static org.jongo.Oid.withOid;
 
@@ -19,12 +20,12 @@ import static org.jongo.Oid.withOid;
  * Data Access Object for the measurements in a mongo db.
  * See: https://www.mongodb.com/
  * Implemented with http://jongo.org
- *
- * TODO: lazy create and release of the db connection
  */
 public class MongoDao {
-    private static final Logger logger = LoggerFactory.getLogger(MongoDao.class.getName());
     // private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+
+    private static final Logger logger = LoggerFactory.getLogger(MongoDao.class.getName());
+    private MongoClient mongoClient = null;
 
     private String dbName;
     private String host;
@@ -46,41 +47,41 @@ public class MongoDao {
     }
 
     /**
-     * Returns the database.
+     * Opens and returns the connection to the measurement db.
      *
-     * @return the db
+     * @return the DB connection
+     * @throws PersistenceException
      */
-    private DB getDatabase() {
-        DB db = null;
+    protected MongoCollection getMeasurements() throws PersistenceException {
+        MongoCollection measurements = null;
 
         try {
-            MongoClient mongoClient = new MongoClient(host, port);
-            db = mongoClient.getDB(dbName);
+            if (mongoClient == null) {
+                mongoClient = new MongoClient(host, port);
+            }
+
+            DB db = Objects.requireNonNull(mongoClient).getDB(dbName);
+            Jongo jongo = new Jongo(db);
+
+            measurements = jongo.getCollection("measurements");
+
         } catch (UnknownHostException e) {
-            logger.error("Error while connecting to the database.", e);
+            handleException("Error while connecting to the database.", e);
         }
 
-        return db;
+        return measurements;
     }
 
     /**
-     * Returns the DB connection.
-     *
-     * @return the DB connection
+     * Close the connection to the measurement db.
+     * https://github.com/bguerout/jongo/issues/162
+     * Well Jongo owns only a DB instance and so is not responsible of closing mongo connections (should be done through MongoClient instance)
      */
-    protected MongoCollection getMeasurements() {
-
-        // TODO: getDatabase -->  getMeasurements
-        // TODO: add mongoClient.close();
-        // https://github.com/bguerout/jongo/issues/162
-        // Well Jongo owns only a DB instance and so is not responsible of closing mongo connections (should be done through MongoClient instance)
-
-
-        DB db = getDatabase();
-
-        Jongo jongo = new Jongo(db);
-
-        return jongo.getCollection("measurements");
+    protected void closeMeasurements() {
+        if (mongoClient != null) {
+            mongoClient.close();
+            mongoClient = null;
+        }
     }
 
     /**
@@ -92,8 +93,13 @@ public class MongoDao {
      * @throws PersistenceException
      */
     public Measurement createMeasurement(Measurement measurement) throws PersistenceException {
-        MongoCollection measurements = getMeasurements();
-        measurements.save(measurement);
+        try {
+            MongoCollection measurements = getMeasurements();
+            measurements.save(measurement);
+        } finally {
+            closeMeasurements();
+        }
+
         return measurement;
     }
 
@@ -109,9 +115,13 @@ public class MongoDao {
         Measurement m = null;
 
         try {
-            m = measurements.findOne(withOid(id)).as(Measurement.class);
-        } catch (Exception e) {
-            handleException("Error while searching for id '" + id + "' the measurements!", e);
+            try {
+                m = measurements.findOne(withOid(id)).as(Measurement.class);
+            } catch (Exception e) {
+                handleException("Error while searching for id '" + id + "' the measurements!", e);
+            }
+        } finally {
+            closeMeasurements();
         }
 
         return m;
@@ -136,11 +146,15 @@ public class MongoDao {
         List<Measurement> myList = null;
 
         try {
-            MongoCursor<Measurement> all = measurements.find(query).sort(sort).limit(limit).as(Measurement.class);
-            myList = Lists.newArrayList(all.iterator());
-        }
-        catch (Exception e) {
-            handleException("Error while selecting the measurements!", e);
+            try {
+                MongoCursor<Measurement> all = measurements.find(query).sort(sort).limit(limit).as(Measurement.class);
+                myList = Lists.newArrayList(all.iterator());
+                all.close();
+            } catch (Exception e) {
+                handleException("Error while selecting the measurements!", e);
+            }
+        } finally {
+            closeMeasurements();
         }
 
         if (myList == null) {
