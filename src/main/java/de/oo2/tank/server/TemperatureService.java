@@ -4,6 +4,12 @@ import de.oo2.tank.server.dao.MongoDao;
 import de.oo2.tank.server.dao.PersistenceException;
 import de.oo2.tank.server.model.Measurement;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import java.util.Set;
+
 /**
  * This class provides the functionality for the management of the temperature measurements.
  */
@@ -38,6 +44,14 @@ public class TemperatureService {
      * @throws PersistenceException
      */
     public Measurement saveTemperatue(Measurement measurement) throws PersistenceException {
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<Measurement>> violations = validator.validate(measurement);
+
+        // TODO: throw a validation exception
+        // if violations > 0 --> messages
+
         Measurement createdMeasurement = dao.createMeasurement(measurement);
         return createdMeasurement;
     }

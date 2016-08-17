@@ -1,5 +1,6 @@
 package de.oo2.tank.server.model;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 import javax.validation.constraints.Max;
@@ -65,8 +66,9 @@ public class Measurement {
      * Returns the sensor name of the measurement. E. g. Temperature, Waterlevel, stc.
      * @return the name of the sensor
      */
-    @NotNull(message = "Sensor name is mandatory.")
-    @Pattern(regexp = "[a-z-A-Z]*", message = "Sensor name is mandatory.")
+    // @NotNull(message = "Sensor name is mandatory.")
+    @NotBlank(message = "Sensor name is mandatory.")
+    @Pattern(regexp = "[a-z-A-Z]*", message = "Sensor name contains invalid characters.")
     public String getSensor() {
         return sensor;
     }
@@ -83,6 +85,7 @@ public class Measurement {
      * Returns the measured value of this measurement.
      * @return the value of the measurement
      */
+    @NotNull(message = "Value is mandatory.")
     @Min(value = -1000, message = "Value must be greater than or equal to -1000")
     @Max(value = 1000, message = "Value must be less than or equal to 1000")
     public Float getValue() {
@@ -101,6 +104,9 @@ public class Measurement {
      * Returns the unit of the measured value.
      * @return the unit
      */
+    // @NotNull(message = "Unit is mandatory.")
+    @NotBlank(message = "Unit is mandatory.")
+    @Pattern(regexp = "[a-z-A-Z]*", message = "Unit contains invalid characters.")
     public String getUnit() {
         return unit;
     }
@@ -117,6 +123,7 @@ public class Measurement {
      * Returns <code>true</code> if the measurement is valid/consistent, otherwise <code>false</code>.
      * @return <code>true</code> or <code>false</code>
      */
+    @NotNull(message = "The 'Valid' marker is mandatory.")
     public Boolean getValid() {
         return valid;
     }
