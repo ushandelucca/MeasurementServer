@@ -13,22 +13,21 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.OutputStream;
 import java.util.Set;
 
 import static spark.Spark.get;
 
 /**
- * This class adds the routes for the temperature service and handles the REST requests an responses.
- * http://localhost:8080/swagger
+ * This class adds the routes for the api documentation. The documentation ist available as:
+ *  - File:    http://localhost:8080/apidoc/swaggerfile.json
+ *  - Browser: http://localhost:8080/apidoc/swagger
+ *
  * https://srlk.github.io/posts/2016/swagger_sparkjava/
  * https://github.com/swagger-api/swagger-core/wiki/Annotations
  */
 public class DocumentationRoutes {
     private static final Logger logger = LoggerFactory.getLogger(DocumentationRoutes.class.getName());
     private String swaggerJson = "";
-    private File tmpExternalFile;
-
 
     /**
      * Constructor.
@@ -39,9 +38,14 @@ public class DocumentationRoutes {
             // Build swagger json description
             swaggerJson = getSwaggerJson(TemperatureRoutes.class.getPackage().getName());
 
-            // write the description as a file
-            new File(System.getProperty("java.io.tmpdir") + File.separator + "apidocs").mkdir();
-            tmpExternalFile = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidocs", "swagger.json");
+            // write the description as a file --> so it is available as external static file
+            // TODO: put the tmp file location in the configuration class
+            boolean success = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidoc").mkdir();
+            if (!success) {
+                logger.error("Error while creating the directory for the 'swaggerfile.json'.");
+            }
+
+            File tmpExternalFile = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidoc", "swaggerfile.json");
             FileWriter writer = new FileWriter(tmpExternalFile);
             writer.write(swaggerJson);
             writer.flush();
@@ -54,12 +58,17 @@ public class DocumentationRoutes {
         // description a route
         get("/apidoc/swagger", (req, res) -> {
             res.type("text/json");
-            res.header("Content-Disposition", "attachment; filename=\"swagger.json\"");
+
+            /*
+            Optional: send a file to the browser
+            res.header("Content-Disposition", "attachment; filename=\"swaggerfile.json\"");
 
             OutputStream outputStream = res.raw().getOutputStream();
             outputStream.write(swaggerJson.getBytes());
             outputStream.flush();
             outputStream.close();
+            */
+
             return swaggerJson;
         });
     }
