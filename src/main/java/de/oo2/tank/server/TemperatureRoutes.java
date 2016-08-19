@@ -48,7 +48,7 @@ public class TemperatureRoutes {
 
             try {
                 _measurement = new Gson().fromJson(req.body(), Measurement.class);
-                _measurement = temperatureService.saveTemperatue(_measurement);
+                _measurement = temperatureService.saveTemperature(_measurement);
             } catch (Exception e) {
                 res.status(400);
                 return new ResponseError(e.getMessage());

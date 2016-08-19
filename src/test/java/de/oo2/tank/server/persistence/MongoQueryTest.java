@@ -1,12 +1,15 @@
-package de.oo2.tank.server.dao;
+package de.oo2.tank.server.persistence;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MeasurementQueryComposerTest {
-    private MeasurementQueryComposer composer;
+/**
+ * Test for the query creation.
+ */
+public class MongoQueryTest {
+    private MongoQuery composer;
 
     @Before
     public void setUp() throws Exception {
@@ -20,7 +23,7 @@ public class MeasurementQueryComposerTest {
 
     @Test
     public void testGetQuery1() throws Exception {
-        composer = new MeasurementQueryComposer("query=return&begin=2013-01-13&end=2014-01-20&sort=-date&max_result=10");
+        composer = new MongoQuery("query=return&begin=2013-01-13&end=2014-01-20&sort=-date&max_result=10");
 
         String query = composer.getQuery();
         System.out.println(query);
@@ -37,7 +40,7 @@ public class MeasurementQueryComposerTest {
 
     @Test
     public void testGetQuery2() throws Exception {
-        composer = new MeasurementQueryComposer("query=return&begin=2013-01-13&end=2014-01-20&sort=+date&max_result=20");
+        composer = new MongoQuery("query=return&begin=2013-01-13&end=2014-01-20&sort=+date&max_result=20");
 
         String query = composer.getQuery();
         System.out.println(query);
@@ -54,7 +57,7 @@ public class MeasurementQueryComposerTest {
 
     @Test
     public void testGetQuery3() throws Exception {
-        composer = new MeasurementQueryComposer("query=return&max_result=30");
+        composer = new MongoQuery("query=return&max_result=30");
 
         String query = composer.getQuery();
         System.out.println(query);

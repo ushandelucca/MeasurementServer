@@ -60,6 +60,27 @@ public class ServerIntTest {
     }
 
     @Test
+    public void testPostTemperature_400() throws Exception {
+        Measurement param = new Measurement();
+        String jsonString = gson.toJson(param);
+
+        HttpResponse httpResponse = Request.Post("http://localhost:80/api/tank/temperatures")
+                .bodyString(jsonString, ContentType.APPLICATION_JSON)
+                .execute()
+                .returnResponse();
+
+
+        int code = httpResponse.getStatusLine().getStatusCode();
+
+        Assert.assertEquals(400, code);
+
+        Content content = new ContentResponseHandler().handleEntity(httpResponse.getEntity());
+        ResponseError errorMessage = gson.fromJson(content.toString(), ResponseError.class);
+
+        Assert.assertTrue(errorMessage.getMessage().contains("Multiple"));
+    }
+
+    @Test
     public void testGetTemperature_200() throws Exception {
         // first save a temperature
         Measurement param = getMeasurement2();
@@ -100,7 +121,6 @@ public class ServerIntTest {
         Assert.assertEquals("No temperature measurement with id '54651022bffebc03098b4567' found!", errorMessage.getMessage());
     }
 
-    // TODO: Test with invalid JSON (POST 400), test PUT (200 and 400), test query for measurements (200 and 400)
     // TODO: http://stackoverflow.com/questions/2606572/junit-splitting-integration-test-and-unit-tests
 
 }

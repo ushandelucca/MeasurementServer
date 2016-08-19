@@ -1,7 +1,8 @@
 package de.oo2.tank.server;
 
-import de.oo2.tank.server.dao.MongoDao;
 import de.oo2.tank.server.model.Measurement;
+import de.oo2.tank.server.model.ModelException;
+import de.oo2.tank.server.persistence.MongoDao;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,7 +38,7 @@ public class TemperatureServiceTest {
         when(daoMock.createMeasurement(measurementToRaw)).thenReturn(measurementFromDb);
 
         // test
-        Measurement measurement = service.saveTemperatue(measurementToRaw);
+        Measurement measurement = service.saveTemperature(measurementToRaw);
 
         Assert.assertNotNull(measurement.getId());
     }
@@ -67,4 +68,20 @@ public class TemperatureServiceTest {
         Assert.assertNotNull(measurements);
         Assert.assertTrue(measurements.length > 0);
     }
+
+    @Test
+    public void testTemperatureValidation() throws Exception {
+        Measurement measurement = new Measurement();
+
+        try {
+            measurement = service.saveTemperature(measurement);
+        } catch (ModelException e) {
+            Assert.assertNotNull(e.getMessage());
+            return;
+        }
+
+        Assert.fail("ModelException expected");
+    }
+
+
 }

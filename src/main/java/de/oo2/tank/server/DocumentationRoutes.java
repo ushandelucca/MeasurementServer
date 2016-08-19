@@ -11,6 +11,9 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.OutputStream;
 import java.util.Set;
 
 import static spark.Spark.get;
@@ -24,6 +27,8 @@ import static spark.Spark.get;
 public class DocumentationRoutes {
     private static final Logger logger = LoggerFactory.getLogger(DocumentationRoutes.class.getName());
     private String swaggerJson = "";
+    private File tmpExternalFile;
+
 
     /**
      * Constructor.
@@ -33,13 +38,28 @@ public class DocumentationRoutes {
         try {
             // Build swagger json description
             swaggerJson = getSwaggerJson(TemperatureRoutes.class.getPackage().getName());
-            get("/swagger", (req, res) -> swaggerJson);
+
+            tmpExternalFile = new File(System.getProperty("java.io.tmpdir"), "swagger.json");
+            FileWriter writer = new FileWriter(tmpExternalFile);
+            writer.write(swaggerJson);
+            writer.flush();
+            writer.close();
+
 
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
 
-        get("/apidoc/swagger", (req, res) -> swaggerJson);
+        get("/apidoc/swagger", (req, res) -> {
+            res.type("text/json");
+            res.header("Content-Disposition", "attachment; filename=\"swagger.json\"");
+
+            OutputStream outputStream = res.raw().getOutputStream();
+            outputStream.write(swaggerJson.getBytes());
+            outputStream.flush();
+            outputStream.close();
+            return swaggerJson;
+        });
     }
 
     /**

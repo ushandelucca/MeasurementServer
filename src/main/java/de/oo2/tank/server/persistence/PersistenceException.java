@@ -1,4 +1,4 @@
-package de.oo2.tank.server.dao;
+package de.oo2.tank.server.persistence;
 
 /**
  * This checked exception is thrown to report errors in the persistence layer.

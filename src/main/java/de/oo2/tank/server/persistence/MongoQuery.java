@@ -1,4 +1,4 @@
-package de.oo2.tank.server.dao;
+package de.oo2.tank.server.persistence;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
  * This class creates the search query for the measurements based on the
  * given search criteria.
  */
-public class MeasurementQueryComposer {
+public class MongoQuery {
     private static final String PARAM_QUERY = "query";
     private static final String PARAM_RETURN = "return";
     private static final String PARAM_BEGIN = "begin";
@@ -33,7 +33,7 @@ public class MeasurementQueryComposer {
     /**
      * Constructor for the search criteria object.
      */
-    public MeasurementQueryComposer() {
+    public MongoQuery() {
     }
 
     /**
@@ -41,7 +41,7 @@ public class MeasurementQueryComposer {
      *
      * @param query the search query
      */
-    public MeasurementQueryComposer(String query) {
+    public MongoQuery(String query) {
         this.urlParameters = query;
     }
 

@@ -1,4 +1,4 @@
-package de.oo2.tank.server.dao;
+package de.oo2.tank.server.persistence;
 
 import com.google.common.collect.Lists;
 import com.mongodb.DB;
@@ -136,7 +136,7 @@ public class MongoDao {
      * @throws PersistenceException
      */
     public Measurement[] readMeasurementsWithQuery(String queryParameters) throws PersistenceException {
-        MeasurementQueryComposer queryComposer = new MeasurementQueryComposer(queryParameters);
+        MongoQuery queryComposer = new MongoQuery(queryParameters);
 
         String query = queryComposer.getQuery();
         String sort = queryComposer.getSort();

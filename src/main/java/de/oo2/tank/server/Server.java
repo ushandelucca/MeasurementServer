@@ -18,7 +18,7 @@ import static spark.Spark.*;
                 version = "V1.0", //
                 title = "Tank API", //
                 contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/TankServer")), //
-        schemes = {SwaggerDefinition.Scheme.HTTPS}, //
+        schemes = {SwaggerDefinition.Scheme.HTTPS /*, SwaggerDefinition.Scheme.HTTP*/}, //
         consumes = {"application/json"}, //
         produces = {"application/json"}, //
         tags = {@Tag(name = "Description")})
@@ -41,6 +41,7 @@ public class Server {
         port(config.getServerPort());
 
         staticFiles.location("/public");
+        staticFiles.externalLocation(System.getProperty("java.io.tmpdir"));
 
         new TemperatureRoutes(new TemperatureService(config));
         new DocumentationRoutes();

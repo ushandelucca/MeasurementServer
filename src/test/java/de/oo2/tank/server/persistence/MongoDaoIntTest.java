@@ -1,4 +1,4 @@
-package de.oo2.tank.server.dao;
+package de.oo2.tank.server.persistence;
 
 import de.oo2.tank.server.model.Measurement;
 import org.junit.After;
@@ -9,7 +9,7 @@ import org.junit.Test;
 import static de.oo2.tank.server.model.MeasurementFixture.*;
 
 /**
- * Integration tests for the dao.
+ * Integration tests for the persistence.
  */
 public class MongoDaoIntTest {
 

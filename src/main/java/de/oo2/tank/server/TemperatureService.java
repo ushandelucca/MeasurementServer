@@ -1,13 +1,15 @@
 package de.oo2.tank.server;
 
-import de.oo2.tank.server.dao.MongoDao;
-import de.oo2.tank.server.dao.PersistenceException;
 import de.oo2.tank.server.model.Measurement;
+import de.oo2.tank.server.model.ModelException;
+import de.oo2.tank.server.persistence.MongoDao;
+import de.oo2.tank.server.persistence.PersistenceException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -40,18 +42,11 @@ public class TemperatureService {
      * Save a temperature measurement to the database.
      *
      * @param measurement the measurement
-     * @return the measuremt saved in the database
+     * @return the measurement saved in the database
      * @throws PersistenceException
      */
-    public Measurement saveTemperatue(Measurement measurement) throws PersistenceException {
-
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<Measurement>> violations = validator.validate(measurement);
-
-        // TODO: throw a validation exception
-        // if violations > 0 --> messages
-
+    public Measurement saveTemperature(Measurement measurement) throws PersistenceException, ModelException {
+        validate(measurement);
         Measurement createdMeasurement = dao.createMeasurement(measurement);
         return createdMeasurement;
     }
@@ -81,6 +76,7 @@ public class TemperatureService {
      *     - max_result  : select the maximum number of measurements. If this parameter ist
      *                     not set, then the maximum number of measurements is set to 101
      * </pre>
+     *
      * @param queryParameters the query parameters
      * @return the queried measurements
      * @throws PersistenceException
@@ -90,6 +86,42 @@ public class TemperatureService {
         Measurement[] measurements = dao.readMeasurementsWithQuery(queryParameters);
 
         return measurements;
+    }
+
+    /**
+     * Returns the result of the measurement validation.
+     *
+     * @param measurement the measurement
+     * @return true when the measurement kis valid
+     * @throws ModelException
+     */
+    private boolean validate(Measurement measurement) throws ModelException {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
+        Set<ConstraintViolation<Measurement>> violations = validator.validate(measurement);
+
+        if (violations.isEmpty()) {
+            return true;
+        } else if (violations.size() == 1) {
+            throw new ModelException("Error during validation of the measurement: " + violations.iterator().next().getMessage());
+        } else if (violations.size() > 1) {
+            StringBuilder message = new StringBuilder("Multiple Errors during validation of the measurement: ");
+
+            Iterator<ConstraintViolation<Measurement>> iter = violations.iterator();
+
+            while (iter.hasNext()) {
+                message.append(iter.next().getMessage());
+
+                if (iter.hasNext()) {
+                    message.append(", ");
+                }
+            }
+
+            throw new ModelException(message.toString());
+        }
+
+        return true;
     }
 
 }
