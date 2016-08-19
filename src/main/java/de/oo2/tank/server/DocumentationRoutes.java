@@ -39,17 +39,19 @@ public class DocumentationRoutes {
             // Build swagger json description
             swaggerJson = getSwaggerJson(TemperatureRoutes.class.getPackage().getName());
 
-            tmpExternalFile = new File(System.getProperty("java.io.tmpdir"), "swagger.json");
+            // write the description as a file
+            new File(System.getProperty("java.io.tmpdir") + File.separator + "apidocs").mkdir();
+            tmpExternalFile = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidocs", "swagger.json");
             FileWriter writer = new FileWriter(tmpExternalFile);
             writer.write(swaggerJson);
             writer.flush();
             writer.close();
 
-
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
 
+        // description a route
         get("/apidoc/swagger", (req, res) -> {
             res.type("text/json");
             res.header("Content-Disposition", "attachment; filename=\"swagger.json\"");
