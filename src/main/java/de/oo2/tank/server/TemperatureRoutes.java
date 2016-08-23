@@ -1,8 +1,11 @@
 package de.oo2.tank.server;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import de.oo2.tank.server.model.Measurement;
+import de.oo2.tank.server.model.ModelException;
 import de.oo2.tank.server.model.ResponseError;
+import de.oo2.tank.server.persistence.PersistenceException;
 import io.swagger.annotations.*;
 
 import javax.ws.rs.*;
@@ -49,9 +52,17 @@ public class TemperatureRoutes {
             try {
                 _measurement = new Gson().fromJson(req.body(), Measurement.class);
                 _measurement = temperatureService.saveTemperature(_measurement);
-            } catch (Exception e) {
+            } catch (JsonParseException e) {
+                // TODO: Logging
+
+                res.status(400);
+                return new ResponseError("Error while parsing the measurement!");
+            } catch (PersistenceException | ModelException e) {
                 res.status(400);
                 return new ResponseError(e.getMessage());
+            } catch (Exception e) {
+                res.status(400);
+                return new ResponseError("Error while processing the request!");
             }
 
             return _measurement;
