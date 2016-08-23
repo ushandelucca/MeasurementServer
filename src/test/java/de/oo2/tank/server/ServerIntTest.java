@@ -78,6 +78,24 @@ public class ServerIntTest {
         ResponseError errorMessage = gson.fromJson(content.toString(), ResponseError.class);
 
         Assert.assertTrue(errorMessage.getMessage().contains("Multiple"));
+
+        jsonString = "{\"timestamp\":\"\",\"sensor\":\"\",\"value\":0,\"unit\":\"\",\"valid\":false,\"id\":\"\"}";
+
+        httpResponse = Request.Post("http://localhost:80/api/tank/temperatures")
+                .bodyString(jsonString, ContentType.APPLICATION_JSON)
+                .execute()
+                .returnResponse();
+
+
+        code = httpResponse.getStatusLine().getStatusCode();
+
+        Assert.assertEquals(400, code);
+
+        content = new ContentResponseHandler().handleEntity(httpResponse.getEntity());
+        errorMessage = gson.fromJson(content.toString(), ResponseError.class);
+
+        Assert.assertTrue(errorMessage.getMessage().contains("parsing the measurement"));
+
     }
 
     @Test
