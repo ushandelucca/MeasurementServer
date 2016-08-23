@@ -12,7 +12,7 @@ public class ServerOo2aIntTest {
 
     @Test
     public void testGet() throws Exception {
-        HttpResponse httpResponse = Request.Get("https://confluence.baloisenet.com/confluence/display/TAM/Architekturweiche+Java+8+Migration")
+        HttpResponse httpResponse = Request.Get("https://google.de")
                 .execute()
                 .returnResponse();
 
