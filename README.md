@@ -1,5 +1,5 @@
 # TankServer
-[![Build Status](https://travis-ci.org/ushandelucca/TankServer.png?branch=master)](https://travis-ci.org/ushandelucca/TankServer) [![Coverage Status](https://coveralls.io/repos/ushandelucca/TankServer/badge.png?branch=development)](https://coveralls.io/r/ushandelucca/TankServer?branch=development)
+[![Build Status](https://travis-ci.org/ushandelucca/TankServer.png?branch=master)](https://travis-ci.org/ushandelucca/TankServer) [![Coverage Status](https://coveralls.io/repos/github/ushandelucca/TankServer/badge.svg?branch=master)](https://coveralls.io/github/ushandelucca/TankServer?branch=master)
 
 Server for the level measurements of a water tank. [Demo](http://www.oo2a.de).
 
