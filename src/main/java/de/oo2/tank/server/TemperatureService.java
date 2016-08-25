@@ -43,7 +43,8 @@ public class TemperatureService {
      *
      * @param measurement the measurement
      * @return the measurement saved in the database
-     * @throws PersistenceException
+     * @throws PersistenceException in case of failure
+     * @throws ModelException in case of failure
      */
     public Measurement saveTemperature(Measurement measurement) throws PersistenceException, ModelException {
         validate(measurement);
@@ -56,7 +57,7 @@ public class TemperatureService {
      *
      * @param id of temperature measurement
      * @return the temperature measurement
-     * @throws PersistenceException
+     * @throws PersistenceException in case of failure
      */
     public Measurement readTemperature(String id) throws PersistenceException {
         Measurement measurement = dao.readMeasurementById(id);
@@ -66,7 +67,6 @@ public class TemperatureService {
 
     /**
      * Select the temperatures in the db using the query.
-     * http://localhost:8180/webapi/water/temperatures?query=return&begin=2014-01-13&end=2014-01-20&sort=-date&max_result=10
      * <pre>
      *     Query parameters
      *     - return      : trigger a query and return the result
@@ -79,7 +79,7 @@ public class TemperatureService {
      *
      * @param queryParameters the query parameters
      * @return the queried measurements
-     * @throws PersistenceException
+     * @throws PersistenceException in case of failure
      */
     public Measurement[] selectTemperatures(String queryParameters) throws PersistenceException {
 
@@ -93,7 +93,7 @@ public class TemperatureService {
      *
      * @param measurement the measurement
      * @return true when the measurement kis valid
-     * @throws ModelException
+     * @throws ModelException in case of failure
      */
     private boolean validate(Measurement measurement) throws ModelException {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

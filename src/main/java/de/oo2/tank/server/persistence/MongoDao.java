@@ -50,7 +50,7 @@ public class MongoDao {
      * Opens and returns the connection to the measurement db.
      *
      * @return the DB connection
-     * @throws PersistenceException
+     * @throws PersistenceException in case of failure
      */
     protected MongoCollection getMeasurements() throws PersistenceException {
         MongoCollection measurements = null;
@@ -90,7 +90,7 @@ public class MongoDao {
      *
      * @param measurement data to store
      * @return the stored measurement
-     * @throws PersistenceException
+     * @throws PersistenceException in case of failure
      */
     public Measurement createMeasurement(Measurement measurement) throws PersistenceException {
         try {
@@ -108,7 +108,7 @@ public class MongoDao {
      *
      * @param id of the measurement
      * @return the measurement if the measurement is not found in the db the return value is <code>null</code>.
-     * @throws PersistenceException
+     * @throws PersistenceException in case of failure
      */
     public Measurement readMeasurementById(String id) throws PersistenceException {
         MongoCollection measurements = getMeasurements();
@@ -133,7 +133,7 @@ public class MongoDao {
      * @param queryParameters the parameters for the query
      * @return An array of the matching <code>Measurement</code> objects. If no <code>Measurement</code> matches
      * the period an empty array will be returned.
-     * @throws PersistenceException
+     * @throws PersistenceException in case of failure
      */
     public Measurement[] readMeasurementsWithQuery(String queryParameters) throws PersistenceException {
         MongoQuery queryComposer = new MongoQuery(queryParameters);
@@ -185,7 +185,7 @@ public class MongoDao {
      *
      * @param message   the exception message
      * @param throwable the original exception
-     * @throws PersistenceException the exception that will be thrown
+     * @throws PersistenceException in case of failure
      */
     private void handleException(String message, Throwable throwable) throws PersistenceException {
         logger.error(message, throwable);

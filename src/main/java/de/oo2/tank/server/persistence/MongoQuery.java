@@ -49,7 +49,7 @@ public class MongoQuery {
      * Returns the query string for the given search criteria.
      *
      * @return the query string
-     * @throws PersistenceException
+     * @throws PersistenceException in case of failure
      */
     public String getQuery() throws PersistenceException {
         checkQuery();
@@ -73,6 +73,7 @@ public class MongoQuery {
      * Returns the sort string for the given search criteria.
      *
      * @return the sort string
+     * @throws PersistenceException in case of failure
      */
     public String getSort() throws PersistenceException {
         checkQuery();
@@ -96,7 +97,7 @@ public class MongoQuery {
      * Returns the limit parameter for the given search criteria.
      *
      * @return the limit string
-     * @throws PersistenceException
+     * @throws PersistenceException in case of failure
      */
     public int getLimit() throws PersistenceException {
         checkQuery();
@@ -113,7 +114,7 @@ public class MongoQuery {
      * Checks the syntax of the query.
      *
      * @return <code>true</code> if the syntax is correct, otherwise <code>false</code>
-     * @throws PersistenceException
+     * @throws PersistenceException in case of failure
      */
     private boolean checkQuery() throws PersistenceException {
 
