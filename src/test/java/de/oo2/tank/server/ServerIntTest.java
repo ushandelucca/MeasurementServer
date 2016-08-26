@@ -25,6 +25,8 @@ public class ServerIntTest {
 
     @BeforeClass
     public static void beforeClass() {
+
+
         // start the server
         Server.main(null);
     }
@@ -40,7 +42,7 @@ public class ServerIntTest {
         Measurement param = getMeasurement1();
         String jsonString = gson.toJson(param);
 
-        Content content = Request.Post("http://localhost:80/api/tank/measurements")
+        Content content = Request.Post("http://localhost:8080/api/tank/measurements")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnContent();
@@ -64,7 +66,7 @@ public class ServerIntTest {
         Measurement param = new Measurement();
         String jsonString = gson.toJson(param);
 
-        HttpResponse httpResponse = Request.Post("http://localhost:80/api/tank/measurements")
+        HttpResponse httpResponse = Request.Post("http://localhost:8080/api/tank/measurements")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnResponse();
@@ -81,7 +83,7 @@ public class ServerIntTest {
 
         jsonString = "{\"timestamp\":\"\",\"sensor\":\"\",\"value\":0,\"unit\":\"\",\"valid\":false,\"id\":\"\"}";
 
-        httpResponse = Request.Post("http://localhost:80/api/tank/measurements")
+        httpResponse = Request.Post("http://localhost:8080/api/tank/measurements")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnResponse();
@@ -104,7 +106,7 @@ public class ServerIntTest {
         Measurement param = getMeasurement2();
         String jsonString = gson.toJson(param);
 
-        Content content = Request.Post("http://localhost:80/api/tank/measurements")
+        Content content = Request.Post("http://localhost:8080/api/tank/measurements")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnContent();
@@ -114,7 +116,7 @@ public class ServerIntTest {
         Assert.assertNotSame("", savedMeasurement.getId());
 
         // then read it again
-        content = Request.Get("http://localhost:80/api/tank/measurements/" + savedMeasurement.getId())
+        content = Request.Get("http://localhost:8080/api/tank/measurements/" + savedMeasurement.getId())
                 .execute()
                 .returnContent();
 
@@ -125,7 +127,7 @@ public class ServerIntTest {
 
     @Test
     public void testGetTemperature_400() throws Exception {
-        HttpResponse httpResponse = Request.Get("http://localhost:80/api/tank/measurements/54651022bffebc03098b4567")
+        HttpResponse httpResponse = Request.Get("http://localhost:8080/api/tank/measurements/54651022bffebc03098b4567")
                 .execute()
                 .returnResponse();
 
