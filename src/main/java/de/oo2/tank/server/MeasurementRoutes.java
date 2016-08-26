@@ -120,7 +120,7 @@ public class MeasurementRoutes {
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
     public void deleteMeasurement(@ApiParam(value = "Id of the measurement", required = true) @PathParam("id") String id) {
 
-        put("/api/water/measurements", (req, res) -> {
+        delete("/api/water/measurements", (req, res) -> {
             res.type("application/json");
 
             res.status(400);
