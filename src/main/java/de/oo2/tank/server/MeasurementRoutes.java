@@ -30,8 +30,9 @@ public class MeasurementRoutes {
         // the method parameters are irrelevant for the execution. They are solely used to place the
         // annotations for the swagger documentation
         postTemperature(null);
-        getTemperature("");
-        putTemperature(null);
+        getMeasurement("");
+        putMeasurement(null);
+        deleteMeasurement("");
     }
 
     @POST
@@ -76,7 +77,7 @@ public class MeasurementRoutes {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success, the measurement", response = Measurement.class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
-    public void getTemperature(@ApiParam(value = "Id of the measurement", required = true) @PathParam("id") String id) {
+    public void getMeasurement(@ApiParam(value = "Id of the measurement", required = true) @PathParam("id") String id) {
 
         get("/api/tank/measurements/:id", (req, res) -> {
             res.type("application/json");
@@ -100,7 +101,7 @@ public class MeasurementRoutes {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success, the updated measurement", response = Measurement.class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
-    public void putTemperature(@ApiParam(value = "The measurement to update.", required = true) Measurement measurement) {
+    public void putMeasurement(@ApiParam(value = "The measurement to update.", required = true) Measurement measurement) {
 
         put("/api/water/measurements", (req, res) -> {
             res.type("application/json");
@@ -117,7 +118,7 @@ public class MeasurementRoutes {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success, the measurement has been deleted"),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
-    public void deleteTemperature(@ApiParam(value = "Id of the measurement", required = true) @PathParam("id") String id) {
+    public void deleteMeasurement(@ApiParam(value = "Id of the measurement", required = true) @PathParam("id") String id) {
 
         put("/api/water/measurements", (req, res) -> {
             res.type("application/json");
