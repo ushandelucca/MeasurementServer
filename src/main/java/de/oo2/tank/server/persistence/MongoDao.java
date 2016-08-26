@@ -10,7 +10,6 @@ import org.jongo.MongoCursor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Objects;
 
@@ -60,12 +59,14 @@ public class MongoDao {
                 mongoClient = new MongoClient(host, port);
             }
 
+            // TODO: replace deprecated method
             DB db = Objects.requireNonNull(mongoClient).getDB(dbName);
             Jongo jongo = new Jongo(db);
 
             measurements = jongo.getCollection("measurements");
 
-        } catch (UnknownHostException e) {
+            // TODO: remove exception
+        } catch (Exception e) {
             handleException("Error while connecting to the database.", e);
         }
 
