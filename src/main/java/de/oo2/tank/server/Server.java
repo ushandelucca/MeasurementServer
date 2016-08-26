@@ -16,7 +16,7 @@ import static spark.Spark.*;
 @SwaggerDefinition(// host = "localhost:8080", //
         info = @Info(description = "REST API for the tank in OO2a", //
                 version = "V1.0", //
-                title = "Tank API", //
+                title = "Tank measurement API", //
                 contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/TankServer")), //
         schemes = {SwaggerDefinition.Scheme.HTTPS /*, SwaggerDefinition.Scheme.HTTP*/}, //
         consumes = {"application/json"}, //

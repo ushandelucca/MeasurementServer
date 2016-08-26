@@ -169,8 +169,9 @@
                 <version>2.19</version>
                 <configuration>
                     <excludes>
-                        <!-- Exclude all resource dependent tests *RdTest.* -->
-                        <exclude>%regex[.*IntTest.*]</exclude>
+                        <!-- Exclude all integration tests tests *IntTest.*
+                             They need a database -->
+                        <!-- <exclude>%regex[.*IntTest.*]</exclude> -->
                     </excludes>
                 </configuration>
             </plugin>

@@ -7,12 +7,11 @@ import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.ContentResponseHandler;
 import org.apache.http.client.fluent.Request;
 import org.junit.Assert;
-import org.junit.Test;
 
 public class ServerOo2aIntTest {
     private Gson gson = new Gson();
 
-    @Test
+    // @Test
     public void testGet() throws Exception {
         HttpResponse httpResponse = Request.Get("https://www.oo2a.de/api/tank/temperatures/54651022bffebc03098b4567")
                 .execute()
