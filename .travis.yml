@@ -10,9 +10,9 @@ services:
 
 after_success:
   - mvn clean test jacoco:report coveralls:report
+  - cd "$TRAVIS_BUILD_DIR";
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-      cd "$TRAVIS_BUILD_DIR";
-      docker build . -t oo2a/tankserver;
       docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+      docker build . -t oo2a/tankserver;
       docker push oo2a/tankserver;
       fi
