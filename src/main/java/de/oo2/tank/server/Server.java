@@ -43,7 +43,7 @@ public class Server {
         staticFiles.location("/public");
         staticFiles.externalLocation(System.getProperty("java.io.tmpdir"));
 
-        new TemperatureRoutes(new TemperatureService(config));
+        new MeasurementRoutes(new MeasurementService(config));
         new DocumentationRoutes();
 
         // after each route

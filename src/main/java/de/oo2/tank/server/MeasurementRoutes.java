@@ -14,18 +14,18 @@ import static de.oo2.tank.server.util.JsonUtil.json;
 import static spark.Spark.*;
 
 /**
- * This class adds the routes for the temperature service and handles the REST requests an responses.
+ * This class adds the routes for the measurement service and handles the REST requests an responses.
  */
-@Path("/api/tank/temperatures")
-@Api(value = "/api/tank/temperatures",
-        description = "Operations for the tank temperatures.")
+@Path("/api/tank/measurements")
+@Api(value = "/api/tank/measurements",
+        description = "Operations for the tank measurements.")
 @Produces({"application/json"})
-public class TemperatureRoutes {
+public class MeasurementRoutes {
 
-    private final TemperatureService temperatureService;
+    private final MeasurementService measurementService;
 
-    public TemperatureRoutes(final TemperatureService temperatureService) {
-        this.temperatureService = temperatureService;
+    public MeasurementRoutes(final MeasurementService temperatureService) {
+        this.measurementService = temperatureService;
 
         // the method parameters are irrelevant for the execution. They are solely used to place the
         // annotations for the swagger documentation
@@ -35,13 +35,13 @@ public class TemperatureRoutes {
     }
 
     @POST
-    @ApiOperation(value = "Save a temperature measurement.", consumes = "application/json", authorizations = {@Authorization(value = "tankauth")})
+    @ApiOperation(value = "Save a measurement.", consumes = "application/json", authorizations = {@Authorization(value = "tankauth")})
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success, the saved temperature measurement", response = Measurement.class),
+            @ApiResponse(code = 200, message = "Success, the saved measurement", response = Measurement.class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
     public void postTemperature(@ApiParam(value = "The measurement to save.", required = true) Measurement measurement) {
 
-        post("/api/tank/temperatures", (req, res) -> {
+        post("/api/tank/measurements", (req, res) -> {
             res.type("application/json");
 
             // TODO: check authorisation in POST request
@@ -51,7 +51,7 @@ public class TemperatureRoutes {
 
             try {
                 _measurement = new Gson().fromJson(req.body(), Measurement.class);
-                _measurement = temperatureService.saveTemperature(_measurement);
+                _measurement = measurementService.saveMeasurement(_measurement);
             } catch (JsonParseException e) {
                 // TODO: Logging
 
@@ -72,37 +72,37 @@ public class TemperatureRoutes {
 
     @GET
     @Path("/{id}")
-    @ApiOperation(value = "Find a temperature measurement by id.")
+    @ApiOperation(value = "Find a measurement by id.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success, the temperature measurement", response = Measurement.class),
+            @ApiResponse(code = 200, message = "Success, the measurement", response = Measurement.class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
-    public void getTemperature(@ApiParam(value = "Id of the temperature measurement", required = true) @PathParam("id") String id) {
+    public void getTemperature(@ApiParam(value = "Id of the measurement", required = true) @PathParam("id") String id) {
 
-        get("/api/tank/temperatures/:id", (req, res) -> {
+        get("/api/tank/measurements/:id", (req, res) -> {
             res.type("application/json");
 
             String tid = req.params(":id");
 
-            Measurement measurement = temperatureService.readTemperature(tid);
+            Measurement measurement = measurementService.readMeasurement(tid);
 
             if (measurement != null) {
                 return measurement;
             }
 
             res.status(400);
-            return new ResponseError("No temperature measurement with id '%s' found!", tid);
+            return new ResponseError("No measurement with id '%s' found!", tid);
 
         }, json());
     }
 
     @PUT
-    @ApiOperation(value = "Update a temperature measurement.", consumes = "application/json")
+    @ApiOperation(value = "Update a measurement.", consumes = "application/json")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success, the updated temperature measurement", response = Measurement.class),
+            @ApiResponse(code = 200, message = "Success, the updated measurement", response = Measurement.class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
-    public void putTemperature(@ApiParam(value = "The temperature measurement to update.", required = true) Measurement measurement) {
+    public void putTemperature(@ApiParam(value = "The measurement to update.", required = true) Measurement measurement) {
 
-        put("/api/water/temperatures", (req, res) -> {
+        put("/api/water/measurements", (req, res) -> {
             res.type("application/json");
 
             res.status(400);

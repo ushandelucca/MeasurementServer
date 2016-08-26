@@ -13,9 +13,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * This class provides the functionality for the management of the temperature measurements.
+ * This class provides the functionality for the management of the measurements.
  */
-public class TemperatureService {
+public class MeasurementService {
 
     // the data access
     private MongoDao dao = null;
@@ -25,7 +25,7 @@ public class TemperatureService {
      *
      * @param config the configuration
      */
-    public TemperatureService(Configurator config) {
+    public MeasurementService(Configurator config) {
         this.dao = new MongoDao(config.getDbName(), config.getDbHost(), config.getDbPort());
     }
 
@@ -34,39 +34,39 @@ public class TemperatureService {
      *
      * @param dao the data access object
      */
-    public TemperatureService(MongoDao dao) {
+    public MeasurementService(MongoDao dao) {
         this.dao = dao;
     }
 
     /**
-     * Save a temperature measurement to the database.
+     * Save a measurement to the database.
      *
      * @param measurement the measurement
      * @return the measurement saved in the database
      * @throws PersistenceException in case of failure
      * @throws ModelException in case of failure
      */
-    public Measurement saveTemperature(Measurement measurement) throws PersistenceException, ModelException {
+    public Measurement saveMeasurement(Measurement measurement) throws PersistenceException, ModelException {
         validate(measurement);
         Measurement createdMeasurement = dao.createMeasurement(measurement);
         return createdMeasurement;
     }
 
     /**
-     * Read a temperature measurement from the database.
+     * Read a measurement from the database.
      *
      * @param id of temperature measurement
      * @return the temperature measurement
      * @throws PersistenceException in case of failure
      */
-    public Measurement readTemperature(String id) throws PersistenceException {
+    public Measurement readMeasurement(String id) throws PersistenceException {
         Measurement measurement = dao.readMeasurementById(id);
 
         return measurement;
     }
 
     /**
-     * Select the temperatures in the db using the query.
+     * Select the measurements in the db using the query.
      * <pre>
      *     Query parameters
      *     - return      : trigger a query and return the result
@@ -81,7 +81,7 @@ public class TemperatureService {
      * @return the queried measurements
      * @throws PersistenceException in case of failure
      */
-    public Measurement[] selectTemperatures(String queryParameters) throws PersistenceException {
+    public Measurement[] selectMeasurements(String queryParameters) throws PersistenceException {
 
         Measurement[] measurements = dao.readMeasurementsWithQuery(queryParameters);
 

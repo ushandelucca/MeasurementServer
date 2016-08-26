@@ -13,16 +13,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Tests for <code>TemperatureService</code>
+ * Tests for <code>MeasurementService</code>
  */
-public class TemperatureServiceTest {
-    private TemperatureService service = null;
+public class MeasurementServiceTest {
+    private MeasurementService service = null;
     private MongoDao daoMock = null;
 
     @Before
     public void setUp() throws Exception {
         daoMock = mock(MongoDao.class);
-        service = new TemperatureService(daoMock);
+        service = new MeasurementService(daoMock);
     }
 
     @After
@@ -38,43 +38,43 @@ public class TemperatureServiceTest {
         when(daoMock.createMeasurement(measurementToRaw)).thenReturn(measurementFromDb);
 
         // test
-        Measurement measurement = service.saveTemperature(measurementToRaw);
+        Measurement measurement = service.saveMeasurement(measurementToRaw);
 
         Assert.assertNotNull(measurement.getId());
     }
 
     @Test
-    public void testReadTemperature() throws Exception {
+    public void testReadMeasurement() throws Exception {
         // setup the mock
         Measurement measurementToRaw = getMeasurement2();
         Measurement measurementFromDb = setRandomId(measurementToRaw);
         when(daoMock.readMeasurementById(measurementFromDb.getId())).thenReturn(measurementFromDb);
 
         // test
-        Measurement measurement = service.readTemperature(measurementFromDb.getId());
+        Measurement measurement = service.readMeasurement(measurementFromDb.getId());
 
         Assert.assertEquals(measurementFromDb.getId(), measurement.getId());
     }
 
     @Test
-    public void testGetTemperatures() throws Exception {
+    public void testGetMeasurements() throws Exception {
         // setup the mock
         Measurement[] measurementsFromDb = new Measurement[]{setRandomId(getMeasurement3()), setRandomId(getMeasurement2())};
         when(daoMock.readMeasurementsWithQuery("query=return&&max_result=30")).thenReturn(measurementsFromDb);
 
         // test
-        Measurement[] measurements = service.selectTemperatures("query=return&&max_result=30");
+        Measurement[] measurements = service.selectMeasurements("query=return&&max_result=30");
 
         Assert.assertNotNull(measurements);
         Assert.assertTrue(measurements.length > 0);
     }
 
     @Test
-    public void testTemperatureValidation() throws Exception {
+    public void testMeasurementValidation() throws Exception {
         Measurement measurement = new Measurement();
 
         try {
-            measurement = service.saveTemperature(measurement);
+            measurement = service.saveMeasurement(measurement);
         } catch (ModelException e) {
             Assert.assertNotNull(e.getMessage());
             return;

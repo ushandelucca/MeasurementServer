@@ -36,7 +36,7 @@ public class DocumentationRoutes {
 
         try {
             // Build swagger json description
-            swaggerJson = getSwaggerJson(TemperatureRoutes.class.getPackage().getName());
+            swaggerJson = getSwaggerJson(MeasurementRoutes.class.getPackage().getName());
 
             // write the description as a file --> so it is available as external static file
             // TODO: put the tmp file location in the configuration class
