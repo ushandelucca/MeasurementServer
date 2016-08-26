@@ -1,7 +1,17 @@
+sudo: required
+
 language: java
 jdk:
   - oraclejdk8
+
 services:
   - mongodb
+  - docker
+
 after_success:
   - mvn clean test jacoco:report coveralls:report
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      docker build . -t oo2a/tankserver
+      docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+      docker push oo2a/tankserver;
+      fi
