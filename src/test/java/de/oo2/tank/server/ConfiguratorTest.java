@@ -23,7 +23,7 @@ public class ConfiguratorTest {
 
     @Test
     public void testServerPort() {
-        Assert.assertEquals(new Integer(80), config.getServerPort());
+        Assert.assertEquals(new Integer(8080), config.getServerPort());
     }
 
     @Test

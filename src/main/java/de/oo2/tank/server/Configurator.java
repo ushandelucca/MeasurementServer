@@ -39,13 +39,13 @@ public final class Configurator {
     private boolean isLogglyConfigured = false;
 
     /**
-     * Returns the server port. Default: "80".
+     * Returns the server port. Default: "8080".
      *
      * @return the port
      */
     public Integer getServerPort() {
         if (serverPort == null) {
-            String portAsString = env.getOrDefault(ENV_SERVER_PORT, "80");
+            String portAsString = env.getOrDefault(ENV_SERVER_PORT, "8080");
             serverPort = Integer.parseInt(portAsString);
         }
 

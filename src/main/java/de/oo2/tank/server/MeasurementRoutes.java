@@ -111,5 +111,21 @@ public class MeasurementRoutes {
         }, json());
     }
 
+    @DELETE
+    @Path("/{id}")
+    @ApiOperation(value = "Delete a measurement by id.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success, the measurement has been deleted"),
+            @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
+    public void deleteTemperature(@ApiParam(value = "Id of the measurement", required = true) @PathParam("id") String id) {
+
+        put("/api/water/measurements", (req, res) -> {
+            res.type("application/json");
+
+            res.status(400);
+            return new ResponseError("Not implemented yet!");
+
+        }, json());
+    }
 }
 
