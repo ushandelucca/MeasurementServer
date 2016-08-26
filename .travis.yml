@@ -21,9 +21,6 @@ services:
 
 after_success:
   - mvn clean test jacoco:report coveralls:report
-  - echo $PWD
-  - echo "$TRAVIS_BUILD_DIR"
-  - cd "$TRAVIS_BUILD_DIR"
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
       mvn clean package;
       docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
