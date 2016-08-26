@@ -50,7 +50,7 @@ public class Server {
         // after each route
         after((req, res) -> {
 
-            //
+            // enable Google Analytics
             if (config.getGoogleAnalyticsKey() != null) {
                 GoogleAnalytics ga = new GoogleAnalytics(config.getGoogleAnalyticsKey());
                 ga.postAsync(new PageViewHit(req.url(), req.requestMethod()));
