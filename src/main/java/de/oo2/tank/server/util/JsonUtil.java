@@ -1,9 +1,8 @@
 package de.oo2.tank.server.util;
 
 /**
- * Created by Peter on 29.07.2016.
+ * Utilities for JSON
  */
-
 import com.google.gson.Gson;
 import spark.ResponseTransformer;
 

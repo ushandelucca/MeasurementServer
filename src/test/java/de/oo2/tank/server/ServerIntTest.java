@@ -25,8 +25,6 @@ public class ServerIntTest {
 
     @BeforeClass
     public static void beforeClass() {
-
-
         // start the server
         Server.main(null);
     }

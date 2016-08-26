@@ -3,6 +3,7 @@ package de.oo2.tank.server;
 import com.brsanthu.googleanalytics.GoogleAnalytics;
 import com.brsanthu.googleanalytics.PageViewHit;
 import de.oo2.tank.server.model.ResponseError;
+import de.oo2.tank.server.util.MavenUtil;
 import io.swagger.annotations.Contact;
 import io.swagger.annotations.Info;
 import io.swagger.annotations.SwaggerDefinition;
@@ -13,14 +14,14 @@ import org.slf4j.LoggerFactory;
 import static de.oo2.tank.server.util.JsonUtil.toJson;
 import static spark.Spark.*;
 
-@SwaggerDefinition(// host = "localhost:8080", //
-        info = @Info(description = "REST API for the tank in OO2a", //
-                version = "V1.0", //
-                title = "Tank measurement API", //
-                contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/TankServer")), //
-        schemes = {SwaggerDefinition.Scheme.HTTPS /*, SwaggerDefinition.Scheme.HTTP*/}, //
-        consumes = {"application/json"}, //
-        produces = {"application/json"}, //
+@SwaggerDefinition(host = "www.oo2a.de",
+        info = @Info(description = "REST API for the tank in OO2a",
+                version = "V1.0",
+                title = "Tank measurement API",
+                contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/TankServer")),
+        schemes = {SwaggerDefinition.Scheme.HTTPS /*, SwaggerDefinition.Scheme.HTTP*/},
+        consumes = {"application/json"},
+        produces = {"application/json"},
         tags = {@Tag(name = "Description")})
 /**
  * This is the main application class.
@@ -36,7 +37,7 @@ public class Server {
     public static void main(String[] args) {
         Configurator config = new Configurator();
 
-        logger.info("Starting the server.");
+        logger.info("Starting the server. Version: " + MavenUtil.getVersion());
 
         port(config.getServerPort());
 
@@ -66,23 +67,5 @@ public class Server {
         });
 
     }
-
-    /**
-     * - https://github.com/rajasegar/JADE-Bootstrap
-     *
-     * - http://intercoolerjs.org
-     * - https://github.com/jakerella/jquery-mockjax
-     *
-     * - http://www.mscharhag.com/java/building-rest-api-with-spark
-     * - https://github.com/mscharhag/blog-examples/tree/master/sparkdemo/src
-     *
-     *
-     * - https://github.com/fabiomaffioletti/jsondoc-samples/blob/master/jsondoc-sample-spark/src/main/java/org/jsondoc/sample/spark/controller/CityController.java
-     * - https://srlk.github.io/posts/2016/swagger_sparkjava/
-     *
-     *
-     * - https://github.com/cahtisroo/jschema-example/blob/master/src/main/java/org/jschema/sample/App.java
-     *
-     */
 
 }
