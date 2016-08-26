@@ -8,20 +8,21 @@ services:
   - mongodb
   - docker
 
-addons:
-  sonarqube: true
+#addons:
+#  sonarqube: true
 
-env:
-  global:
-    - secure: ********* # defines SONAR_TOKEN=abcdef0123456789
+#env:
+#  global:
+#    - secure: ********* # defines SONAR_TOKEN=abcdef0123456789
 
-script:
+#script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarQube analysis
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.login=$SONAR_TOKEN
+#  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.login=$SONAR_TOKEN
 
 after_success:
   - mvn clean test jacoco:report coveralls:report
   - echo $PWD
+  - echo "$TRAVIS_BUILD_DIR"
   - cd "$TRAVIS_BUILD_DIR"
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
       docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
