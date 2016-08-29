@@ -170,7 +170,7 @@ public class MongoDao {
      * @param id the id of the measurement to be updated
      */
     public void updateMeasurement(int id) {
-        System.out.println("Update : " + id);
+        logger.debug("Update : " + id);
     }
 
     /**
@@ -178,7 +178,7 @@ public class MongoDao {
      * @param id the id of the measurement to be deleted
      */
     public void deleteMeasurement(int id) {
-        System.out.println("Delete : " + id);
+        logger.debug("Delete : " + id);
     }
 
     /**

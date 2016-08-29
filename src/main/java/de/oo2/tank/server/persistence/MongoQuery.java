@@ -140,7 +140,7 @@ public class MongoQuery {
                     value = stc.nextToken();
                 }
 
-                if ((key != null) && (!key.equals("") && (value != null) && (!value.equals("")))) {
+                if ((key != null) && (!"".equals(key) && (value != null) && (!"".equals(value)))) {
                     criteriaMap.put(key, value);
                 }
             }
