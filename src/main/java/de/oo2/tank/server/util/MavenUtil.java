@@ -25,13 +25,13 @@ public class MavenUtil {
         try {
             prop.load(in);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error("Error while loading the version properties.", e);
 
         } finally {
             try {
                 in.close();
             } catch (Exception e) {
-                logger.error(e.getMessage());
+                logger.error("Error while closing the input stream.", e);
             }
         }
 

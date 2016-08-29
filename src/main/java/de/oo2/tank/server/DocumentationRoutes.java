@@ -37,31 +37,29 @@ public class DocumentationRoutes {
         FileWriter writer = null;
 
         try {
-            try {
-                // Build swagger json description
-                swaggerJson = getSwaggerJson(MeasurementRoutes.class.getPackage().getName());
+            // Build swagger json description
+            swaggerJson = getSwaggerJson(MeasurementRoutes.class.getPackage().getName());
 
-                // write the description as a file --> so it is available as external static file
-                // TODO: put the tmp file location in the configuration class
-                boolean success = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidoc").mkdir();
-                if (!success) {
-                    logger.error("Error while creating the directory for the 'swaggerfile.json'.");
-                }
-
-                File tmpExternalFile = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidoc", "swaggerfile.json");
-                writer = new FileWriter(tmpExternalFile);
-                writer.write(swaggerJson);
-                writer.flush();
-
-            } catch (Exception e) {
-                logger.error(e.getMessage());
-            } finally {
-                if (writer != null) {
-                    writer.close();
-                }
+            // write the description as a file --> so it is available as external static file
+            // TODO: put the tmp file location in the configuration class
+            boolean success = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidoc").mkdir();
+            if (!success) {
+                logger.error("Error while creating the directory for the 'swaggerfile.json'.");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            File tmpExternalFile = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidoc", "swaggerfile.json");
+            writer = new FileWriter(tmpExternalFile);
+            writer.write(swaggerJson);
+            writer.flush();
+
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        } finally {
+            try {
+                writer.close();
+            } catch (IOException e) {
+                logger.error(e.getMessage());
+            }
         }
 
         // description a route

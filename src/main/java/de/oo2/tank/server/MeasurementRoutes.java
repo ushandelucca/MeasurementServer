@@ -7,6 +7,8 @@ import de.oo2.tank.server.model.ModelException;
 import de.oo2.tank.server.model.ResponseError;
 import de.oo2.tank.server.persistence.PersistenceException;
 import io.swagger.annotations.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
 
@@ -21,7 +23,7 @@ import static spark.Spark.*;
         description = "Operations for the tank measurements.")
 @Produces({"application/json"})
 public class MeasurementRoutes {
-
+    private static final Logger logger = LoggerFactory.getLogger(MeasurementRoutes.class.getName());
     private final MeasurementService measurementService;
 
     public MeasurementRoutes(final MeasurementService temperatureService) {
@@ -54,14 +56,18 @@ public class MeasurementRoutes {
                 _measurement = new Gson().fromJson(req.body(), Measurement.class);
                 _measurement = measurementService.saveMeasurement(_measurement);
             } catch (JsonParseException e) {
-                // TODO: Logging
+                logger.error("Error while parsing the measurement!", e);
 
                 res.status(400);
                 return new ResponseError("Error while parsing the measurement!");
             } catch (PersistenceException | ModelException e) {
+                logger.error(e.getMessage(), e);
+
                 res.status(400);
                 return new ResponseError(e.getMessage());
             } catch (Exception e) {
+                logger.error("Error while processing the request!", e);
+
                 res.status(400);
                 return new ResponseError("Error while processing the request!");
             }
