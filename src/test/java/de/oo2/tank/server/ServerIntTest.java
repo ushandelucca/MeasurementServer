@@ -138,7 +138,4 @@ public class ServerIntTest {
 
         Assert.assertEquals("No measurement with id '54651022bffebc03098b4567' found!", errorMessage.getMessage());
     }
-
-    // TODO: http://stackoverflow.com/questions/2606572/junit-splitting-integration-test-and-unit-tests
-
 }
