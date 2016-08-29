@@ -32,12 +32,6 @@ public class MongoQuery {
 
     /**
      * Constructor for the search criteria object.
-     */
-    public MongoQuery() {
-    }
-
-    /**
-     * Constructor for the search criteria object.
      *
      * @param query the search query
      */
@@ -47,6 +41,7 @@ public class MongoQuery {
 
     /**
      * Returns the query string for the given search criteria.
+     * { "timestamp": { $lt: new Date("2015-12-10T08:11:30.058Z") } }
      *
      * @return the query string
      * @throws PersistenceException in case of failure
@@ -55,8 +50,6 @@ public class MongoQuery {
         checkQuery();
 
         StringBuilder query = new StringBuilder();
-
-        // { "timestamp": { $lt: new Date("2015-12-10T08:11:30.058Z") } }
 
         query.append("{ ");
 
@@ -78,19 +71,19 @@ public class MongoQuery {
     public String getSort() throws PersistenceException {
         checkQuery();
 
-        StringBuilder sort = new StringBuilder();
+        StringBuilder sortString = new StringBuilder();
 
-        sort.append("{ ");
+        sortString.append("{ ");
 
-        if (PARAM_DATE_ASC.equals(this.sort)) {
-            sort.append("\"timestamp\": 1 ");
-        } else if (PARAM_DATE_DESC.equals(this.sort)) {
-            sort.append("\"timestamp\": 0 ");
+        if (PARAM_DATE_ASC.equals(sort)) {
+            sortString.append("\"timestamp\": 1 ");
+        } else if (PARAM_DATE_DESC.equals(sort)) {
+            sortString.append("\"timestamp\": 0 ");
         }
 
-        sort.append(" }");
+        sortString.append(" }");
 
-        return sort.toString();
+        return sortString.toString();
     }
 
     /**
