@@ -10,6 +10,7 @@ import org.jongo.MongoCursor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +25,7 @@ public class MongoDao {
     // private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
     private static final Logger logger = LoggerFactory.getLogger(MongoDao.class.getName());
-    // private MongoClient mongoClient = null;
+    private MongoClient mongoClient = null;
 
     private String dbName;
     private String host;
@@ -53,21 +54,17 @@ public class MongoDao {
      */
     protected MongoCollection getMeasurements() throws PersistenceException {
         MongoCollection measurements = null;
-        MongoClient mongoClient = null;
 
         try {
             if (mongoClient == null) {
                 mongoClient = new MongoClient(host, port);
             }
 
-            // TODO: replace deprecated method
             DB db = Objects.requireNonNull(mongoClient).getDB(dbName);
             Jongo jongo = new Jongo(db);
-
             measurements = jongo.getCollection("measurements");
 
-            // TODO: remove exception
-        } catch (Exception e) {
+        } catch (UnknownHostException e) {
             handleException("Error while connecting to the database.", e);
         }
 
@@ -80,7 +77,6 @@ public class MongoDao {
      * Well Jongo owns only a DB instance and so is not responsible of closing mongo connections (should be done through MongoClient instance)
      */
     protected void closeMeasurements() {
-        MongoClient mongoClient = null;
         if (mongoClient != null) {
             mongoClient.close();
             mongoClient = null;
