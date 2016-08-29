@@ -13,15 +13,16 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Set;
 
 import static spark.Spark.get;
 
 /**
  * This class adds the routes for the api documentation. The documentation ist available as:
- *  - File:    http://localhost:8080/apidoc/swaggerfile.json
- *  - Browser: http://localhost:8080/apidoc/swagger
- *
+ * - File:    http://localhost:8080/apidoc/swaggerfile.json
+ * - Browser: http://localhost:8080/apidoc/swagger
+ * <p>
  * https://srlk.github.io/posts/2016/swagger_sparkjava/
  * https://github.com/swagger-api/swagger-core/wiki/Annotations
  */
@@ -33,26 +34,34 @@ public class DocumentationRoutes {
      * Constructor.
      */
     public DocumentationRoutes() {
+        FileWriter writer = null;
 
         try {
-            // Build swagger json description
-            swaggerJson = getSwaggerJson(MeasurementRoutes.class.getPackage().getName());
+            try {
+                // Build swagger json description
+                swaggerJson = getSwaggerJson(MeasurementRoutes.class.getPackage().getName());
 
-            // write the description as a file --> so it is available as external static file
-            // TODO: put the tmp file location in the configuration class
-            boolean success = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidoc").mkdir();
-            if (!success) {
-                logger.error("Error while creating the directory for the 'swaggerfile.json'.");
+                // write the description as a file --> so it is available as external static file
+                // TODO: put the tmp file location in the configuration class
+                boolean success = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidoc").mkdir();
+                if (!success) {
+                    logger.error("Error while creating the directory for the 'swaggerfile.json'.");
+                }
+
+                File tmpExternalFile = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidoc", "swaggerfile.json");
+                writer = new FileWriter(tmpExternalFile);
+                writer.write(swaggerJson);
+                writer.flush();
+
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+            } finally {
+                if (writer != null) {
+                    writer.close();
+                }
             }
-
-            File tmpExternalFile = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidoc", "swaggerfile.json");
-            FileWriter writer = new FileWriter(tmpExternalFile);
-            writer.write(swaggerJson);
-            writer.flush();
-            writer.close();
-
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         // description a route
