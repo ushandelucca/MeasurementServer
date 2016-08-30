@@ -4,10 +4,10 @@
 This small REST server is used to store measurements of a water tank. Moreover, it has also the capabilities to evaluate measurements and represent with nice reports. 
 
 ## Features
-* REST api to store and retrieve the measurements
-* Using arbitrary sensors
-* Website included
-* automatic API with [Swagger](http://swagger.io/)
+* REST API to store and retrieve the measurements
+* Various sensors and measurements can be stored
+* automatic API documentation with [Swagger](http://swagger.io/)
+* Website for measurement reporting is included
 
 ## Installation
 * Clone the source code
