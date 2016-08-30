@@ -1,5 +1,5 @@
 # TankServer
-[![Build Status](https://travis-ci.org/ushandelucca/TankServer.png?branch=master)](https://travis-ci.org/ushandelucca/TankServer) [![Coverage Status](https://coveralls.io/repos/github/ushandelucca/TankServer/badge.svg?branch=master)](https://coveralls.io/github/ushandelucca/TankServer?branch=master) [![SonarQube Status](https://img.shields.io/badge/SonarQube-Failed-red.svg)](https://sonarqube.com/overview?id=de.oo2a.tank%3Aserver)
+[![Build Status](https://travis-ci.org/ushandelucca/TankServer.png?branch=master)](https://travis-ci.org/ushandelucca/TankServer) [![Coveralls Status](https://coveralls.io/repos/github/ushandelucca/TankServer/badge.svg?branch=master)](https://coveralls.io/github/ushandelucca/TankServer?branch=master) [![SonarQube coverage](https://img.shields.io/sonar/https/sonarqube.com/de.oo2a.tank%3Aserver/coverage.svg)](https://sonarqube.com/overview?id=de.oo2a.tank%3Aserver) [![SonarQube tech debt](https://img.shields.io/sonar/https/sonarqube.com/de.oo2a.tank%3Aserver/tech_debt.svg)](https://sonarqube.com/overview?id=de.oo2a.tank%3Aserver)
 
 Server for the level measurements of a water tank. [Demo](http://www.oo2a.de).
 
