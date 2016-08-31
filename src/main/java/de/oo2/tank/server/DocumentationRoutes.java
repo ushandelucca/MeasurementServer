@@ -45,6 +45,7 @@ public class DocumentationRoutes {
             boolean success = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidoc").mkdir();
             if (!success) {
                 logger.error("Error while creating the directory for the 'swaggerfile.json'.");
+                logger.error("Tried to create directory: " + System.getProperty("java.io.tmpdir") + File.separator + "apidoc");
             }
 
             File tmpExternalFile = new File(System.getProperty("java.io.tmpdir") + File.separator + "apidoc", "swaggerfile.json");

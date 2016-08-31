@@ -42,6 +42,7 @@ public class Server {
         port(config.getServerPort());
 
         staticFiles.location("/public");
+        // TODO: create a website for the swagger.json --> notes
         staticFiles.externalLocation(System.getProperty("java.io.tmpdir"));
 
         new MeasurementRoutes(new MeasurementService(config));

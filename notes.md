@@ -1,8 +1,20 @@
 # Notes
  
 ## Web Client
-https://github.com/rajasegar/JADE-Bootstrap
+- Switch to https://github.com/rajasegar/JADE-Bootstrap
+- display the swagger.json on the website (nice formatted) and make it downloadable with [Javascript](http://stackoverflow.com/questions/4184944/javascript-download-data-to-file-from-content-within-the-page)
+    - do not generate a temporary file
+    - keep the route ```/apidoc/swagger```
 
+Example for the static resources:
+```bash
+resources
++ - index.html  --> plaxceholder that redirects to website (jade)  
++ - swagger-ui
+    + - swagger-ui files 
+```
+
+### More interesting things
 http://intercoolerjs.org
 https://github.com/jakerella/jquery-mockjax
 
@@ -16,38 +28,39 @@ https://srlk.github.io/posts/2016/swagger_sparkjava/
 ## git Commands
 Accidentally committed .idea directory files into git
 http://stackoverflow.com/questions/11124053/accidentally-committed-idea-directory-files-into-git
-
-    $ echo '.idea' >> .gitignore  
-    $ git rm -r --cached .idea
-    $ git add .gitignore
-    $ git commit -m "removed .idea directory"
-    $ git push
-
+```bash
+$ echo '.idea' >> .gitignore  
+$ git rm -r --cached .idea
+$ git add .gitignore
+$ git commit -m "removed .idea directory"
+$ git push
+```
 List files in local git repo?
 http://stackoverflow.com/questions/8533202/list-files-in-local-git-repo
-
-    $ git ls-tree --full-tree -r HEAD
-
+```bash
+$ git ls-tree --full-tree -r HEAD
+```
 Configure git to accept a particular self-signed server certificate for a particular https remote
 http://stackoverflow.com/questions/9072376/configure-git-to-accept-a-particular-self-signed-server-certificate-for-a-partic
-
-    $ git config --global http.sslCAInfo /home/javl/git-certs/cert.pem
-    $ git config --global http.sslVerify false #NO NEED TO USE THIS
-    $ // git config --global --unset http.sslVerify
-    $ git config --global --list
-
+```bash
+$ git config --global http.sslCAInfo /home/javl/git-certs/cert.pem
+$ git config --global http.sslVerify false #NO NEED TO USE THIS
+$ // git config --global --unset http.sslVerify
+$ git config --global --list
+```
 Change the current branch to master in git
 http://stackoverflow.com/questions/2763006/change-the-current-branch-to-master-in-git
-
-    $ git checkout better_branch
-    $ git merge --strategy=ours master    # keep the content of this branch, but record a merge
-    $ git checkout master
-    $ git merge better_branch             # fast-forward master up to the merge
-
+```bash
+$ git checkout better_branch
+$ git merge --strategy=ours master    # keep the content of this branch, but record a merge
+$ git checkout master
+$ git merge better_branch             # fast-forward master up to the merge
+```
 ## Release workflow
-1. Announce the release process Very important. As I said, you don’t release on a whim. Make sure everyone on your team knows a release is pending and has all their stuff pushed to the development branch that needs to be included.
+Adapted from an [article](https://dzone.com/articles/why-i-never-use-maven-release) by Lieven Doclo - thank you very much!
+1. Announce the release process and make sure that all the stuff is pushed to the development (dev) branch that needs to be included in the release.
 2. Branch the development branch into a release branch. Following git-flow rules, I make a release branch 1.0.
-3. Update the POM version of the development branch. Update the version to the next release version. For example mvn versions:set -DnewVersion=2.0-SNAPSHOT. Commit and push. Now you can put resources developing towards the next release version.
+3. Update the POM version of the development branch. Update the version to the next release version. For example mvn versions:set -DnewVersion=2.0-SNAPSHOT. Commit and push. Now, the work for the next release continues on the development branch.
 4. Update the POM version of the release branch. Update the version to the standard CR version. For example mvn versions:set -DnewVersion=1.0.CR-SNAPSHOT. Commit and push.
 5. Run tests on the release branch. Run all the tests. If one or more fail, fix them first.
 6. Create a candidate release from the release branch.
