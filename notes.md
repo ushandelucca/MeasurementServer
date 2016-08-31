@@ -3,6 +3,16 @@
 ## Web Client
 - Switch to https://github.com/rajasegar/JADE-Bootstrap
 - display the swagger.json on the website (nice formatted) and make it downloadable with [Javascript](http://stackoverflow.com/questions/4184944/javascript-download-data-to-file-from-content-within-the-page)
+    - do not generate a temporary file
+    - keep the route ```/apidoc/swagger```
+
+Example for the static resources:
+```bash
+resources
++ - index.html  --> plaxceholder that redirects to website (jade)  
++ - swagger-ui
+    + - swagger-ui files 
+```
 
 ### More interesting things
 http://intercoolerjs.org
@@ -18,34 +28,34 @@ https://srlk.github.io/posts/2016/swagger_sparkjava/
 ## git Commands
 Accidentally committed .idea directory files into git
 http://stackoverflow.com/questions/11124053/accidentally-committed-idea-directory-files-into-git
-
-    $ echo '.idea' >> .gitignore  
-    $ git rm -r --cached .idea
-    $ git add .gitignore
-    $ git commit -m "removed .idea directory"
-    $ git push
-
+```bash
+$ echo '.idea' >> .gitignore  
+$ git rm -r --cached .idea
+$ git add .gitignore
+$ git commit -m "removed .idea directory"
+$ git push
+```
 List files in local git repo?
 http://stackoverflow.com/questions/8533202/list-files-in-local-git-repo
-
-    $ git ls-tree --full-tree -r HEAD
-
+```bash
+$ git ls-tree --full-tree -r HEAD
+```
 Configure git to accept a particular self-signed server certificate for a particular https remote
 http://stackoverflow.com/questions/9072376/configure-git-to-accept-a-particular-self-signed-server-certificate-for-a-partic
-
-    $ git config --global http.sslCAInfo /home/javl/git-certs/cert.pem
-    $ git config --global http.sslVerify false #NO NEED TO USE THIS
-    $ // git config --global --unset http.sslVerify
-    $ git config --global --list
-
+```bash
+$ git config --global http.sslCAInfo /home/javl/git-certs/cert.pem
+$ git config --global http.sslVerify false #NO NEED TO USE THIS
+$ // git config --global --unset http.sslVerify
+$ git config --global --list
+```
 Change the current branch to master in git
 http://stackoverflow.com/questions/2763006/change-the-current-branch-to-master-in-git
-
-    $ git checkout better_branch
-    $ git merge --strategy=ours master    # keep the content of this branch, but record a merge
-    $ git checkout master
-    $ git merge better_branch             # fast-forward master up to the merge
-
+```bash
+$ git checkout better_branch
+$ git merge --strategy=ours master    # keep the content of this branch, but record a merge
+$ git checkout master
+$ git merge better_branch             # fast-forward master up to the merge
+```
 ## Release workflow
 Adapted from an [article](https://dzone.com/articles/why-i-never-use-maven-release) by Lieven Doclo - thank you very much!
 1. Announce the release process and make sure that all the stuff is pushed to the development (dev) branch that needs to be included in the release.
