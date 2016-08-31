@@ -18,15 +18,6 @@ public class PersistenceException extends Exception {
     /**
      * Constructor for the <code>PersistenceException</code>.
      *
-     * @param throwable the original exception
-     */
-    public PersistenceException(Throwable throwable) {
-        super(throwable);
-    }
-
-    /**
-     * Constructor for the <code>PersistenceException</code>.
-     *
      * @param message   the message
      * @param throwable the original exception
      */
