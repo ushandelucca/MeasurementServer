@@ -58,6 +58,7 @@ $ git merge better_branch             # fast-forward master up to the merge
 ```
 ## Release workflow
 Adapted from an [article](https://dzone.com/articles/why-i-never-use-maven-release) by Lieven Doclo - thank you very much!
+
 1. Announce the release process and make sure that all the stuff is pushed to the development (dev) branch that needs to be included in the release.
 2. Branch the development branch into a release branch. Following git-flow rules, I make a release branch 1.0.
 3. Update the POM version of the development branch. Update the version to the next release version. For example mvn versions:set -DnewVersion=2.0-SNAPSHOT. Commit and push. Now, the work for the next release continues on the development branch.
