@@ -1,8 +1,10 @@
 # Notes
  
 ## Web Client
-https://github.com/rajasegar/JADE-Bootstrap
+- Switch to https://github.com/rajasegar/JADE-Bootstrap
+- display the swagger.json on the website (nice formatted) and make it downloadable with [Javascript](http://stackoverflow.com/questions/4184944/javascript-download-data-to-file-from-content-within-the-page)
 
+### More interesting things
 http://intercoolerjs.org
 https://github.com/jakerella/jquery-mockjax
 
