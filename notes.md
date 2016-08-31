@@ -45,9 +45,10 @@ http://stackoverflow.com/questions/2763006/change-the-current-branch-to-master-i
     $ git merge better_branch             # fast-forward master up to the merge
 
 ## Release workflow
-1. Announce the release process Very important. As I said, you don’t release on a whim. Make sure everyone on your team knows a release is pending and has all their stuff pushed to the development branch that needs to be included.
+Adapted from an [article](https://dzone.com/articles/why-i-never-use-maven-release) by Lieven Doclo - thank you very much!
+1. Announce the release process and make sure that all the stuff is pushed to the development (dev) branch that needs to be included in the release.
 2. Branch the development branch into a release branch. Following git-flow rules, I make a release branch 1.0.
-3. Update the POM version of the development branch. Update the version to the next release version. For example mvn versions:set -DnewVersion=2.0-SNAPSHOT. Commit and push. Now you can put resources developing towards the next release version.
+3. Update the POM version of the development branch. Update the version to the next release version. For example mvn versions:set -DnewVersion=2.0-SNAPSHOT. Commit and push. Now, the work for the next release continues on the development branch.
 4. Update the POM version of the release branch. Update the version to the standard CR version. For example mvn versions:set -DnewVersion=1.0.CR-SNAPSHOT. Commit and push.
 5. Run tests on the release branch. Run all the tests. If one or more fail, fix them first.
 6. Create a candidate release from the release branch.
