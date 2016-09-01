@@ -26,14 +26,8 @@
 
         <dependency>
             <groupId>com.sparkjava</groupId>
-            <artifactId>spark-template-jade</artifactId>
+            <artifactId>spark-template-freemarker</artifactId>
             <version>2.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>de.neuland-bfi</groupId>
-            <artifactId>jade4j</artifactId>
-            <version>1.2.3</version>
         </dependency>
 
         <dependency>
