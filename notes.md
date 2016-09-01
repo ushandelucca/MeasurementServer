@@ -15,8 +15,9 @@ resources
 ```
 
 ### More interesting things
-http://intercoolerjs.org
-https://github.com/jakerella/jquery-mockjax
+- http://intercoolerjs.org
+- https://github.com/jakerella/jquery-mockjax
+- Badge champion: https://github.com/oshi/oshi/blob/master/README.md
 
 ## [Spark](http://sparkjava.com/)
 http://www.mscharhag.com/java/building-rest-api-with-spark
