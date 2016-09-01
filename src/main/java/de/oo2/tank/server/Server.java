@@ -45,6 +45,7 @@ public class Server {
 
         new MeasurementRoutes(new MeasurementService(config));
         new DocumentationRoutes();
+        new WebsiteRoutes();
 
         // after each route
         after((req, res) -> {
