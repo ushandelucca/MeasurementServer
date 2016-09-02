@@ -19,4 +19,11 @@ public class ResponseErrorTest {
 
         Assert.assertEquals("Hello World!", responseError.getMessage());
     }
+
+    @Test
+    public void testGetStadandardMessage() throws Exception {
+        ResponseError responseError = new ResponseError(null, "World");
+
+        Assert.assertEquals("Error while processing the request!", responseError.getMessage());
+    }
 }
