@@ -31,18 +31,9 @@ public class MavenUtil {
                 return UNKNOWN;
             }
 
-            try {
-                prop.load(in);
-            } catch (Exception e) {
-                logger.error("Error while loading the version properties.", e);
+            prop.load(in);
+            // in.close();
 
-            } finally {
-                try {
-                    in.close();
-                } catch (Exception e) {
-                    logger.error("Error while closing the input stream.", e);
-                }
-            }
         } catch (IOException e) {
             logger.error("Error while opening the input stream.", e);
         }
