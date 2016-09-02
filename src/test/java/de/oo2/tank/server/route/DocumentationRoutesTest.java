@@ -38,12 +38,4 @@ public class DocumentationRoutesTest {
         Assert.assertNotSame("", content.asString());
     }
 
-    // @Test
-    public void testGetSwaggerfile_json() throws Exception {
-        Content content = Request.Get("http://localhost:8080/apidoc/swaggerfile.json")
-                .execute()
-                .returnContent();
-
-        Assert.assertNotSame("", content.asString());
-    }
 }
