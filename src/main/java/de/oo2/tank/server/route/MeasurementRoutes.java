@@ -28,7 +28,6 @@ public class MeasurementRoutes {
     private static final Logger logger = LoggerFactory.getLogger(MeasurementRoutes.class.getName());
     private final MeasurementService measurementService;
 
-
     /**
      * Constructor.
      *

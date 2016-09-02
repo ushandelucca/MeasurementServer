@@ -39,19 +39,21 @@ public class Server {
      * @param args command line arguments
      */
     public static void main(String[] args) {
+        // create the model
         Tank tank = new Tank();
         Configuration configuration = tank.getConfiguration();
 
         logger.info("Starting the server. Version: " + MavenUtil.getVersion());
 
+        // set the server configuration
         port(configuration.getServerPort());
 
+        // define the routes
         staticFiles.location("/public");
 
-        // TODO: Add tank as argument
         new MeasurementRoutes(tank);
-        new DocumentationRoutes();
-        new WebsiteRoutes();
+        new DocumentationRoutes(tank);
+        new WebsiteRoutes(tank);
 
         // TODO: Move the routes in separate class
         // after each route

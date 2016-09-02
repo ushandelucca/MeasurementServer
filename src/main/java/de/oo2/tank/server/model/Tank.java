@@ -21,53 +21,63 @@ public class Tank {
     private MeasurementService measurementService = null;
     private SwaggerService swaggerService = null;
 
-    public Tank() {
-        configuration = new Configuration();
-
-        version = MavenUtil.getVersion();
-        hostname = "unknown";
-
-        measurementService = new MeasurementService(configuration);
-        swaggerService = new SwaggerService();
-    }
-
+    /**
+     * Returns the configuration.
+     *
+     * @return the configuration
+     */
     public Configuration getConfiguration() {
+        if (configuration == null) {
+            configuration = new Configuration();
+        }
         return configuration;
     }
 
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
-    }
-
+    /**
+     * Returns the version.
+     *
+     * @return the version
+     */
     public String getVersion() {
+        if (version == null) {
+            version = MavenUtil.getVersion();
+        }
         return version;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
+    /**
+     * Returns the hostname.
+     *
+     * @return the hostname
+     */
     public String getHostname() {
+        if (hostname == null) {
+            hostname = "unknown";
+        }
         return hostname;
     }
 
-    public void setHostname(String hostname) {
-        this.hostname = hostname;
-    }
-
+    /**
+     * Returns the measurement service.
+     *
+     * @return the measurement service
+     */
     public MeasurementService getMeasurementService() {
+        if (measurementService == null) {
+            measurementService = new MeasurementService(getConfiguration());
+        }
         return measurementService;
     }
 
-    public void setMeasurementService(MeasurementService measurementService) {
-        this.measurementService = measurementService;
-    }
-
+    /**
+     * Returns the Swagger service.
+     *
+     * @return the Swagger service
+     */
     public SwaggerService getSwaggerService() {
+        if (swaggerService == null) {
+            swaggerService = new SwaggerService();
+        }
         return swaggerService;
-    }
-
-    public void setSwaggerService(SwaggerService swaggerService) {
-        this.swaggerService = swaggerService;
     }
 }
