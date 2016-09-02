@@ -1,6 +1,6 @@
 package de.oo2.tank.server.model;
 
-import de.oo2.tank.server.Configurator;
+import de.oo2.tank.server.Configuration;
 import de.oo2.tank.server.service.MeasurementService;
 import de.oo2.tank.server.service.SwaggerService;
 import de.oo2.tank.server.util.MavenUtil;
@@ -11,7 +11,7 @@ import de.oo2.tank.server.util.MavenUtil;
 public class Tank {
 
     // configuration
-    private Configurator configuration = null;
+    private Configuration configuration = null;
 
     // properties
     private String version = null;
@@ -22,7 +22,7 @@ public class Tank {
     private SwaggerService swaggerService = null;
 
     public Tank() {
-        configuration = new Configurator();
+        configuration = new Configuration();
 
         version = MavenUtil.getVersion();
         hostname = "unknown";
@@ -31,11 +31,11 @@ public class Tank {
         swaggerService = new SwaggerService();
     }
 
-    public Configurator getConfiguration() {
+    public Configuration getConfiguration() {
         return configuration;
     }
 
-    public void setConfiguration(Configurator configuration) {
+    public void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
     }
 

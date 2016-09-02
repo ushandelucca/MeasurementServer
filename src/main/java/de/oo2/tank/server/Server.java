@@ -40,13 +40,15 @@ public class Server {
      */
     public static void main(String[] args) {
         Tank tank = new Tank();
+        Configuration configuration = tank.getConfiguration();
 
         logger.info("Starting the server. Version: " + MavenUtil.getVersion());
 
-        port(tank.getConfiguration().getServerPort());
+        port(configuration.getServerPort());
 
         staticFiles.location("/public");
 
+        // TODO: Add tank as argument
         new MeasurementRoutes(tank);
         new DocumentationRoutes();
         new WebsiteRoutes();
@@ -56,8 +58,8 @@ public class Server {
         after((req, res) -> {
 
             // enable Google Analytics
-            if (tank.getConfiguration().getGoogleAnalyticsKey() != null) {
-                GoogleAnalytics ga = new GoogleAnalytics(tank.getConfiguration().getGoogleAnalyticsKey());
+            if (configuration.getGoogleAnalyticsKey() != null) {
+                GoogleAnalytics ga = new GoogleAnalytics(configuration.getGoogleAnalyticsKey());
                 ga.postAsync(new PageViewHit(req.url(), req.requestMethod()));
             }
 
