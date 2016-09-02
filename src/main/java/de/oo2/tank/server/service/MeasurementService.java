@@ -1,5 +1,6 @@
-package de.oo2.tank.server;
+package de.oo2.tank.server.service;
 
+import de.oo2.tank.server.Configurator;
 import de.oo2.tank.server.model.Measurement;
 import de.oo2.tank.server.model.ModelException;
 import de.oo2.tank.server.persistence.MongoDao;

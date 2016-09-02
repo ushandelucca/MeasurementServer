@@ -1,4 +1,4 @@
-package de.oo2.tank.server;
+package de.oo2.tank.server.route;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,7 +19,7 @@ import java.util.Set;
 import static spark.Spark.get;
 
 /**
- * This class adds the routes for the api documentation. The documentation ist available as:
+ * This class adds the route for the api documentation. The documentation ist available as:
  * - File:    http://localhost:8080/apidoc/swaggerfile.json
  * - Browser: http://localhost:8080/apidoc/swagger
  * <p>

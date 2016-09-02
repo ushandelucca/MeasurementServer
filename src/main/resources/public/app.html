@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>Obere Ortstra&szlig;e 2a</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="css/bootstrap-switch.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/theme.css" rel="stylesheet">
+
+    <!--Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]>
+    <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body role="document">
+
+<!-- Fixed navbar -->
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Obere Ortstra&szlig;e 2a</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Messwerte
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#">Aktuell</a>
+                        </li>
+                        <li>
+                            <a href="#history">Historie</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Dokumentation</li>
+                        <li>
+                            <a href="/swagger-ui/index.html">Swagger UI</a>
+                        </li>
+                        <li>
+                            <a href="/apidoc/swaggerfile.json">Swagger JSON</a>
+                        </li>
+                    </ul>
+                </li>
+                </p>
+            </ul>
+            <p class="navbar-text navbar-right"><a class="navbar-link" data-toggle="modal"
+                                                   href="#loginModal">Anmelden</a>
+
+
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</div>
+
+<div class="container" role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <section id="history1">
+        <div class="well">
+            <h1>Wasserstand: 45%</h1>
+            <h1>Temperatur: 15°C</h1>
+            <h1>${message}</h1>
+        </div>
+    </section>
+
+    <div class="page-header">
+        <h3>Me&szlig;werte</h3>
+    </div>
+
+    <section id="history">
+        <div id="dashboard">
+            <div id="chart" style="width: 100%; height:300px;"></div>
+        </div>
+    </section>
+
+    <div class="page-header">
+        <h3>Service</h3>
+    </div>
+
+    <p>
+        <input id="btn_service" type="checkbox" unchecked>
+    </p>
+
+    <div class="alert alert-danger">
+        <strong>Achtung!&nbsp;</strong>Die automatische Steuerung wurde deaktiviert.
+    </div>
+
+    <ul id="btn_di" class="list-group">
+        <li class="list-group-item">Lampe 1
+            <div style="float: right;">
+                <input id="btn_do_1" type="checkbox" checked>
+            </div>
+            <p>&nbsp;</p>
+        </li>
+        <li class="list-group-item">Lampe 2
+            <div style="float: right;">
+                <input id="btn_do_2" type="checkbox" unchecked>
+            </div>
+            <p>&nbsp;</p>
+        </li>
+    </ul>
+
+    <!-- loginModal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">Benutzer anmelden</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- <form method="post" action='' name="login_form"> -->
+                    <p>
+                        <input type="text" class="form-control" name="eid" id="eid" placeholder="Email">
+                    </p>
+                    <p>
+                        <input type="text" class="form-control" name="passwd" id="epw" placeholder="Passwort">
+                    </p>
+                    <p>
+                        <button onclick="userLogin()" class="btn btn-primary">Anmelden</button>
+                        <a href="#">Passwort vergessen?</a>
+                    </p>
+                    <!-- </form> -->
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-primary">Benutzer registrieren</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.min.js"></script>
+
+<script src="js/bootstrap.min.js"></script>
+<!-- <script src="js/docs.min.js"></script> -->
+<script src="js/bootstrap-switch.min.js"></script>
+
+<!--
+<script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+<script src="https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js"></script>
+-->
+
+<script src="js/dygraph-combined.js"></script>
+<script src="js/data.js"></script>
+
+<!-- Application
+================================================== -->
+<script src="js/app.js"></script>
+<script src="js/login.js"></script>
+</body>
+
+</html>

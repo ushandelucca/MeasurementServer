@@ -1,5 +1,6 @@
-package de.oo2.tank.server;
+package de.oo2.tank.server.route;
 
+import de.oo2.tank.server.Server;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Request;
 import org.junit.AfterClass;
