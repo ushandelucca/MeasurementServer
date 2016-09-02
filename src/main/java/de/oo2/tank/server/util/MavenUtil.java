@@ -24,21 +24,19 @@ public class MavenUtil {
     public static String getVersion() {
         Properties prop = new Properties();
         InputStream in = ClassLoader.getSystemResourceAsStream(PATH);
+
+        if (in == null) {
+            return UNKNOWN;
+        }
+
         try {
-            if (in != null) {
-                prop.load(in);
-            } else {
-                logger.error("Error while initialising the input stream.");
-                return UNKNOWN;
-            }
+            prop.load(in);
         } catch (Exception e) {
             logger.error("Error while loading the version properties.", e);
 
         } finally {
             try {
-                if (in != null) {
-                    in.close();
-                }
+                in.close();
             } catch (Exception e) {
                 logger.error("Error while closing the input stream.", e);
             }
