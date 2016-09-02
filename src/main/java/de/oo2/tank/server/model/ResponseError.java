@@ -28,14 +28,6 @@ public class ResponseError {
     }
 
     /**
-     * This constructor creates a response where the message is extracted from the given exception.
-     * @param e the exception
-     */
-    public ResponseError(Exception e) {
-        this(e.getMessage());
-    }
-
-    /**
      * Returns the message.
      * @return the message
      */

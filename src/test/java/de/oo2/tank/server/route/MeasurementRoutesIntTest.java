@@ -1,6 +1,7 @@
-package de.oo2.tank.server;
+package de.oo2.tank.server.route;
 
 import com.google.gson.Gson;
+import de.oo2.tank.server.Server;
 import de.oo2.tank.server.model.Measurement;
 import de.oo2.tank.server.model.ResponseError;
 import org.apache.http.HttpResponse;
@@ -18,15 +19,16 @@ import static de.oo2.tank.server.model.MeasurementFixture.getMeasurement2;
 import static spark.Spark.stop;
 
 /**
- * Integration tests for the <code>Server</code>. Prerequisite: the database must be accessible.
+ * Integration tests class.
  */
-public class ServerIntTest {
+public class MeasurementRoutesIntTest {
     private Gson gson = new Gson();
 
     @BeforeClass
-    public static void beforeClass() {
+    public static void beforeClass() throws Exception {
         // start the server
         Server.main(null);
+        Thread.sleep(1500); // allow the server to start
     }
 
     @AfterClass
@@ -139,3 +141,4 @@ public class ServerIntTest {
         Assert.assertEquals("No measurement with id '54651022bffebc03098b4567' found!", errorMessage.getMessage());
     }
 }
+

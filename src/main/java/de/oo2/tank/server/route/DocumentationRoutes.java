@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import static spark.Spark.get;
 
 /**
- * This class adds the route for the api documentation. The documentation ist available as:
+ * This class adds the route for the api documentation.
  */
 public class DocumentationRoutes {
     private static final Logger logger = LoggerFactory.getLogger(DocumentationRoutes.class.getName());
