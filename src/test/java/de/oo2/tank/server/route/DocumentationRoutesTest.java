@@ -1,5 +1,6 @@
-package de.oo2.tank.server;
+package de.oo2.tank.server.route;
 
+import de.oo2.tank.server.Server;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Request;
 import org.junit.AfterClass;
@@ -15,15 +16,17 @@ import static spark.Spark.stop;
 public class DocumentationRoutesTest {
 
     @BeforeClass
-    public static void beforeClass() {
+    public static void beforeClass() throws Exception {
         // start the server
         Server.main(null);
+        Thread.sleep(1500); // allow the server to start
     }
 
     @AfterClass
-    public static void afterClass() {
+    public static void afterClass() throws Exception {
         // stop the server
         stop();
+        Thread.sleep(1500); // allow the server to start
     }
 
     @Test
@@ -35,12 +38,4 @@ public class DocumentationRoutesTest {
         Assert.assertNotSame("", content.asString());
     }
 
-    // @Test
-    public void testGetSwaggerfile_json() throws Exception {
-        Content content = Request.Get("http://localhost:8080/apidoc/swaggerfile.json")
-                .execute()
-                .returnContent();
-
-        Assert.assertNotSame("", content.asString());
-    }
 }

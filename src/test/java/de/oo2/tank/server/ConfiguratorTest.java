@@ -9,11 +9,11 @@ import org.junit.Test;
  * Test class for the configurator.
  */
 public class ConfiguratorTest {
-    private Configurator config;
+    private Configuration config;
 
     @Before
     public void setUp() {
-        config = new Configurator();
+        config = new Configuration();
     }
 
     @After

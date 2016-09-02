@@ -1,5 +1,6 @@
-package de.oo2.tank.server;
+package de.oo2.tank.server.service;
 
+import de.oo2.tank.server.Configuration;
 import de.oo2.tank.server.model.Measurement;
 import de.oo2.tank.server.model.ModelException;
 import de.oo2.tank.server.persistence.MongoDao;
@@ -25,7 +26,7 @@ public class MeasurementService {
      *
      * @param config the configuration
      */
-    public MeasurementService(Configurator config) {
+    public MeasurementService(Configuration config) {
         this.dao = new MongoDao(config.getDbName(), config.getDbHost(), config.getDbPort());
     }
 

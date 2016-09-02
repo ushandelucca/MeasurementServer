@@ -1,11 +1,13 @@
-package de.oo2.tank.server;
+package de.oo2.tank.server.route;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import de.oo2.tank.server.model.Measurement;
 import de.oo2.tank.server.model.ModelException;
 import de.oo2.tank.server.model.ResponseError;
+import de.oo2.tank.server.model.Tank;
 import de.oo2.tank.server.persistence.PersistenceException;
+import de.oo2.tank.server.service.MeasurementService;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +18,7 @@ import static de.oo2.tank.server.util.JsonUtil.json;
 import static spark.Spark.*;
 
 /**
- * This class adds the routes for the measurement service and handles the REST requests an responses.
+ * This class adds the route for the measurement service and handles the REST requests an responses.
  */
 @Path("/api/tank/measurements")
 @Api(value = "/api/tank/measurements",
@@ -26,8 +28,13 @@ public class MeasurementRoutes {
     private static final Logger logger = LoggerFactory.getLogger(MeasurementRoutes.class.getName());
     private final MeasurementService measurementService;
 
-    public MeasurementRoutes(final MeasurementService temperatureService) {
-        this.measurementService = temperatureService;
+    /**
+     * Constructor.
+     *
+     * @param tank the tank model
+     */
+    public MeasurementRoutes(Tank tank) {
+        this.measurementService = tank.getMeasurementService();
 
         // the method parameters are irrelevant for the execution. They are solely used to place the
         // annotations for the swagger documentation

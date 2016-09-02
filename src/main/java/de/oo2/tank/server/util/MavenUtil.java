@@ -12,6 +12,9 @@ import java.util.Properties;
 public class MavenUtil {
     private static final Logger logger = LoggerFactory.getLogger(MavenUtil.class.getName());
 
+    private static final String UNKNOWN = "unknown";
+    private static final String PATH = "META-INF/maven/de.oo2a.tank/server/pom.properties";
+
     /**
      * Returns the version of the maven build. Currently this solution works only when the
      * server runs in the JAR file with all the dependencies.
@@ -19,23 +22,29 @@ public class MavenUtil {
      * @return the version
      */
     public static String getVersion() {
-        String path = "META-INF/maven/de.oo2a.tank/server/pom.properties";
         Properties prop = new Properties();
-        InputStream in = ClassLoader.getSystemResourceAsStream(path);
+        InputStream in = ClassLoader.getSystemResourceAsStream(PATH);
         try {
-            prop.load(in);
+            if (in != null) {
+                prop.load(in);
+            } else {
+                logger.error("Error while initialising the input stream.");
+                return UNKNOWN;
+            }
         } catch (Exception e) {
             logger.error("Error while loading the version properties.", e);
 
         } finally {
             try {
-                in.close();
+                if (in != null) {
+                    in.close();
+                }
             } catch (Exception e) {
                 logger.error("Error while closing the input stream.", e);
             }
         }
 
-        return (String) prop.getOrDefault("version", "unknown");
+        return (String) prop.getOrDefault("version", UNKNOWN);
     }
 
 }
