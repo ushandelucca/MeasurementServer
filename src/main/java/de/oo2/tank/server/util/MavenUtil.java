@@ -3,6 +3,7 @@ package de.oo2.tank.server.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -23,23 +24,26 @@ public class MavenUtil {
      */
     public static String getVersion() {
         Properties prop = new Properties();
-        InputStream in = ClassLoader.getSystemResourceAsStream(PATH);
+        try (InputStream in = ClassLoader.getSystemResourceAsStream(PATH)) {
 
-        if (in == null) {
-            return UNKNOWN;
-        }
-
-        try {
-            prop.load(in);
-        } catch (Exception e) {
-            logger.error("Error while loading the version properties.", e);
-
-        } finally {
-            try {
-                in.close();
-            } catch (Exception e) {
-                logger.error("Error while closing the input stream.", e);
+            if (in == null) {
+                return UNKNOWN;
             }
+
+            try {
+                prop.load(in);
+            } catch (Exception e) {
+                logger.error("Error while loading the version properties.", e);
+
+            } finally {
+                try {
+                    in.close();
+                } catch (Exception e) {
+                    logger.error("Error while closing the input stream.", e);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return (String) prop.getOrDefault("version", UNKNOWN);
