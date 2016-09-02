@@ -6,9 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test class for the configurator.
+ * Test class.
  */
-public class ConfiguratorTest {
+public class ConfigurationTest {
     private Configuration config;
 
     @Before
