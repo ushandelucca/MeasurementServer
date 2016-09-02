@@ -32,9 +32,10 @@ public class MeasurementRoutesIntTest {
     }
 
     @AfterClass
-    public static void afterClass() {
+    public static void afterClass() throws Exception {
         // stop the server
         stop();
+        Thread.sleep(1500); // allow the server to start
     }
 
     @Test
