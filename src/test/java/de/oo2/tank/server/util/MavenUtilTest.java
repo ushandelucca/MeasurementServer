@@ -9,10 +9,20 @@ import org.junit.Test;
 public class MavenUtilTest {
 
     @Test
+    public void testConstructor() {
+        try {
+            new MavenUtil();
+        } catch (IllegalAccessError e) {
+            return;
+        }
+
+        Assert.fail();
+    }
+
+    @Test
     public void testVersion() {
         String version = MavenUtil.getVersion();
         System.out.println("maven version: " + version);
         Assert.assertEquals("test", version);
     }
-
 }
