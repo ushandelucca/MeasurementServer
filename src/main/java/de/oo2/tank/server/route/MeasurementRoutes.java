@@ -5,6 +5,7 @@ import com.google.gson.JsonParseException;
 import de.oo2.tank.server.model.Measurement;
 import de.oo2.tank.server.model.ModelException;
 import de.oo2.tank.server.model.ResponseError;
+import de.oo2.tank.server.model.Tank;
 import de.oo2.tank.server.persistence.PersistenceException;
 import de.oo2.tank.server.service.MeasurementService;
 import io.swagger.annotations.*;
@@ -27,8 +28,14 @@ public class MeasurementRoutes {
     private static final Logger logger = LoggerFactory.getLogger(MeasurementRoutes.class.getName());
     private final MeasurementService measurementService;
 
-    public MeasurementRoutes(final MeasurementService temperatureService) {
-        this.measurementService = temperatureService;
+
+    /**
+     * Constructor.
+     *
+     * @param tank the tank model
+     */
+    public MeasurementRoutes(Tank tank) {
+        this.measurementService = tank.getMeasurementService();
 
         // the method parameters are irrelevant for the execution. They are solely used to place the
         // annotations for the swagger documentation

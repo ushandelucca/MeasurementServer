@@ -3,10 +3,10 @@ package de.oo2.tank.server;
 import com.brsanthu.googleanalytics.GoogleAnalytics;
 import com.brsanthu.googleanalytics.PageViewHit;
 import de.oo2.tank.server.model.ResponseError;
+import de.oo2.tank.server.model.Tank;
 import de.oo2.tank.server.route.DocumentationRoutes;
 import de.oo2.tank.server.route.MeasurementRoutes;
 import de.oo2.tank.server.route.WebsiteRoutes;
-import de.oo2.tank.server.service.MeasurementService;
 import de.oo2.tank.server.util.MavenUtil;
 import io.swagger.annotations.Contact;
 import io.swagger.annotations.Info;
@@ -18,6 +18,9 @@ import org.slf4j.LoggerFactory;
 import static de.oo2.tank.server.util.JsonUtil.toJson;
 import static spark.Spark.*;
 
+/**
+ * This is the main application class.
+ */
 @SwaggerDefinition(host = "www.oo2a.de",
         info = @Info(description = "REST API for the tank in OO2a",
                 version = "V1.0",
@@ -27,9 +30,6 @@ import static spark.Spark.*;
         consumes = {"application/json"},
         produces = {"application/json"},
         tags = {@Tag(name = "Description")})
-/**
- * This is the main application class.
- */
 public class Server {
     private static final Logger logger = LoggerFactory.getLogger(Server.class.getName());
 
@@ -39,24 +39,25 @@ public class Server {
      * @param args command line arguments
      */
     public static void main(String[] args) {
-        Configurator config = new Configurator();
+        Tank tank = new Tank();
 
         logger.info("Starting the server. Version: " + MavenUtil.getVersion());
 
-        port(config.getServerPort());
+        port(tank.getConfiguration().getServerPort());
 
         staticFiles.location("/public");
 
-        new MeasurementRoutes(new MeasurementService(config));
+        new MeasurementRoutes(tank);
         new DocumentationRoutes();
         new WebsiteRoutes();
 
+        // TODO: Move the routes in separate class
         // after each route
         after((req, res) -> {
 
             // enable Google Analytics
-            if (config.getGoogleAnalyticsKey() != null) {
-                GoogleAnalytics ga = new GoogleAnalytics(config.getGoogleAnalyticsKey());
+            if (tank.getConfiguration().getGoogleAnalyticsKey() != null) {
+                GoogleAnalytics ga = new GoogleAnalytics(tank.getConfiguration().getGoogleAnalyticsKey());
                 ga.postAsync(new PageViewHit(req.url(), req.requestMethod()));
             }
 
