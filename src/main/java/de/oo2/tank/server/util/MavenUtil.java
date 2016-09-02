@@ -24,6 +24,7 @@ public class MavenUtil {
      */
     public static String getVersion() {
         Properties prop = new Properties();
+
         try (InputStream in = ClassLoader.getSystemResourceAsStream(PATH)) {
 
             if (in == null) {
@@ -43,7 +44,7 @@ public class MavenUtil {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Error while opening the input stream.", e);
         }
 
         return (String) prop.getOrDefault("version", UNKNOWN);
