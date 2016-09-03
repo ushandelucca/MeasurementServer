@@ -19,7 +19,7 @@ public class MavenUtil {
     /**
      * Constructor.
      */
-    MavenUtil() {
+    private MavenUtil() {
         throw new IllegalAccessError("Utility class");
     }
 
