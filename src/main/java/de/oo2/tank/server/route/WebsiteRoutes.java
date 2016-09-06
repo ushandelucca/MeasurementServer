@@ -60,6 +60,7 @@ public class WebsiteRoutes {
 
         attributes.put("version", tankModel.getVersion());
         attributes.put("hostname", tankModel.getHostname());
+        attributes.put("copyrightYear", "2016");
 
         return attributes;
     }
