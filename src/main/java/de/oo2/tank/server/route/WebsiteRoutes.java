@@ -59,6 +59,7 @@ public class WebsiteRoutes {
     private Map<String, Object> initialiseModel() {
         Map<String, Object> attributes = new HashMap<>();
 
+        attributes.put("dataSource", "server");
         attributes.put("version", tankModel.getVersion());
         attributes.put("hostname", tankModel.getHostname());
         attributes.put("copyrightYear", Integer.toString(LocalDate.now().getYear()));
