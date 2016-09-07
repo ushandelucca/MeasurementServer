@@ -5,6 +5,7 @@ import freemarker.template.Configuration;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,7 +61,7 @@ public class WebsiteRoutes {
 
         attributes.put("version", tankModel.getVersion());
         attributes.put("hostname", tankModel.getHostname());
-        attributes.put("copyrightYear", "2016");
+        attributes.put("copyrightYear", Integer.toString(LocalDate.now().getYear()));
 
         return attributes;
     }
