@@ -96,7 +96,13 @@
 
 <footer class="footer">
     <div class="container">
-        <p class="text-muted">TankServer: ${version} @ ${hostname} Copyright © 2015 - ${copyrightYear}</p>
+        <div class="pull-left">
+            <div class="text-muted">${version} @ ${hostname}</div>
+        </div>
+        <div class="pull-right">
+            <div class="text-muted">Copyright © 2015 - ${copyrightYear}</div>
+        </div>
+        <div class="clearfix"></div>
     </div>
 </footer>
 
@@ -132,8 +138,5 @@
     );
 
 });
-
-
-
 </script>
 </html>
