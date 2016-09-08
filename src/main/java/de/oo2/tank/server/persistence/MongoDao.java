@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import static org.jongo.Oid.withOid;
@@ -134,7 +135,7 @@ public class MongoDao {
      * the period an empty array will be returned.
      * @throws PersistenceException in case of failure
      */
-    public Measurement[] readMeasurementsWithQuery(String queryParameters) throws PersistenceException {
+    public Measurement[] readMeasurementsWithQuery(Map<String, String[]> queryParameters) throws PersistenceException {
         MongoQuery queryComposer = new MongoQuery(queryParameters);
 
         String query = queryComposer.getQuery();

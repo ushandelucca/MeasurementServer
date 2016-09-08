@@ -6,6 +6,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static de.oo2.tank.server.model.MeasurementFixture.*;
 
 /**
@@ -72,16 +75,21 @@ public class MongoDaoIntTest {
         dao.createMeasurement(getMeasurement2());
         dao.createMeasurement(getMeasurement3());
 
-        Measurement[] measurements = dao.readMeasurementsWithQuery("query=return&max_result=3");
+        Map<String, String[]> params = new HashMap<>();
+        params.put("query", new String[]{"return"});
+        params.put("max_result", new String[]{"3"});
+
+        Measurement[] measurements = dao.readMeasurementsWithQuery(params);
 
         Assert.assertEquals(3, measurements.length);
     }
 
     @Test
     public void testReadMeasurementsWithQueryFail() throws Exception {
+        Map<String, String[]> params = new HashMap<>();
 
         try {
-            dao.readMeasurementsWithQuery("toFail");
+            dao.readMeasurementsWithQuery(params);
         } catch (PersistenceException e) {
             return;
         }

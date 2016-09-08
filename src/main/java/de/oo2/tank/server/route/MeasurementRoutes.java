@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
+import java.util.Map;
 
 import static de.oo2.tank.server.util.JsonUtil.json;
 import static spark.Spark.*;
@@ -39,7 +40,8 @@ public class MeasurementRoutes {
         // the method parameters are irrelevant for the execution. They are solely used to place the
         // annotations for the swagger documentation
         postTemperature(null);
-        getMeasurement("");
+        getMeasurementById("");
+        getMeasurementByQuery();
         putMeasurement(null);
         deleteMeasurement("");
     }
@@ -90,7 +92,7 @@ public class MeasurementRoutes {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success, the measurement", response = Measurement.class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
-    public void getMeasurement(@ApiParam(value = "Id of the measurement", required = true) @PathParam("id") String id) {
+    public void getMeasurementById(@ApiParam(value = "Id of the measurement", required = true) @PathParam("id") String id) {
 
         get("/api/tank/measurements/:id", (req, res) -> {
             res.type("application/json");
@@ -105,6 +107,38 @@ public class MeasurementRoutes {
 
             res.status(400);
             return new ResponseError("No measurement with id '%s' found!", tid);
+
+        }, json());
+    }
+
+    @GET
+    @Path("/")
+    @ApiOperation(value = "Find a measurement by query.")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "query", value = "Query command, set it to 'return' to get the result of the query", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "begin", value = "Begin date of the measurement series, format YYYY-MM-DD", required = false, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "end", value = "Begin date of the measurement series, format YYYY-MM-DD", required = false, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "sort", value = "Sorting of the result, use '+date' for date ascending and '-date' for date descending sort", required = false, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "max_result", value = "Max number of results", required = false, dataType = "string", paramType = "query")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success, the measurements", response = Measurement[].class),
+            @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
+    public void getMeasurementByQuery() {
+
+        get("/api/tank/measurements", (req, res) -> {
+            res.type("application/json");
+
+            Map<String, String[]> query = req.queryMap().toMap();
+
+            Measurement[] measurements = measurementService.selectMeasurements(query);
+
+            if (measurements != null) {
+                return measurements;
+            }
+
+            res.status(400);
+            return new ResponseError("No measurement with id '%s' found!", query.toString());
 
         }, json());
     }

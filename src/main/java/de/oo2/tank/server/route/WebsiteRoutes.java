@@ -45,18 +45,18 @@ public class WebsiteRoutes {
      */
     private Map<String, Object> getModel() {
         if (model == null) {
-            model = initialiseModel();
+            model = initializeModel();
         }
         model = updateModel(model);
         return model;
     }
 
     /**
-     * Initialises the model.
+     * Initializes the model.
      *
      * @return the model
      */
-    private Map<String, Object> initialiseModel() {
+    private Map<String, Object> initializeModel() {
         Map<String, Object> attributes = new HashMap<>();
 
         attributes.put("dataSource", "server");

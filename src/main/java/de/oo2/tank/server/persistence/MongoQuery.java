@@ -2,9 +2,7 @@ package de.oo2.tank.server.persistence;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 /**
  * This class creates the search query for the measurements based on the
@@ -19,10 +17,8 @@ public class MongoQuery {
     private static final String PARAM_DATE_ASC = "+date";
     private static final String PARAM_DATE_DESC = "-date";
     private static final String PARAM_MAX_RESULT = "max_result";
-
+    Map<String, String[]> queryParams = null;
     private SimpleDateFormat dateParser = new SimpleDateFormat("YYYY-MM-dd");
-
-    private String urlParameters = "";
     private String beginDate;
     private String endDate;
     private String sort;
@@ -35,8 +31,8 @@ public class MongoQuery {
      *
      * @param query the search query
      */
-    public MongoQuery(String query) {
-        this.urlParameters = query;
+    public MongoQuery(Map<String, String[]> query) {
+        queryParams = query;
     }
 
     /**
@@ -113,47 +109,26 @@ public class MongoQuery {
 
         if (!checked) {
 
-            if (urlParameters.length() < 1) {
+            if (queryParams.isEmpty()) {
                 throw new PersistenceException("No search query defined!");
             }
 
-            Map<String, String> criteriaMap = new HashMap<>();
-
-            StringTokenizer stp = new StringTokenizer(urlParameters, "&", false);
-            while (stp.hasMoreTokens()) {
-                String parameter = stp.nextToken();
-                String key = null;
-                String value = null;
-
-                StringTokenizer stc = new StringTokenizer(parameter, "=", false);
-                if (stc.hasMoreTokens()) {
-                    key = stc.nextToken();
-                }
-                if (stc.hasMoreTokens()) {
-                    value = stc.nextToken();
-                }
-
-                if ((key != null) && (!"".equals(key) && (value != null) && (!"".equals(value)))) {
-                    criteriaMap.put(key, value);
-                }
-            }
-
             // check the query parameter combination
-            if (!criteriaMap.containsKey(PARAM_QUERY)) {
+            if (queryParams.get(PARAM_QUERY) == null) {
                 throw new PersistenceException("Syntax Error in the search criteria: 'query' wrong format or not defined!");
             } else {
-                if (!criteriaMap.get(PARAM_QUERY).equals(PARAM_RETURN)) {
+                if (!queryParams.get(PARAM_QUERY)[0].equals(PARAM_RETURN)) {
                     throw new PersistenceException("Syntax Error in the search criteria: query without 'return'!");
                 }
             }
 
             // check begin and end
-            if (criteriaMap.containsKey(PARAM_BEGIN)) {
-                if (!criteriaMap.containsKey(PARAM_END)) {
+            if (queryParams.get(PARAM_BEGIN) != null) {
+                if (queryParams.get(PARAM_END) == null) {
                     throw new PersistenceException("Syntax Error in the search criteria: 'begin' without 'end'!");
                 }
                 try {
-                    beginDate = criteriaMap.get(PARAM_BEGIN);
+                    beginDate = queryParams.get(PARAM_BEGIN)[0];
                     dateParser.parse(beginDate); // check the format
                 } catch (ParseException e) {
                     beginDate = null;
@@ -161,12 +136,12 @@ public class MongoQuery {
                 }
             }
 
-            if (criteriaMap.containsKey(PARAM_END)) {
-                if (!criteriaMap.containsKey(PARAM_BEGIN)) {
+            if (queryParams.get(PARAM_END) != null) {
+                if (queryParams.get(PARAM_BEGIN) == null) {
                     throw new PersistenceException("Syntax Error in the search criteria: 'end' without 'begin'!");
                 }
                 try {
-                    endDate = criteriaMap.get(PARAM_END);
+                    endDate = queryParams.get(PARAM_END)[0];
                     dateParser.parse(endDate); // check the format
                 } catch (ParseException e) {
                     endDate = null;
@@ -175,9 +150,9 @@ public class MongoQuery {
             }
 
             // check sorting parameters
-            if (criteriaMap.containsKey(PARAM_SORT)) {
+            if (queryParams.get(PARAM_SORT) != null) {
 
-                sort = criteriaMap.get(PARAM_SORT);
+                sort = queryParams.get(PARAM_SORT)[0];
 
                 if ((!PARAM_DATE_ASC.equals(sort)) && (!PARAM_DATE_DESC.equals(sort))) {
                     sort = null;
@@ -186,8 +161,8 @@ public class MongoQuery {
             }
 
             // check max_result
-            if (criteriaMap.containsKey(PARAM_MAX_RESULT)) {
-                String number = criteriaMap.get(PARAM_MAX_RESULT);
+            if (queryParams.get(PARAM_MAX_RESULT) != null) {
+                String number = queryParams.get(PARAM_MAX_RESULT)[0];
 
                 maxResult = Integer.parseInt(number);
 
