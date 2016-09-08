@@ -115,10 +115,10 @@ public class MeasurementRoutes {
     @Path("/")
     @ApiOperation(value = "Find a measurement by query.")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "query", value = "Query command, set it to 'return' to get the result of the query", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "query", value = "Query command, set it to 'return' to get the result of the query", allowableValues = "return", required = true, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "begin", value = "Begin date of the measurement series, format YYYY-MM-DD", required = false, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "end", value = "Begin date of the measurement series, format YYYY-MM-DD", required = false, dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "sort", value = "Sorting of the result, use '+date' for date ascending and '-date' for date descending sort", required = false, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "sort", value = "Sorting of the result, use '+date' for date ascending and '-date' for date descending sort", allowableValues = "+date, -date", required = false, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "max_result", value = "Max number of results", required = false, dataType = "string", paramType = "query")
     })
     @ApiResponses(value = {
@@ -131,7 +131,26 @@ public class MeasurementRoutes {
 
             Map<String, String[]> query = req.queryMap().toMap();
 
-            Measurement[] measurements = measurementService.selectMeasurements(query);
+            Measurement[] measurements = null;
+
+            try {
+                measurements = measurementService.selectMeasurements(query);
+            } catch (JsonParseException e) {
+                logger.error("Error while parsing the measurement!", e);
+
+                res.status(400);
+                return new ResponseError("Error while parsing the measurement!");
+            } catch (PersistenceException e) {
+                logger.error(e.getMessage(), e);
+
+                res.status(400);
+                return new ResponseError(e.getMessage());
+            } catch (Exception e) {
+                logger.error("Error while processing the request!", e);
+
+                res.status(400);
+                return new ResponseError("Error while processing the request!");
+            }
 
             if (measurements != null) {
                 return measurements;

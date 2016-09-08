@@ -74,7 +74,7 @@ public class MongoQuery {
         if (PARAM_DATE_ASC.equals(sort)) {
             sortString.append("\"timestamp\": 1 ");
         } else if (PARAM_DATE_DESC.equals(sort)) {
-            sortString.append("\"timestamp\": 0 ");
+            sortString.append("\"timestamp\": -1 ");
         }
 
         sortString.append(" }");

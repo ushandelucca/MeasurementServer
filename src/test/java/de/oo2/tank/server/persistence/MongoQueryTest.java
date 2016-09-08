@@ -44,7 +44,7 @@ public class MongoQueryTest {
 
         String sort = composer.getSort();
         System.out.println(sort);
-        Assert.assertEquals("{ \"timestamp\": 0  }", sort);
+        Assert.assertEquals("{ \"timestamp\": -1  }", sort);
 
         int limit = composer.getLimit();
         System.out.println(limit);
