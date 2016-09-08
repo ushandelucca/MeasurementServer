@@ -135,11 +135,6 @@ public class MeasurementRoutes {
 
             try {
                 measurements = measurementService.selectMeasurements(query);
-            } catch (JsonParseException e) {
-                logger.error("Error while parsing the measurement!", e);
-
-                res.status(400);
-                return new ResponseError("Error while parsing the measurement!");
             } catch (PersistenceException e) {
                 logger.error(e.getMessage(), e);
 
@@ -152,12 +147,7 @@ public class MeasurementRoutes {
                 return new ResponseError("Error while processing the request!");
             }
 
-            if (measurements != null) {
-                return measurements;
-            }
-
-            res.status(400);
-            return new ResponseError("No measurement with id '%s' found!", query.toString());
+            return measurements;
 
         }, json());
     }
