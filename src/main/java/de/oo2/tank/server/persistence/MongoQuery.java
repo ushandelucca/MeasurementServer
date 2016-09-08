@@ -50,7 +50,7 @@ public class MongoQuery {
         query.append("{ ");
 
         if ((beginDate != null) && (endDate != null)) {
-            query.append("\"timestamp\": { $gt: new Date(\"").append(beginDate).append("\") }, \"timestamp\": { $lt: new Date(\"").append(beginDate).append("\") } ");
+            query.append("\"timestamp\": { $gt: new Date(\"").append(beginDate).append("\") }, \"timestamp\": { $lt: new Date(\"").append(endDate).append("\") } ");
         }
 
         query.append(" }");

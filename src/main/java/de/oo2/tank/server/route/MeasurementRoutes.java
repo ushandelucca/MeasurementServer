@@ -105,7 +105,7 @@ public class MeasurementRoutes {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "query", value = "Query command, set it to 'return' to get the result of the query", allowableValues = "return", required = true, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "begin", value = "Begin date of the measurement series, format YYYY-MM-DD", example = "2000-01-01", required = false, dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "end", value = "Begin date of the measurement series, format YYYY-MM-DD", example = "2000-01-01", required = false, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "end", value = "Begin date of the measurement series, format YYYY-MM-DD", example = "2001-12-31", required = false, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "sort", value = "Sorting of the result, use '+date' for date ascending and '-date' for date descending sort", allowableValues = "+date, -date", required = false, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "max_result", value = "Max number of results", required = false, dataType = "string", paramType = "query")})
     @ApiResponses(value = {
@@ -165,7 +165,7 @@ public class MeasurementRoutes {
     }
 
     /**
-     * Handles the Exceptions from the service.
+     * Handles the Exceptions thrown during the request processing.
      *
      * @param e        the Exception
      * @param response the Response
