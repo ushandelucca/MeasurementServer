@@ -11,6 +11,7 @@ import de.oo2.tank.server.service.MeasurementService;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import spark.Response;
 
 import javax.ws.rs.*;
 import java.util.Map;
@@ -64,21 +65,8 @@ public class MeasurementRoutes {
             try {
                 _measurement = new Gson().fromJson(req.body(), Measurement.class);
                 _measurement = measurementService.saveMeasurement(_measurement);
-            } catch (JsonParseException e) {
-                logger.error("Error while parsing the measurement!", e);
-
-                res.status(400);
-                return new ResponseError("Error while parsing the measurement!");
-            } catch (PersistenceException | ModelException e) {
-                logger.error(e.getMessage(), e);
-
-                res.status(400);
-                return new ResponseError(e.getMessage());
             } catch (Exception e) {
-                logger.error("Error while processing the request!", e);
-
-                res.status(400);
-                return new ResponseError("Error while processing the request!");
+                return handleException(e, res);
             }
 
             return _measurement;
@@ -116,11 +104,10 @@ public class MeasurementRoutes {
     @ApiOperation(value = "Find a measurement by query.")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "query", value = "Query command, set it to 'return' to get the result of the query", allowableValues = "return", required = true, dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "begin", value = "Begin date of the measurement series, format YYYY-MM-DD", required = false, dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "end", value = "Begin date of the measurement series, format YYYY-MM-DD", required = false, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "begin", value = "Begin date of the measurement series, format YYYY-MM-DD", example = "2000-01-01", required = false, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "end", value = "Begin date of the measurement series, format YYYY-MM-DD", example = "2000-01-01", required = false, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "sort", value = "Sorting of the result, use '+date' for date ascending and '-date' for date descending sort", allowableValues = "+date, -date", required = false, dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "max_result", value = "Max number of results", required = false, dataType = "string", paramType = "query")
-    })
+            @ApiImplicitParam(name = "max_result", value = "Max number of results", required = false, dataType = "string", paramType = "query")})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success, the measurements", response = Measurement[].class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
@@ -135,16 +122,8 @@ public class MeasurementRoutes {
 
             try {
                 measurements = measurementService.selectMeasurements(query);
-            } catch (PersistenceException e) {
-                logger.error(e.getMessage(), e);
-
-                res.status(400);
-                return new ResponseError(e.getMessage());
             } catch (Exception e) {
-                logger.error("Error while processing the request!", e);
-
-                res.status(400);
-                return new ResponseError("Error while processing the request!");
+                return handleException(e, res);
             }
 
             return measurements;
@@ -184,5 +163,36 @@ public class MeasurementRoutes {
 
         }, json());
     }
-}
 
+    /**
+     * Handles the Exceptions from the service.
+     *
+     * @param e        the Exception
+     * @param response the Response
+     * @return the Response object
+     */
+    private Object handleException(Exception e, Response response) {
+        if (e instanceof JsonParseException) {
+            logger.error("Error while parsing the measurement!", e);
+
+            response.status(400);
+            return new ResponseError("Error while parsing the measurement!");
+        } else if (e instanceof PersistenceException) {
+            logger.error(e.getMessage(), e);
+
+            response.status(400);
+            return new ResponseError(e.getMessage());
+        } else if (e instanceof ModelException) {
+            logger.error(e.getMessage(), e);
+
+            response.status(400);
+            return new ResponseError(e.getMessage());
+        } else {
+            // any other Exception
+            logger.error("Error while processing the request!", e);
+
+            response.status(400);
+            return new ResponseError("Error while processing the request!");
+        }
+    }
+}
