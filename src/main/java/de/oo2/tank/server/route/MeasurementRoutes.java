@@ -177,12 +177,7 @@ public class MeasurementRoutes {
 
             response.status(400);
             return new ResponseError("Error while parsing the measurement!");
-        } else if (e instanceof PersistenceException) {
-            logger.error(e.getMessage(), e);
-
-            response.status(400);
-            return new ResponseError(e.getMessage());
-        } else if (e instanceof ModelException) {
+        } else if ((e instanceof PersistenceException) || (e instanceof ModelException)) {
             logger.error(e.getMessage(), e);
 
             response.status(400);
