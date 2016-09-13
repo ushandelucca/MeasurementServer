@@ -8,10 +8,6 @@ import de.oo2.tank.server.route.DocumentationRoutes;
 import de.oo2.tank.server.route.MeasurementRoutes;
 import de.oo2.tank.server.route.WebsiteRoutes;
 import de.oo2.tank.server.util.MavenUtil;
-import io.swagger.annotations.Contact;
-import io.swagger.annotations.Info;
-import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,15 +17,6 @@ import static spark.Spark.*;
 /**
  * This is the main application class.
  */
-@SwaggerDefinition(host = "www.oo2a.de",
-        info = @Info(description = "REST API for the tank in OO2a",
-                version = "V1.0",
-                title = "Tank measurement API",
-                contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/TankServer")),
-        schemes = {SwaggerDefinition.Scheme.HTTPS /*, SwaggerDefinition.Scheme.HTTP*/},
-        consumes = {"application/json"},
-        produces = {"application/json"},
-        tags = {@Tag(name = "Description")})
 public class Server {
     private static final Logger logger = LoggerFactory.getLogger(Server.class.getName());
 

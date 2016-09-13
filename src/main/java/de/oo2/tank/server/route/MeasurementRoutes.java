@@ -22,6 +22,15 @@ import static spark.Spark.*;
 /**
  * This class adds the route for the measurement service and handles the REST requests an responses.
  */
+@SwaggerDefinition(host = "www.oo2a.de",
+        info = @Info(description = "REST API for the tank in OO2a",
+                version = "V1.0",
+                title = "Tank measurement API",
+                contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/TankServer")),
+        schemes = {SwaggerDefinition.Scheme.HTTPS /*, SwaggerDefinition.Scheme.HTTP*/},
+        consumes = {"application/json"},
+        produces = {"application/json"},
+        tags = {@Tag(name = "Description")})
 @Path("/api/tank/measurements")
 @Api(value = "/api/tank/measurements",
         description = "Operations for the tank measurements.")
