@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import de.oo2.tank.server.model.Measurement;
+import org.jongo.Find;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import static org.jongo.Oid.withOid;
@@ -76,7 +78,7 @@ public class MongoDao {
      * https://github.com/bguerout/jongo/issues/162
      * Well Jongo owns only a DB instance and so is not responsible of closing mongo connections (should be done through MongoClient instance)
      */
-    protected void closeMeasurements() {
+    void closeMeasurements() {
         if (mongoClient != null) {
             mongoClient.close();
             mongoClient = null;
@@ -134,21 +136,43 @@ public class MongoDao {
      * the period an empty array will be returned.
      * @throws PersistenceException in case of failure
      */
-    public Measurement[] readMeasurementsWithQuery(String queryParameters) throws PersistenceException {
-        MongoQuery queryComposer = new MongoQuery(queryParameters);
+    public Measurement[] readMeasurementsWithQuery(Map<String, String[]> queryParameters) throws PersistenceException {
+        QueryParser queryParser = new QueryParser();
+        queryParser.setQuery(queryParameters);
 
-        String query = queryComposer.getQuery();
-        String sort = queryComposer.getSort();
-        int limit = queryComposer.getLimit();
+        queryParser.checkQuery();
 
         MongoCollection measurements = getMeasurements();
         List<Measurement> myList = null;
 
         try {
             try {
-                MongoCursor<Measurement> all = measurements.find(query).sort(sort).limit(limit).as(Measurement.class);
-                myList = Lists.newArrayList(all.iterator());
-                all.close();
+                Find find;
+
+                if (queryParser.hasDate()) {
+                    find = measurements.find("{ timestamp: { $gte: #, $lt: # }  }", queryParser.getBeginDate().toDate(), queryParser.getEndDate().toDate());
+                } else {
+                    find = measurements.find("{ }");
+                }
+
+                if (queryParser.hasSort()) {
+
+                    if (queryParser.isSortDateAsc()) {
+                        find = find.sort("{ \"timestamp\": 1 }");
+                    }
+                    if (queryParser.isSortDateDesc()) {
+                        find = find.sort("{ \"timestamp\": -1 }");
+                    }
+                }
+
+                if (queryParser.hasLimit()) {
+                    find.limit(queryParser.getLimit());
+                }
+
+                MongoCursor<Measurement> mongoCursor = find.as(Measurement.class);
+
+                myList = Lists.newArrayList(mongoCursor.iterator());
+                mongoCursor.close();
             } catch (Exception e) {
                 handleException("Error while selecting the measurements!", e);
             }

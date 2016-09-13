@@ -9,10 +9,9 @@ import org.junit.Test;
 public class MavenUtilTest {
 
     @Test
-    public void testServerPort() {
+    public void testVersion() {
         String version = MavenUtil.getVersion();
-        System.out.println("maven version: " + version);
-        Assert.assertEquals("unknown", version);
-    }
 
+        Assert.assertEquals("test", version);
+    }
 }

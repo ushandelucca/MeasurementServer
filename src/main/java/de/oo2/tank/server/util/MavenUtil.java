@@ -3,6 +3,7 @@ package de.oo2.tank.server.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -16,6 +17,13 @@ public class MavenUtil {
     private static final String PATH = "META-INF/maven/de.oo2a.tank/server/pom.properties";
 
     /**
+     * Constructor.
+     */
+    private MavenUtil() {
+        throw new IllegalAccessError("Utility class");
+    }
+
+    /**
      * Returns the version of the maven build. Currently this solution works only when the
      * server runs in the JAR file with all the dependencies.
      *
@@ -23,25 +31,18 @@ public class MavenUtil {
      */
     public static String getVersion() {
         Properties prop = new Properties();
-        InputStream in = ClassLoader.getSystemResourceAsStream(PATH);
-        try {
-            if (in != null) {
-                prop.load(in);
-            } else {
-                logger.error("Error while initialising the input stream.");
+
+        // Resource will be released automatically
+        try (InputStream in = ClassLoader.getSystemResourceAsStream(PATH)) {
+
+            if (in == null) {
                 return UNKNOWN;
             }
-        } catch (Exception e) {
-            logger.error("Error while loading the version properties.", e);
 
-        } finally {
-            try {
-                if (in != null) {
-                    in.close();
-                }
-            } catch (Exception e) {
-                logger.error("Error while closing the input stream.", e);
-            }
+            prop.load(in);
+
+        } catch (IOException e) {
+            logger.error("Error while opening the input stream.", e);
         }
 
         return (String) prop.getOrDefault("version", UNKNOWN);
