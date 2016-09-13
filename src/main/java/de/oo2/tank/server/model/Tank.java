@@ -5,6 +5,9 @@ import de.oo2.tank.server.service.MeasurementService;
 import de.oo2.tank.server.service.SwaggerService;
 import de.oo2.tank.server.util.MavenUtil;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 /**
  * This class is the main model for the application.
  */
@@ -52,7 +55,11 @@ public class Tank {
      */
     public String getHostname() {
         if (hostname == null) {
-            hostname = "unknown";
+            try {
+                hostname = InetAddress.getLocalHost().getHostName();
+            } catch (UnknownHostException e) {
+                hostname = "unknown";  // NOSONAR
+            }
         }
         return hostname;
     }
