@@ -170,7 +170,7 @@ public class MeasurementRoutesIntTest {
         Content content = new ContentResponseHandler().handleEntity(httpResponse.getEntity());
         ResponseError errorMessage = gson.fromJson(content.toString(), ResponseError.class);
 
-        Assert.assertEquals("No search criterias defined!", errorMessage.getMessage());
+        Assert.assertEquals("No search criteria defined!", errorMessage.getMessage());
     }
 }
 
