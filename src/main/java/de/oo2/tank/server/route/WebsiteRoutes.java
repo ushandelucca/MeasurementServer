@@ -5,6 +5,7 @@ import freemarker.template.Configuration;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,22 +45,24 @@ public class WebsiteRoutes {
      */
     private Map<String, Object> getModel() {
         if (model == null) {
-            model = initialiseModel();
+            model = initializeModel();
         }
         model = updateModel(model);
         return model;
     }
 
     /**
-     * Initialises the model.
+     * Initializes the model.
      *
      * @return the model
      */
-    private Map<String, Object> initialiseModel() {
+    private Map<String, Object> initializeModel() {
         Map<String, Object> attributes = new HashMap<>();
 
+        attributes.put("dataSource", "server");
         attributes.put("version", tankModel.getVersion());
         attributes.put("hostname", tankModel.getHostname());
+        attributes.put("copyrightYear", Integer.toString(LocalDate.now().getYear()));
 
         return attributes;
     }

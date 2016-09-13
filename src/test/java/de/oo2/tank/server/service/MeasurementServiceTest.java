@@ -8,6 +8,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static de.oo2.tank.server.model.MeasurementFixture.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -60,10 +63,16 @@ public class MeasurementServiceTest {
     public void testGetMeasurements() throws Exception {
         // setup the mock
         Measurement[] measurementsFromDb = new Measurement[]{setRandomId(getMeasurement3()), setRandomId(getMeasurement2())};
-        when(daoMock.readMeasurementsWithQuery("query=return&&max_result=30")).thenReturn(measurementsFromDb);
+
+        Map<String, String[]> params = new HashMap<>();
+        params.put("query", new String[]{"return"});
+        params.put("max_result", new String[]{"30"});
+
+
+        when(daoMock.readMeasurementsWithQuery(params)).thenReturn(measurementsFromDb);
 
         // test
-        Measurement[] measurements = service.selectMeasurements("query=return&&max_result=30");
+        Measurement[] measurements = service.selectMeasurements(params);
 
         Assert.assertNotNull(measurements);
         Assert.assertTrue(measurements.length > 0);

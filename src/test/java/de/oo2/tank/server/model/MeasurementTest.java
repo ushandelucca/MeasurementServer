@@ -13,16 +13,29 @@ public class MeasurementTest {
     @Test
     public void testMeasurementEquals() throws Exception {
         Measurement measurement1 = getMeasurement1();
-
         Measurement measurement2 = new Measurement();
 
+        Assert.assertFalse(measurement1.equals(measurement2));
+
         measurement2.setId(measurement1.getId());
+        Assert.assertFalse(measurement1.equals(measurement2));
+
         measurement2.setTimestamp(measurement1.getTimestamp());
+        Assert.assertFalse(measurement1.equals(measurement2));
+
         measurement2.setSensor(measurement1.getSensor());
+        Assert.assertFalse(measurement1.equals(measurement2));
+
         measurement2.setValue(measurement1.getValue());
+        Assert.assertFalse(measurement1.equals(measurement2));
+
         measurement2.setUnit(measurement1.getUnit());
+        Assert.assertFalse(measurement1.equals(measurement2));
+
         measurement2.setValid(measurement1.getValid());
 
+        Assert.assertFalse(measurement1.equals(null));
+        Assert.assertFalse(measurement1.equals(""));
         Assert.assertTrue(measurement1.equals(measurement2));
     }
 

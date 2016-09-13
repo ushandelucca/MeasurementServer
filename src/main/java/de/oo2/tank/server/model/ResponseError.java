@@ -23,7 +23,7 @@ public class ResponseError {
      */
     public ResponseError(String message, String... args) {
         if (message != null) {
-            this.message = String.format(message, args);
+            this.message = String.format(message, (Object[]) args);
         }
     }
 

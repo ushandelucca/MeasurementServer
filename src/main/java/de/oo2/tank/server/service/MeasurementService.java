@@ -11,6 +11,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -82,7 +83,7 @@ public class MeasurementService {
      * @return the queried measurements
      * @throws PersistenceException in case of failure
      */
-    public Measurement[] selectMeasurements(String queryParameters) throws PersistenceException {
+    public Measurement[] selectMeasurements(Map<String, String[]> queryParameters) throws PersistenceException {
 
         Measurement[] measurements = dao.readMeasurementsWithQuery(queryParameters);
 
