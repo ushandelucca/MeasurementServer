@@ -4,6 +4,8 @@ import de.oo2.tank.server.Configuration;
 import de.oo2.tank.server.service.MeasurementService;
 import de.oo2.tank.server.service.SwaggerService;
 import de.oo2.tank.server.util.MavenUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -12,6 +14,8 @@ import java.net.UnknownHostException;
  * This class is the main model for the application.
  */
 public class Tank {
+    private static final Logger logger = LoggerFactory.getLogger(Tank.class.getName());
+
 
     // configuration
     private Configuration configuration = null;
@@ -58,6 +62,7 @@ public class Tank {
             try {
                 hostname = InetAddress.getLocalHost().getHostName();
             } catch (UnknownHostException e) {
+                logger.error(e.getMessage(), e); // NOSONAR
                 hostname = "unknown";  // NOSONAR
             }
         }
