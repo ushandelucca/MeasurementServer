@@ -44,17 +44,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a data-target="report">Home</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">Mehr<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#apidoc">API Dokumentation</a></li>
-                        <li><a href="/swagger-ui/index.html">API Test-Client</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#contact" data-toggle="collapse">Kontakt</a></li>
-                    </ul>
-                </li>
+                <li><a href="/swagger-ui/index.html">REST Schnittstelle</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -75,21 +65,9 @@
         </div>
     </div>
 
-    <div class="collapse" id="api">
-        <h3>Sticky footer with fixed navbar</h3>
-        <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom
-            HTML
-            and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt;
-                .container</code>.</p>
-        <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>
-    </div>
-
-    <div class="collapse" id="contact">
-        <h3>Sticky footer with fixed navbar</h3>
-        <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom
-            HTML
-            and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt;
-                .container</code>.</p>
+    <div class="collapse" id="swagger_json">
+        <h3>Schnittstellenbeschreibung</h3>
+        <p class="lead">Swagger ... JSON mit Systax Highlight </p>
         <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>
     </div>
 
@@ -122,21 +100,19 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-    // TODO load the data from the server
-    // show please wait
-    //
-    // var dataSource = '${dataSource}'; // whether the page is delivered by a server or static (dev mode)
-    //
-    // if ( dataSource === 'server' ) {
-    //   data = load from server
-    // }
-    // else {
-    //   data = use the fixed data
-    // }
+    var dataSource = '${dataSource}'; // whether the page is delivered by a server or static (dev mode)
+    var data;
+
+    if ( dataSource === 'server' ) {
+        data = mockup_data();
+    }
+    else {
+        data = mockup_data();
+    }
 
     g1 = new Dygraph(
         document.getElementById("chart"),
-        data_temp, {
+        data, {
             customBars: false,
             ylabel: 'Liter',
             legend: 'always',

@@ -3,7 +3,7 @@ package de.oo2.tank.server;
 import com.brsanthu.googleanalytics.GoogleAnalytics;
 import com.brsanthu.googleanalytics.PageViewHit;
 import de.oo2.tank.server.model.ResponseError;
-import de.oo2.tank.server.model.Tank;
+import de.oo2.tank.server.model.ServerContext;
 import de.oo2.tank.server.route.DocumentationRoutes;
 import de.oo2.tank.server.route.MeasurementRoutes;
 import de.oo2.tank.server.route.WebsiteRoutes;
@@ -26,9 +26,9 @@ public class Server {
      * @param args command line arguments
      */
     public static void main(String[] args) {
-        // create the model
-        Tank tank = new Tank();
-        Configuration configuration = tank.getConfiguration();
+        // create the context
+        ServerContext serverContext = new ServerContext();
+        Configuration configuration = serverContext.getConfiguration();
 
         logger.info("Starting the server. Version: " + MavenUtil.getVersion());
 
@@ -38,9 +38,9 @@ public class Server {
         // define the routes
         staticFiles.location("/public");
 
-        new MeasurementRoutes(tank);
-        new DocumentationRoutes(tank);
-        new WebsiteRoutes(tank);
+        new MeasurementRoutes(serverContext);
+        new DocumentationRoutes(serverContext);
+        new WebsiteRoutes(serverContext);
 
         // TODO: Move the routes in separate class
         // after each route

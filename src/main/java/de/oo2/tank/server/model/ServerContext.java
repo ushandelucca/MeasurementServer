@@ -11,10 +11,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * This class is the main model for the application.
+ * This class is the main model for the server.
  */
-public class Tank {
-    private static final Logger logger = LoggerFactory.getLogger(Tank.class.getName());
+public class ServerContext {
+    private static final Logger logger = LoggerFactory.getLogger(ServerContext.class.getName());
 
 
     // configuration

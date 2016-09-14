@@ -1,4 +1,4 @@
-function data_temp() {
+function mockup_data() {
     return "" +
         "Datum,W,R\n" +
         "20090830,66,55\n" +

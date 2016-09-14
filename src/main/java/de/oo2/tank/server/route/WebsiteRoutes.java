@@ -1,6 +1,6 @@
 package de.oo2.tank.server.route;
 
-import de.oo2.tank.server.model.Tank;
+import de.oo2.tank.server.model.ServerContext;
 import freemarker.template.Configuration;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -15,16 +15,16 @@ import static spark.Spark.get;
  * This class adds the route for the website.
  */
 public class WebsiteRoutes {
-    private Tank tankModel = null;
+    private ServerContext serverContext = null;
     private Map<String, Object> model = null;
 
     /**
      * Constructor.
      *
-     * @param tank the tankModel model
+     * @param serverContext the server context
      */
-    public WebsiteRoutes(Tank tank) {
-        this.tankModel = tank;
+    public WebsiteRoutes(ServerContext serverContext) {
+        this.serverContext = serverContext;
 
         // Freemarker configuration
         Configuration configuration = new Configuration();
@@ -60,8 +60,8 @@ public class WebsiteRoutes {
         Map<String, Object> attributes = new HashMap<>();
 
         attributes.put("dataSource", "server");
-        attributes.put("version", tankModel.getVersion());
-        attributes.put("hostname", tankModel.getHostname());
+        attributes.put("version", serverContext.getVersion());
+        attributes.put("hostname", serverContext.getHostname());
         attributes.put("copyrightYear", Integer.toString(LocalDate.now().getYear()));
 
         return attributes;
