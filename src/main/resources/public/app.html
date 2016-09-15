@@ -65,10 +65,15 @@
         </div>
     </div>
 
-    <div class="collapse" id="swagger_json">
+    <div class="collapse in" id="swagger_json">
         <h3>Schnittstellenbeschreibung</h3>
-        <p class="lead">Swagger ... JSON mit Systax Highlight </p>
-        <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>
+
+        <p id="swagger">Swagger ... JSON mit Systax Highlight </p>
+
+        <button class="btn btn-default" ic-get-from="/apidoc/swagger" ic-target="#swagger" ic-indicator="#indicator">
+            Lade Schnittstellenbeschreibung ...
+        </button>
+        <i id="indicator" class="fa fa-spinner fa-spin" style="display:none"></i>
     </div>
 
 </div>
@@ -90,6 +95,10 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.1/dygraph-combined.js"></script>
+
+<link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://intercoolerreleases-leaddynocom.netdna-ssl.com/intercooler-1.0.0.min.js"></script>
+
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
