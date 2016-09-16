@@ -44,7 +44,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/swagger-ui/index.html">REST Schnittstelle</a></li>
+                <li><a href="#api">REST Api</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -59,21 +59,50 @@
     </div>
 
     <div id="report">
-        <h3>Me&szlig;werte</h3>
+        <h1>Me&szlig;werte</h1>
+        Die Grafik zeigt die Werte.
+        <p></p>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                Bereich <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">1 Woche</a></li>
+                <li><a href="#">1 Monat</a></li>
+                <li><a href="#">6 Monate</a></li>
+                <li><a href="#">1 Jahr</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Alle</a></li>
+            </ul>
+        </div>
+        <p></p>
+        <p></p>
         <div id="dashboard">
             <div id="chart" style="width: 100%; height:300px;"></div>
         </div>
     </div>
 
-    <div class="collapse in" id="swagger_json">
-        <h3>Schnittstellenbeschreibung</h3>
+    <div id="api">
+        <h1>Schnittstellenbeschreibung</h1>
+        <ul>
+            <li>Beschreibung</li>
+            <li>Test Client</li>
+            <li><a href="#swagger" data-toggle="collapse">Swagger JSON</a></li>
+        </ul>
 
-        <p id="swagger">Swagger ... JSON mit Systax Highlight </p>
+        <div id="swagger" class="collapse">
+            <p id="json">Swagger ... JSON mit Systax Highlight </p>
 
-        <button class="btn btn-default" ic-get-from="/apidoc/swagger" ic-target="#swagger" ic-indicator="#indicator">
-            Lade Schnittstellenbeschreibung ...
-        </button>
-        <i id="indicator" class="fa fa-spinner fa-spin" style="display:none"></i>
+            <button class="btn btn-default" ic-get-from="/apidoc/swagger" ic-target="#json" ic-indicator="#indicator">
+                Lade Schnittstellenbeschreibung ...
+            </button>
+            <i id="indicator" class="fa fa-spinner fa-spin" style="display:none"></i>
+
+            <p>https://groups.google.com/forum/#!topic/intercooler-js/wtePYi1t_q8</p>
+            <p>span ic-post-to=“/foo” ic-poll=“1s” ic-on-success=“if(data.success){ alert(’success’); } ”</p>
+            <p>var str = JSON.stringify(obj, null, 2); // spacing level = 2</p>
+        </div>
     </div>
 
 </div>
@@ -96,11 +125,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.1/dygraph-combined.js"></script>
 
-<link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+<!-- intercooler.js and font awesome for the asynchronous requests -->
 <script src="https://intercoolerreleases-leaddynocom.netdna-ssl.com/intercooler-1.0.0.min.js"></script>
+<link href="https://netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="js/bootstrap.min.js"></script>
+
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 </body>
