@@ -31,6 +31,7 @@ public class QueryParserTest {
         // query=return&begin=2013-01-13&end=2014-01-20&sort=-date&max_result=10
 
         query.put("query", new String[]{"return"});
+        query.put("sensor", new String[]{"temperature"});
         query.put("begin", new String[]{"2013-01-13"});
         query.put("end", new String[]{"2014-01-20"});
         query.put("sort", new String[]{"-date"});
@@ -45,6 +46,9 @@ public class QueryParserTest {
 
         Assert.assertTrue(parser.hasCommand());
         Assert.assertEquals("return", parser.getCommand());
+
+        Assert.assertTrue(parser.hasSensor());
+        Assert.assertEquals("temperature", parser.getSensor());
 
         Assert.assertTrue(parser.hasDate());
         Assert.assertEquals(new DateTime(2013, 1, 13, 0, 0), parser.getBeginDate());
@@ -78,6 +82,8 @@ public class QueryParserTest {
         Assert.assertTrue(parser.hasCommand());
         Assert.assertEquals("return", parser.getCommand());
 
+        Assert.assertFalse(parser.hasSensor());
+
         Assert.assertTrue(parser.hasDate());
         Assert.assertEquals(new DateTime(2013, 1, 13, 0, 0), parser.getBeginDate());
         Assert.assertEquals(new DateTime(2014, 1, 20, 0, 0), parser.getEndDate());
@@ -95,6 +101,7 @@ public class QueryParserTest {
         // query=return&max_result=30
 
         query.put("query", new String[]{"return"});
+        query.put("sensor", new String[]{"temperature"});
         query.put("max_result", new String[]{"30"});
 
         parser.setQuery(query);
@@ -106,6 +113,9 @@ public class QueryParserTest {
 
         Assert.assertTrue(parser.hasCommand());
         Assert.assertEquals("return", parser.getCommand());
+
+        Assert.assertTrue(parser.hasSensor());
+        Assert.assertEquals("temperature", parser.getSensor());
 
         Assert.assertFalse(parser.hasDate());
 
@@ -288,4 +298,21 @@ public class QueryParserTest {
 
         Assert.fail();
     }
+
+    @Test
+    public void testWrongSensor() {
+        query.put("query", new String[]{"return"});
+        query.put("sensor", new String[]{"muchtoolongsensorname"});
+
+        parser.setQuery(query);
+        try {
+            parser.checkQuery();
+        } catch (PersistenceException e) {
+            Assert.assertTrue(e.getMessage().contains("'sensor' wrong format!"));
+            return;
+        }
+
+        Assert.fail();
+    }
+
 }

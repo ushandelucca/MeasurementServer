@@ -14,8 +14,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static de.oo2.tank.server.model.MeasurementFixture.getMeasurement1;
-import static de.oo2.tank.server.model.MeasurementFixture.getMeasurement2;
+import static de.oo2.tank.server.model.MeasurementFixture.*;
 import static spark.Spark.stop;
 
 /**
@@ -172,5 +171,59 @@ public class MeasurementRoutesIntTest {
 
         Assert.assertEquals("No search criteria defined!", errorMessage.getMessage());
     }
+
+    @Test
+    public void testGetMeasurementLastWeek() throws Exception {
+        // first save measurement 1
+        Measurement param = getMeasurement1();
+        String jsonString = gson.toJson(param);
+
+        Content content = Request.Post("http://localhost:8080/api/tank/measurements")
+                .bodyString(jsonString, ContentType.APPLICATION_JSON)
+                .execute()
+                .returnContent();
+
+        Measurement savedMeasurement = gson.fromJson(content.asString(), Measurement.class);
+
+        Assert.assertNotSame(param.getId(), savedMeasurement.getId());
+
+        // measurement 2
+        param = getMeasurement2();
+        jsonString = gson.toJson(param);
+
+        content = Request.Post("http://localhost:8080/api/tank/measurements")
+                .bodyString(jsonString, ContentType.APPLICATION_JSON)
+                .execute()
+                .returnContent();
+
+        savedMeasurement = gson.fromJson(content.asString(), Measurement.class);
+
+        Assert.assertNotSame(param.getId(), savedMeasurement.getId());
+
+        // measurement 3
+        param = getMeasurement3();
+        jsonString = gson.toJson(param);
+
+        content = Request.Post("http://localhost:8080/api/tank/measurements")
+                .bodyString(jsonString, ContentType.APPLICATION_JSON)
+                .execute()
+                .returnContent();
+
+        savedMeasurement = gson.fromJson(content.asString(), Measurement.class);
+
+        Assert.assertNotSame(param.getId(), savedMeasurement.getId());
+
+        // then select it with the query
+        content = Request.Get("http://localhost:8080/api/tank/measurements?query=return&sensor=Temperature&sort=-date")
+                .execute()
+                .returnContent();
+
+        Measurement[] readMeasurements = gson.fromJson(content.toString(), Measurement[].class);
+
+        System.out.println(content);
+
+        Assert.assertTrue(readMeasurements.length > 0);
+    }
+
 }
 

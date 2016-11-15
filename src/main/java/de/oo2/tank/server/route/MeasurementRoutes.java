@@ -113,6 +113,7 @@ public class MeasurementRoutes {
     @ApiOperation(value = "Find a measurement by query.")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "query", value = "Query command, set it to 'return' to get the result of the query", allowableValues = "return", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "sensor", value = "Sensor name of the measurement series", example = "temperature", required = false, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "begin", value = "Begin date of the measurement series, format YYYY-MM-DD", example = "2000-01-01", required = false, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "end", value = "Begin date of the measurement series, format YYYY-MM-DD", example = "2001-12-31", required = false, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "sort", value = "Sorting of the result, use '+date' for date ascending and '-date' for date descending sort", allowableValues = "+date, -date", required = false, dataType = "string", paramType = "query"),
