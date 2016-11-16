@@ -23,9 +23,9 @@ public class MeasurementFixture {
     public static Measurement getMeasurement1() {
         Measurement m = new Measurement();
         m.setTimestamp(convertToDate(today.minusDays(1)));
-        m.setSensor("Temperature");
+        m.setSensor("Rain");
         m.setValue(1.2f);
-        m.setUnit("C");
+        m.setUnit("mm");
         m.setValid(true);
 
         return m;
@@ -34,9 +34,9 @@ public class MeasurementFixture {
     public static Measurement getMeasurement2() {
         Measurement m = new Measurement();
         m.setTimestamp(convertToDate(today.minusDays(2)));
-        m.setSensor("Temperature");
+        m.setSensor("Rain");
         m.setValue(2.5f);
-        m.setUnit("C");
+        m.setUnit("mm");
         m.setValid(true);
 
         return m;
@@ -45,9 +45,9 @@ public class MeasurementFixture {
     public static Measurement getMeasurement3() {
         Measurement m = new Measurement();
         m.setTimestamp(convertToDate(today.minusDays(3)));
-        m.setSensor("Temperature");
+        m.setSensor("Rain");
         m.setValue(3.5f);
-        m.setUnit("C");
+        m.setUnit("mm");
         m.setValid(true);
 
         return m;
