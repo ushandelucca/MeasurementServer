@@ -149,8 +149,12 @@ public class MongoDao {
             try {
                 Find find;
 
-                if (queryParser.hasDate()) {
-                    find = measurements.find("{ timestamp: { $gte: #, $lt: # }  }", queryParser.getBeginDate().toDate(), queryParser.getEndDate().toDate());
+                if (queryParser.hasDate() && queryParser.hasSensor()) {
+                    find = measurements.find("{ timestamp: { $gte: #, $lt: # }, sensor: # }", queryParser.getBeginDate().toDate(), queryParser.getEndDate().toDate(), queryParser.getSensor());
+                } else if (queryParser.hasDate() && !queryParser.hasSensor()) {
+                    find = measurements.find("{ timestamp: { $gte: #, $lt: # } }", queryParser.getBeginDate().toDate(), queryParser.getEndDate().toDate());
+                } else if (!queryParser.hasDate() && queryParser.hasSensor()) {
+                    find = measurements.find("{ sensor: # }", queryParser.getSensor());
                 } else {
                     find = measurements.find("{ }");
                 }

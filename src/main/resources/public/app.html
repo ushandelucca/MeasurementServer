@@ -13,6 +13,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/oo2a.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -30,7 +31,127 @@
 <body>
 
 <!-- Fixed navbar -->
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container">
+
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="panel panel-blue">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-umbrella fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <h1>Regen 10</h1>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-thermometer-three-quarters fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <h1>Wasserstand 15%</h1>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-area-chart fa-fw"></i> Messwerte
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Anzeige
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="#">1 Woche</a>
+                                </li>
+                                <li><a href="#">1 Monat</a>
+                                </li>
+                                <li><a href="#">6 Monate</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="#">Alle Werte</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="dashboard">
+                        <div id="chart" style="width: 100%; height:300px;"></div>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-xs-12 -->
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-file-code-o fa-fw"></i> Schnittstellenbeschreibung
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <ul>
+                        <li>Beschreibung</li>
+                        <li><a href="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/pages/index.html"
+                               target="_blank">SB
+                            Admin 2</a></li>
+                        <li><a href="/swagger-ui" target="_blank">Test Client</a></li>
+                        <li><a href="#swagger" data-toggle="collapse" ic-get-from="/apidoc/swagger"
+                               ic-indicator="#indicator"
+                               ic-target="#json">Swagger JSON</a>
+                            <i id="indicator" class="fa fa-spinner fa-spin" style="display:none"></i>
+                            <div id="swagger" class="collapse">
+                                <pre id="json"></pre>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-xs-12 -->
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -44,71 +165,20 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a data-target="report">Home</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">Mehr<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#apidoc">API Dokumentation</a></li>
-                        <li><a href="/swagger-ui/index.html">API Test-Client</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#contact" data-toggle="collapse">Kontakt</a></li>
-                    </ul>
-                </li>
+                <!-- <li><a href="#api">REST Api</a></li> -->
             </ul>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
 
-<!-- fork me on github -->
-<a href="https://github.com/ushandelucca/TankServer"><img
-        style="position: absolute; top: 0; right: 0; border: 0; z-index: 9999;"
-        src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
-        alt="Fork me on GitHub"
-        data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
-
-<!-- Begin page content -->
-<div class="container">
-
-    <div class="well" id="current">
-        <h1>Wasserstand: 45%</h1>
-        <h1>Temperatur: 15°C</h1>
-    </div>
-
-    <div id="report">
-        <h3>Me&szlig;werte</h3>
-        <div id="dashboard">
-            <div id="chart" style="width: 100%; height:300px;"></div>
-        </div>
-    </div>
-
-    <div class="collapse" id="api">
-        <h3>Sticky footer with fixed navbar</h3>
-        <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom
-            HTML
-            and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt;
-                .container</code>.</p>
-        <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>
-    </div>
-
-    <div class="collapse" id="contact">
-        <h3>Sticky footer with fixed navbar</h3>
-        <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom
-            HTML
-            and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt;
-                .container</code>.</p>
-        <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>
-    </div>
-
-</div>
-
+<!-- Footer -->
 <footer class="footer">
     <div class="container">
         <div class="pull-left">
             <div class="text-muted">${version} @ ${hostname}</div>
         </div>
         <div class="pull-right">
-            <div class="text-muted">Copyright © 2015 - ${copyrightYear}</div>
+            <div class="text-muted">Copyright © 2015 - ${copyrightYear} Peter B&oumlhringer</div>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -119,31 +189,58 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.1/dygraph-combined.js"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+
+<!-- intercooler.js and font awesome for the asynchronous requests -->
+<script src="https://intercoolerreleases-leaddynocom.netdna-ssl.com/intercooler-1.0.0.min.js"></script>
+<link href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 <script src="js/bootstrap.min.js"></script>
+
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 </body>
 
-<script src="js/data.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
 
-    // TODO load the data from the server
-    // show please wait
-    //
-    // var dataSource = '${dataSource}'; // whether the page is delivered by a server or static (dev mode)
-    //
-    // if ( dataSource === 'server' ) {
-    //   data = load from server
-    // }
-    // else {
-    //   data = use the fixed data
-    // }
+    var dataSource = '${dataSource}'; // whether the page is delivered by a server or static (dev mode)
+    var measurements;
+    var chart;
 
-    g1 = new Dygraph(
+    if ( dataSource === 'server' ) {
+      measurements = "Datum,Regen\n";
+
+        $.getJSON( "/api/tank/measurements?query=return&sensor=Temperature&sort=-date", function( data ) {
+
+          $.each( data, function( key, val ) {
+            var ts = new Date(val.timestamp);
+
+            var formattedDate = ts.getFullYear() + "/" + (ts.getMonth()+1) + "/" + ts.getDate();
+            var hours = (ts.getHours() < 10) ? "0" + ts.getHours() : ts.getHours();
+            var minutes = (ts.getMinutes() < 10) ? "0" + ts.getMinutes() : ts.getMinutes();
+            var formattedTime = hours + ":" + minutes;
+
+            measurements = measurements.concat(formattedDate, " ", formattedTime, ", ", val.value, "\n" );
+          });
+          chart.updateOptions({'file':measurements});
+        });
+    }
+    else {
+        measurements = "Datum,Regen, Wasserstand\n" +
+                       "2016/10/14 00:00, 1.2, 50\n" +
+                       "2016/10/13 00:00, 1.0, 45\n" +
+                       "2016/10/12 00:00, 1.5, 30\n" +
+                       "2016/10/11 00:00, 0.7, 20\n" +
+                       "2016/10/10 00:00, 1.1, 25\n" +
+                       "2016/10/09 00:00, 1.0, 30\n" +
+                       "2016/10/08 00:00, 0.9, 30\n" +
+                       "2016/10/07 00:00, 0.8, 30 \n" +
+                       "2016/10/06 00:00, 1.3, 25\n";
+    }
+
+    chart = new Dygraph(
         document.getElementById("chart"),
-        data_temp, {
+        measurements, {
             customBars: false,
             ylabel: 'Liter',
             legend: 'always',

@@ -72,6 +72,7 @@ public class MeasurementService {
      * <pre>
      *     Query parameters
      *     - return      : trigger a query and return the result
+     *     - sensor      : sensor name
      *     - begin       : begin of the measurement period
      *     - end         : end of the measurement period
      *     - sort        : sort the result where +date means date ascending, -date descending

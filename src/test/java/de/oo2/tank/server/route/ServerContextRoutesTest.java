@@ -13,7 +13,7 @@ import static spark.Spark.stop;
 /**
  * Tests class.
  */
-public class WebsiteRoutesTest {
+public class ServerContextRoutesTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {

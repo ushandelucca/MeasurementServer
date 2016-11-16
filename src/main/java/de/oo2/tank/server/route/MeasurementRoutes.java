@@ -5,7 +5,7 @@ import com.google.gson.JsonParseException;
 import de.oo2.tank.server.model.Measurement;
 import de.oo2.tank.server.model.ModelException;
 import de.oo2.tank.server.model.ResponseError;
-import de.oo2.tank.server.model.Tank;
+import de.oo2.tank.server.model.ServerContext;
 import de.oo2.tank.server.persistence.PersistenceException;
 import de.oo2.tank.server.service.MeasurementService;
 import io.swagger.annotations.*;
@@ -22,6 +22,15 @@ import static spark.Spark.*;
 /**
  * This class adds the route for the measurement service and handles the REST requests an responses.
  */
+@SwaggerDefinition(host = "www.oo2a.de",
+        info = @Info(description = "REST API for the tank in OO2a",
+                version = "V1.0",
+                title = "Tank measurement API",
+                contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/TankServer")),
+        schemes = {SwaggerDefinition.Scheme.HTTPS /*, SwaggerDefinition.Scheme.HTTP*/},
+        consumes = {"application/json"},
+        produces = {"application/json"},
+        tags = {@Tag(name = "Description")})
 @Path("/api/tank/measurements")
 @Api(value = "/api/tank/measurements",
         description = "Operations for the tank measurements.")
@@ -33,10 +42,10 @@ public class MeasurementRoutes {
     /**
      * Constructor.
      *
-     * @param tank the tank model
+     * @param serverContext the server context
      */
-    public MeasurementRoutes(Tank tank) {
-        this.measurementService = tank.getMeasurementService();
+    public MeasurementRoutes(ServerContext serverContext) {
+        this.measurementService = serverContext.getMeasurementService();
 
         // the method parameters are irrelevant for the execution. They are solely used to place the
         // annotations for the swagger documentation
@@ -104,6 +113,7 @@ public class MeasurementRoutes {
     @ApiOperation(value = "Find a measurement by query.")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "query", value = "Query command, set it to 'return' to get the result of the query", allowableValues = "return", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "sensor", value = "Sensor name of the measurement series", example = "temperature", required = false, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "begin", value = "Begin date of the measurement series, format YYYY-MM-DD", example = "2000-01-01", required = false, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "end", value = "Begin date of the measurement series, format YYYY-MM-DD", example = "2001-12-31", required = false, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "sort", value = "Sorting of the result, use '+date' for date ascending and '-date' for date descending sort", allowableValues = "+date, -date", required = false, dataType = "string", paramType = "query"),

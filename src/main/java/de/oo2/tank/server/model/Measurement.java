@@ -62,7 +62,7 @@ public class Measurement {
     }
 
     /**
-     * Returns the sensor name of the measurement. E. g. Temperature, Waterlevel, stc.
+     * Returns the sensor name of the measurement. E. g. Rain, Waterlevel, stc.
      * @return the name of the sensor
      */
     // @NotNull(message = "Sensor name is mandatory.")

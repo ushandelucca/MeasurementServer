@@ -2,7 +2,7 @@ package de.oo2.tank.server.route;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import de.oo2.tank.server.model.ResponseError;
-import de.oo2.tank.server.model.Tank;
+import de.oo2.tank.server.model.ServerContext;
 import de.oo2.tank.server.service.SwaggerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +19,11 @@ public class DocumentationRoutes {
     /**
      * Constructor.
      *
-     * @param tank the tank model
+     * @param serverContext the server context
      */
-    public DocumentationRoutes(Tank tank) {
+    public DocumentationRoutes(ServerContext serverContext) {
 
-        swaggerService = tank.getSwaggerService();
+        swaggerService = serverContext.getSwaggerService();
 
         // description a route
         get("/apidoc/swagger", (req, res) -> {

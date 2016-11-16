@@ -12,6 +12,7 @@ import java.util.Map;
 public class QueryParser {
     private static final String PARAM_QUERY = "query";
     private static final String PARAM_RETURN = "return";
+    private static final String PARAM_SENSOR = "sensor";
     private static final String PARAM_BEGIN = "begin";
     private static final String PARAM_END = "end";
     private static final String PARAM_SORT = "sort";
@@ -25,6 +26,8 @@ public class QueryParser {
     private boolean checked = false;
 
     private String command = null;
+
+    private String sensor = null;
 
     private DateTime beginDate = null;
     private DateTime endDate = null;
@@ -65,6 +68,16 @@ public class QueryParser {
                     command = queryParams.get(PARAM_QUERY)[0];
                 } else {
                     throw new PersistenceException("Syntax Error in the search criteria: query without 'return'!");
+                }
+            }
+
+            // check sensor
+            if (queryParams.get(PARAM_SENSOR) != null) {
+
+                sensor = queryParams.get(PARAM_SENSOR)[0];
+
+                if (sensor.length() > 12) {
+                    throw new PersistenceException("Syntax Error in the search criteria: 'sensor' wrong format!");
                 }
             }
 
@@ -143,6 +156,24 @@ public class QueryParser {
      */
     public String getCommand() {
         return command;
+    }
+
+    /**
+     * Returns <code>true</code> if the query contains a valid sensor name.
+     *
+     * @return <code>true</code> if the query contains a valid sensor name
+     */
+    public boolean hasSensor() {
+        return sensor != null;
+    }
+
+    /**
+     * Returns the sensor name.
+     *
+     * @return the sensor name
+     */
+    public String getSensor() {
+        return sensor;
     }
 
     /**
