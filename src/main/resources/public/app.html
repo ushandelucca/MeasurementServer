@@ -43,7 +43,7 @@
                             <i class="fa fa-umbrella fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <h1>Wasserstand 26%</h1>
+                            <h1>Regen 10</h1>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                             <i class="fa fa-thermometer-three-quarters fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <h1>Temperatur 15°C</h1>
+                            <h1>Wasserstand 15%</h1>
                         </div>
                     </div>
                 </div>
@@ -200,23 +200,47 @@
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 </body>
 
-<script src="js/data.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
 
     var dataSource = '${dataSource}'; // whether the page is delivered by a server or static (dev mode)
-    var data;
+    var measurements;
+    var chart;
 
     if ( dataSource === 'server' ) {
-        data = mockup_data();
+      measurements = "Datum,Regen\n";
+
+        $.getJSON( "/api/tank/measurements?query=return&sensor=Temperature&sort=-date", function( data ) {
+
+          $.each( data, function( key, val ) {
+            var ts = new Date(val.timestamp);
+
+            var formattedDate = ts.getFullYear() + "/" + (ts.getMonth()+1) + "/" + ts.getDate();
+            var hours = (ts.getHours() < 10) ? "0" + ts.getHours() : ts.getHours();
+            var minutes = (ts.getMinutes() < 10) ? "0" + ts.getMinutes() : ts.getMinutes();
+            var formattedTime = hours + ":" + minutes;
+
+            measurements = measurements.concat(formattedDate, " ", formattedTime, ", ", val.value, "\n" );
+          });
+          chart.updateOptions({'file':measurements});
+        });
     }
     else {
-        data = rest_data();
+        measurements = "Datum,Regen\n" +
+                       "2016/10/14 00:00, 1.2\n" +
+                       "2016/10/13 00:00, 1.0\n" +
+                       "2016/10/12 00:00, 1.5\n" +
+                       "2016/10/11 00:00, 0.7\n" +
+                       "2016/10/10 00:00, 1.1\n" +
+                       "2016/10/09 00:00, 1.0\n" +
+                       "2016/10/08 00:00, 0.9\n" +
+                       "2016/10/07 00:00, 0.8\n" +
+                       "2016/10/06 00:00, 1.3\n";
     }
 
-    g1 = new Dygraph(
+    chart = new Dygraph(
         document.getElementById("chart"),
-        data, {
+        measurements, {
             customBars: false,
             ylabel: 'Liter',
             legend: 'always',
