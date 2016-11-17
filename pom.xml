@@ -6,7 +6,7 @@
 
     <groupId>de.oo2a.tank</groupId>
     <artifactId>server</artifactId>
-    <version>1.0.CR-SNAPSHOT</version>
+    <version>1.0.CR1</version>
 
     <properties>
         <!-- ENCODING -->
