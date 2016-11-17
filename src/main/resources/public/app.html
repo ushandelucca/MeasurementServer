@@ -126,21 +126,23 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <ul>
-                        <li>Beschreibung</li>
-                        <li><a href="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/pages/index.html"
-                               target="_blank">SB
-                            Admin 2</a></li>
-                        <li><a href="/swagger-ui" target="_blank">Test Client</a></li>
-                        <li><a href="#swagger" data-toggle="collapse" ic-get-from="/apidoc/swagger"
-                               ic-indicator="#indicator"
-                               ic-target="#json">Swagger JSON</a>
-                            <i id="indicator" class="fa fa-spinner fa-spin" style="display:none"></i>
-                            <div id="swagger" class="collapse">
-                                <pre id="json"></pre>
-                            </div>
-                        </li>
-                    </ul>
+                    <p>Die REST-API stellt Funktionen für die Verwaltung der Messwerte zur Verfügung. Die REST-API ist
+                        für Entwickler, die Messwerte in ihre Anwendung integrieren möchten.</p>
+                    <p>Die REST-API bietet Zugriff auf Ressourcen (Datenentitäten) über URI-Pfade. Um die REST-API zu
+                        verwenden, erstellt Ihre Anwendung eine HTTP-Anforderung und analysiert die Antwort. Das
+                        Antwortformat ist JSON. Ihre Methoden sind die Standard-HTTP-Methoden wie GET, PUT, POST und
+                        DELETE.</p>
+                    <p>Da die REST-API auf offenen Standards basiert, können sie jede Web-Entwicklungssprache verwenden,
+                        um auf die API zuzugreifen.</p>
+                    <p><a href="/swagger-ui/index.html" target="_blank">Test Client und Dokumentation</a></p>
+                    <p></p>
+                    <a href="#swagger" data-toggle="collapse" ic-get-from="/apidoc/swagger"
+                       ic-indicator="#indicator"
+                       ic-target="#json">Swagger JSON</a>
+                    <i id="indicator" class="fa fa-spinner fa-spin" style="display:none"></i>
+                    <div id="swagger" class="collapse">
+                        <pre id="json"></pre>
+                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -234,8 +236,8 @@
                        "2016/10/10 00:00, 1.1, 25\n" +
                        "2016/10/09 00:00, 1.0, 30\n" +
                        "2016/10/08 00:00, 0.9, 30\n" +
-                       "2016/10/07 00:00, 0.8, 30 \n" +
-                       "2016/10/06 00:00, 1.3, 25\n";
+                       "2016/10/07 00:00, 0.8, 30\n" +
+                       "2016/10/06 00:00, 1.3, 25";
     }
 
     chart = new Dygraph(
