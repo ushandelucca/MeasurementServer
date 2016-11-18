@@ -24,7 +24,6 @@ after_success:
 - if [ "$TRAVIS_BRANCH" == "master" ]; then
      mvn clean package;
      docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-     docker pull oo2a/tankserver;
      docker build . -t oo2a/tankserver;
      docker push oo2a/tankserver;
      fi
