@@ -109,6 +109,7 @@
                 <div class="panel-body">
                     <div id="dashboard">
                         <div id="chart" style="width: 100%; height:300px;"></div>
+                        <canvas id="canvas" style="width: 100%; height:300px;"></canvas>
                     </div>
                 </div>
                 <!-- /.panel-body -->
@@ -194,6 +195,7 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.1/dygraph-combined.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
 
 <!-- intercooler.js and font awesome for the asynchronous requests -->
 <script src="https://intercoolerreleases-leaddynocom.netdna-ssl.com/intercooler-1.0.0.min.js"></script>
@@ -255,6 +257,99 @@
             showRangeSelector: true
         }
     );
+
+                window.chartColors = {
+            red: 'rgb(255, 99, 132)',
+            orange: 'rgb(255, 159, 64)',
+            yellow: 'rgb(255, 205, 86)',
+            green: 'rgb(75, 192, 192)',
+            blue: 'rgb(54, 162, 235)',
+            purple: 'rgb(153, 102, 255)',
+            grey: 'rgb(231,233,237)'
+        };
+
+
+        var color = Chart.helpers.color;
+        var scatterChartData = {
+            datasets: [{
+                label: "My First dataset",
+                borderColor: window.chartColors.red,
+                backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+                data: [{
+                    x: '20161007T000000',
+                    y: 20,
+                }, {
+                    x: '20161006T000000',
+                    y: 19,
+                }, {
+                    x: '20161005T000000',
+                    y: 18,
+                }, {
+                    x: '20161004T000000',
+                    y: 17,
+                }, {
+                    x: '20161003T000000',
+                    y: 16,
+                }, {
+                    x: '20161002T000000',
+                    y: 15,
+                }, {
+                    x: '20161001T000000',
+                    y: 14,
+                }]
+            }, {
+                label: "My Second dataset",
+                borderColor: window.chartColors.blue,
+                backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
+                data: [{
+                    x: '20161030T000000',
+                    y: 2,
+                }, {
+                    x: '20161020T000000',
+                    y: 3,
+                }, {
+                    x: '20161010T000000',
+                    y: 4,
+                }, {
+                    x: '20161007T000000',
+                    y: 5,
+                }, {
+                    x: '20161006T000000',
+                    y: 6,
+                }, {
+                    x: '20161005T000000',
+                    y: 7,
+                }, {
+                    x: '20161004T000000',
+                    y: 8,
+                }]
+            }]
+        };
+
+        window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myScatter = Chart.Scatter(ctx, {
+                data: scatterChartData,
+                options: {
+                    title: {
+                        display: true,
+                    },
+
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            time: {
+                                unit: 'week',
+                                displayFormats: {
+                                    week: 'DD.MM.'
+                                    }
+                            }
+                        }]
+                    }
+                }
+            });
+        };
+
 
 });
 </script>
