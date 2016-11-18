@@ -202,6 +202,7 @@
 <link href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 <script src="js/bootstrap.min.js"></script>
+<script src="js/chartjs-plugin-zoom.min.js"></script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="js/ie10-viewport-bug-workaround.js"></script>
@@ -213,6 +214,9 @@
     var dataSource = '${dataSource}'; // whether the page is delivered by a server or static (dev mode)
     var measurements;
     var chart;
+    var myScatter;
+    var rainSeries = [];
+
 
     if ( dataSource === 'server' ) {
       measurements = "Datum,Regen\n";
@@ -228,7 +232,13 @@
             var formattedTime = hours + ":" + minutes;
 
             measurements = measurements.concat(formattedDate, " ", formattedTime, ", ", val.value, "\n" );
+
+            rainSeries.push({x:ts.toISOString(), y:val.value});
           });
+
+          scatterChartData.datasets[1].data = rainSeries;
+          myScatter.update();
+
           chart.updateOptions({'file':measurements});
         });
     }
@@ -262,21 +272,20 @@
             red: 'rgb(255, 99, 132)',
             orange: 'rgb(255, 159, 64)',
             yellow: 'rgb(255, 205, 86)',
-            green: 'rgb(75, 192, 192)',
-            blue: 'rgb(54, 162, 235)',
+            green: 'rgb(92, 184, 92)',
+            blue: 'rgb(51, 122, 183)',
             purple: 'rgb(153, 102, 255)',
             grey: 'rgb(231,233,237)'
         };
 
-
         var color = Chart.helpers.color;
         var scatterChartData = {
             datasets: [{
-                label: "My First dataset",
-                borderColor: window.chartColors.red,
-                backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+                label: "Wasserstand",
+                borderColor: window.chartColors.green,
+                backgroundColor: color(window.chartColors.green).alpha(0.2).rgbString(),
                 data: [{
-                    x: '20161007T000000',
+                    x: '2016-10-07 11:56:18.228Z',
                     y: 20,
                 }, {
                     x: '20161006T000000',
@@ -298,58 +307,40 @@
                     y: 14,
                 }]
             }, {
-                label: "My Second dataset",
+                label: "Regen",
                 borderColor: window.chartColors.blue,
                 backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
-                data: [{
-                    x: '20161030T000000',
-                    y: 2,
-                }, {
-                    x: '20161020T000000',
-                    y: 3,
-                }, {
-                    x: '20161010T000000',
-                    y: 4,
-                }, {
-                    x: '20161007T000000',
-                    y: 5,
-                }, {
-                    x: '20161006T000000',
-                    y: 6,
-                }, {
-                    x: '20161005T000000',
-                    y: 7,
-                }, {
-                    x: '20161004T000000',
-                    y: 8,
-                }]
+                data: []
             }]
         };
 
-        window.onload = function() {
-            var ctx = document.getElementById("canvas").getContext("2d");
-            window.myScatter = Chart.Scatter(ctx, {
-                data: scatterChartData,
-                options: {
-                    title: {
-                        display: true,
-                    },
+        var ctx = document.getElementById("canvas").getContext("2d");
+        myScatter = Chart.Scatter(ctx, {
+            data: scatterChartData,
+            options: {
+                title: {
+                    display: true,
+                },
 
-                    scales: {
-                        xAxes: [{
-                            type: 'time',
-                            time: {
-                                unit: 'week',
-                                displayFormats: {
-                                    week: 'DD.MM.'
-                                    }
-                            }
-                        }]
-                    }
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+                            unit: 'week',
+                            displayFormats: {
+                                week: 'DD.MM.'
+                                }
+                        }
+                    }]
+                },
+
+                zoom: {
+                    enabled: true,
+                    drag: false,
+                    mode: 'x'
                 }
-            });
-        };
-
+            }
+        });
 
 });
 </script>
