@@ -171,6 +171,7 @@ public class MongoDao {
                     }
                 }
 
+                // TODO limit the result set with a default
                 if (queryParser.hasLimit()) {
                     find.limit(queryParser.getLimit());
                 }
