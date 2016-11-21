@@ -230,12 +230,14 @@ $(document).ready(function () {
             label: "Wasserstand",
             borderColor: window.chartColors.green,
             backgroundColor: color(window.chartColors.green).alpha(0.2).rgbString(),
+            yAxisID: "y-axis-1",
             data: []
             },
             {
             label: "Regen",
             borderColor: window.chartColors.blue,
             backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
+            yAxisID: "y-axis-2",
             data: []
         }]
     };
@@ -290,7 +292,31 @@ $(document).ready(function () {
                             week: 'DD.MM.'
                             }
                     }
-                }]
+                }],
+                yAxes: [{
+                    type: "linear",
+                    display: true,
+                    position: "left",
+                    id: "y-axis-1",
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Wasserstand'
+                    }
+                }, {
+                    type: "linear",
+                    display: true,
+                    position: "right",
+                    id: "y-axis-2",
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Regen'
+                    },
+
+                    // grid line settings
+                    gridLines: {
+                        drawOnChartArea: false, // only want the grid lines for one axis to show up
+                    },
+                }],
             },
 
             zoom: {
