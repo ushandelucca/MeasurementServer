@@ -149,7 +149,6 @@ public class MongoDao {
             try {
                 Find find;
 
-                // TODO test coverage
                 if (queryParser.hasDate() && queryParser.hasSensor()) {
                     find = measurements.find("{ timestamp: { $gte: #, $lt: # }, sensor: # }", queryParser.getBeginDate().toDate(), queryParser.getEndDate().toDate(), queryParser.getSensor());
                 } else if (queryParser.hasDate() && !queryParser.hasSensor()) {

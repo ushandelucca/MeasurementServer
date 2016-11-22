@@ -130,7 +130,7 @@ public class QueryParser {
                 }
             }
 
-            if ((beginDate == null) && (endDate == null) && (!hasSort()) && (limit == 0)) {
+            if ((beginDate == null) && (endDate == null) && (!hasSensor()) && (!hasSort()) && (limit == 0)) {
                 throw new PersistenceException("No search criteria defined!");
             }
 
