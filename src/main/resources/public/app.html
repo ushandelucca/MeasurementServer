@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -108,7 +108,7 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div id="dashboard">
-                        <div id="chart" style="width: 100%; height:300px;"></div>
+                        <canvas id="canvas" style="width: 100%; height:300px;"></canvas>
                     </div>
                 </div>
                 <!-- /.panel-body -->
@@ -180,7 +180,7 @@
 <footer class="footer">
     <div class="container">
         <div class="pull-left">
-            <div class="text-muted">${version} @ ${hostname}</div>
+            <div class="text-muted">Version ${version} @ ${hostname}</div>
         </div>
         <div class="pull-right">
             <div class="text-muted">Copyright &copy; 2015 - ${copyrightYear} Peter B&oumlhringer</div>
@@ -193,24 +193,63 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.1/dygraph-combined.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
 
 <!-- intercooler.js and font awesome for the asynchronous requests -->
 <script src="https://intercoolerreleases-leaddynocom.netdna-ssl.com/intercooler-1.0.0.min.js"></script>
 <link href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 <script src="js/bootstrap.min.js"></script>
+<script src="js/chartjs-plugin-zoom.min.js"></script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 </body>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+$(document).ready(function () {
 
     var dataSource = '${dataSource}'; // whether the page is delivered by a server or static (dev mode)
-    var measurements;
     var chart;
+    var rainSeries = [];
+    var levelSeries = [];
+
+    window.chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(92, 184, 92)',
+        blue: 'rgb(51, 122, 183)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(231,233,237)'
+    };
+
+    var color = Chart.helpers.color;
+    var chartData = {
+        datasets: [{
+            label: "Wasserstand",
+            borderColor: window.chartColors.green,
+            backgroundColor: color(window.chartColors.green).alpha(0.2).rgbString(),
+            yAxisID: "y-axis-1",
+            data: []
+            },
+            {
+            label: "Regen",
+            borderColor: window.chartColors.blue,
+            backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
+            yAxisID: "y-axis-2",
+            data: []
+        }]
+    };
+
+    levelSeries = [{ x: '2016-11-19 20:00:00.000Z', y: 70},
+                   { x: '2016-11-17 19:05:00.000Z', y: 65},
+                   { x: '2016-11-14 20:00:00.000Z', y: 60},
+                   { x: '2016-11-13 19:00:00.000Z', y: 55},
+                   { x: '2016-11-12 18:59:00.000Z', y: 50},
+                   { x: '2016-11-11 17:00:00.000Z', y: 40}];
+
+    chartData.datasets[0].data = levelSeries;
 
     if ( dataSource === 'server' ) {
       measurements = "Datum,Regen\n";
@@ -219,42 +258,75 @@
 
           $.each( data, function( key, val ) {
             var ts = new Date(val.timestamp);
-
-            var formattedDate = ts.getFullYear() + "/" + (ts.getMonth()+1) + "/" + ts.getDate();
-            var hours = (ts.getHours() < 10) ? "0" + ts.getHours() : ts.getHours();
-            var minutes = (ts.getMinutes() < 10) ? "0" + ts.getMinutes() : ts.getMinutes();
-            var formattedTime = hours + ":" + minutes;
-
-            measurements = measurements.concat(formattedDate, " ", formattedTime, ", ", val.value, "\n" );
+            rainSeries.push({x:ts.toISOString(), y:val.value});
           });
-          chart.updateOptions({'file':measurements});
+
+          chartData.datasets[1].data = rainSeries;
+          chart.update();
         });
     }
     else {
-        measurements = "Datum,Regen, Wasserstand\n" +
-                       "2016/10/14 00:00, 1.2, 50\n" +
-                       "2016/10/13 00:00, 1.0, 45\n" +
-                       "2016/10/12 00:00, 1.5, 30\n" +
-                       "2016/10/11 00:00, 0.7, 20\n" +
-                       "2016/10/10 00:00, 1.1, 25\n" +
-                       "2016/10/09 00:00, 1.0, 30\n" +
-                       "2016/10/08 00:00, 0.9, 30\n" +
-                       "2016/10/07 00:00, 0.8, 30\n" +
-                       "2016/10/06 00:00, 1.3, 25";
+        rainSeries = [{ x: '2016-11-18 20:00:00.000Z', y: 20},
+                      { x: '2016-11-17 20:23:00.000Z', y: 19},
+                      { x: '2016-11-16 20:03:00.000Z', y: 18},
+                      { x: '2016-11-15 20:06:00.000Z', y: 17},
+                      { x: '2016-11-14 20:59:00.000Z', y: 16},
+                      { x: '2016-11-13 20:00:00.000Z', y: 18}];
+        chartData.datasets[1].data = rainSeries;
     }
 
-    chart = new Dygraph(
-        document.getElementById("chart"),
-        measurements, {
-            customBars: false,
-            ylabel: 'Liter',
-            legend: 'always',
-            labelsDivStyles: {
-                'textAlign': 'right'
+    var ctx = document.getElementById("canvas").getContext("2d");
+    chart = Chart.Scatter(ctx, {
+        data: chartData,
+        options: {
+            title: {
+                text: 'Alle Messwerte',
+                display: false
             },
-            showRangeSelector: true
+
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        unit: 'week',
+                        displayFormats: {
+                            week: 'DD.MM.'
+                            }
+                    }
+                }],
+                yAxes: [{
+                    type: "linear",
+                    display: true,
+                    position: "left",
+                    id: "y-axis-1",
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Wasserstand'
+                    }
+                }, {
+                    type: "linear",
+                    display: true,
+                    position: "right",
+                    id: "y-axis-2",
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Regen'
+                    },
+
+                    // grid line settings
+                    gridLines: {
+                        drawOnChartArea: false, // only want the grid lines for one axis to show up
+                    },
+                }],
+            },
+
+            zoom: {
+                enabled: true,
+                drag: false,
+                mode: 'x'
+            }
         }
-    );
+    });
 
 });
 </script>

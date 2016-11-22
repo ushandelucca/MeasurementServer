@@ -70,7 +70,7 @@ public class MongoDaoIntTest {
     }
 
     @Test
-    public void testReadMeasurementsWithQuery() throws Exception {
+    public void testReadMeasurementsWithQuery1() throws Exception {
         dao.createMeasurement(getMeasurement1());
         dao.createMeasurement(getMeasurement2());
         dao.createMeasurement(getMeasurement3());
@@ -82,6 +82,54 @@ public class MongoDaoIntTest {
         Measurement[] measurements = dao.readMeasurementsWithQuery(params);
 
         Assert.assertEquals(3, measurements.length);
+    }
+
+    @Test
+    public void testReadMeasurementsWithQueryDate() throws Exception {
+        dao.createMeasurement(getMeasurement1());
+        dao.createMeasurement(getMeasurement2());
+        dao.createMeasurement(getMeasurement3());
+
+        Map<String, String[]> params = new HashMap<>();
+        params.put("query", new String[]{"return"});
+        params.put("begin", new String[]{"2014-01-20"});
+        params.put("end", new String[]{"2015-01-20"});
+
+        Measurement[] measurements = dao.readMeasurementsWithQuery(params);
+
+        Assert.assertEquals(0, measurements.length);
+    }
+
+    @Test
+    public void testReadMeasurementsWithQuerySensor() throws Exception {
+        dao.createMeasurement(getMeasurement1());
+        dao.createMeasurement(getMeasurement2());
+        dao.createMeasurement(getMeasurement3());
+
+        Map<String, String[]> params = new HashMap<>();
+        params.put("query", new String[]{"return"});
+        params.put("sensor", new String[]{"Rain"});
+
+        Measurement[] measurements = dao.readMeasurementsWithQuery(params);
+
+        Assert.assertEquals(3, measurements.length);
+    }
+
+    @Test
+    public void testReadMeasurementsWithQueryDateAndSensor() throws Exception {
+        dao.createMeasurement(getMeasurement1());
+        dao.createMeasurement(getMeasurement2());
+        dao.createMeasurement(getMeasurement3());
+
+        Map<String, String[]> params = new HashMap<>();
+        params.put("query", new String[]{"return"});
+        params.put("sensor", new String[]{"Rain"});
+        params.put("begin", new String[]{"2014-01-20"});
+        params.put("end", new String[]{"2015-01-20"});
+
+        Measurement[] measurements = dao.readMeasurementsWithQuery(params);
+
+        Assert.assertEquals(0, measurements.length);
     }
 
     @Test
