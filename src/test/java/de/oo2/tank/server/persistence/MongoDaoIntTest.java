@@ -147,13 +147,56 @@ public class MongoDaoIntTest {
 
     @Test
     public void testUpdateMeasurement() throws Exception {
-        dao.updateMeasurement(1);
-        // TODO implementation
+        Measurement measurement = getMeasurement1();
+
+        measurement = dao.createMeasurement(measurement);
+
+        Measurement measurementInDb = dao.readMeasurementById(measurement.getId());
+        Assert.assertEquals(measurement, measurementInDb);
+
+        float newValue = 99.7654321f;
+
+        measurement.setValue(newValue);
+        dao.updateMeasurement(measurement);
+
+        measurementInDb = dao.readMeasurementById(measurement.getId());
+        Assert.assertEquals(measurement, measurementInDb);
+    }
+
+    @Test
+    public void testUpdateMeasurementFail() throws Exception {
+        Measurement measurement = getMeasurement1();
+        measurement = dao.createMeasurement(measurement);
+        dao.deleteMeasurement(measurement.getId());
+
+        try {
+            dao.updateMeasurement(measurement);
+        } catch (PersistenceException e) {
+            return;
+        }
+
+        Assert.fail("should throw a exception");
     }
 
     @Test
     public void testDeleteMeasurement() throws Exception {
-        dao.deleteMeasurement(1);
-        // TODO implementation
+        Measurement measurement = getMeasurement1();
+        measurement = dao.createMeasurement(measurement);
+        dao.deleteMeasurement(measurement.getId());
+    }
+
+    @Test
+    public void testDeleteMeasurementFail() throws Exception {
+        Measurement measurement = getMeasurement1();
+        measurement = dao.createMeasurement(measurement);
+        dao.deleteMeasurement(measurement.getId());
+
+        try {
+            dao.deleteMeasurement(measurement.getId());
+        } catch (PersistenceException e) {
+            return;
+        }
+
+        Assert.fail("should throw a exception");
     }
 }
