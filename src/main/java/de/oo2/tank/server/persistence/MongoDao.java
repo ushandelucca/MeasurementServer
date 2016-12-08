@@ -3,6 +3,7 @@ package de.oo2.tank.server.persistence;
 import com.google.common.collect.Lists;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import de.oo2.tank.server.model.Measurement;
 import org.jongo.Find;
 import org.jongo.Jongo;
@@ -195,18 +196,53 @@ public class MongoDao {
 
     /**
      * Update a measurement
-     * @param id the id of the measurement to be updated
+     * @param measurement the measurement to be updated
+     * @throws PersistenceException in case of failure
+     * @return the updated measurement
      */
-    public void updateMeasurement(int id) {
-        logger.debug("Update : " + id);
+    public Measurement updateMeasurement(Measurement measurement) throws PersistenceException {
+        MongoCollection measurements = getMeasurements();
+
+        try {
+            try {
+                WriteResult writeResult = measurements.update(withOid(measurement.getId())).with(measurement);
+
+                if (writeResult.getN() != 1) {
+                    throw new Exception("");
+                }
+
+            } catch (Exception e) {
+                handleException("Error while updating the measurement with id '" + measurement.getId() + "'", e);
+            }
+        } finally {
+            closeMeasurements();
+        }
+
+        return measurement;
     }
 
     /**
      * Delete a measurement
      * @param id the id of the measurement to be deleted
+     * @throws PersistenceException in case of failure
      */
-    public void deleteMeasurement(int id) {
-        logger.debug("Delete : " + id);
+    public void deleteMeasurement(String id) throws PersistenceException {
+        MongoCollection measurements = getMeasurements();
+
+        try {
+            try {
+                WriteResult writeResult = measurements.remove(withOid(id));
+
+                if (writeResult.getN() != 1) {
+                    throw new Exception("");
+                }
+
+            } catch (Exception e) {
+                handleException("Error while deleting the measurement with id '" + id + "'", e);
+            }
+        } finally {
+            closeMeasurements();
+        }
     }
 
     /**

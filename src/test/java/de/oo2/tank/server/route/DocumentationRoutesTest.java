@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static spark.Spark.awaitInitialization;
 import static spark.Spark.stop;
 
 /**
@@ -19,14 +20,15 @@ public class DocumentationRoutesTest {
     public static void beforeClass() throws Exception {
         // start the server
         Server.main(null);
-        Thread.sleep(1500); // allow the server to start
+        awaitInitialization();
+//         Thread.sleep(2000); // allow the server to start
     }
 
     @AfterClass
     public static void afterClass() throws Exception {
         // stop the server
         stop();
-        Thread.sleep(1500); // allow the server to start
+        Thread.sleep(2000); // allow the server to stop
     }
 
     @Test

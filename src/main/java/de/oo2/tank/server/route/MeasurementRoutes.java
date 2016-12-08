@@ -148,11 +148,19 @@ public class MeasurementRoutes {
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
     public void putMeasurement(@ApiParam(value = "The measurement to update.", required = true) Measurement measurement) {
 
-        put("/api/water/measurements", (req, res) -> {
+        put("/api/tank/measurements", (req, res) -> {
             res.type("application/json");
 
-            res.status(400);
-            return new ResponseError("Not implemented yet!");
+            Measurement _measurement = null;
+
+            try {
+                _measurement = new Gson().fromJson(req.body(), Measurement.class);
+                _measurement = measurementService.updateMeasurement(_measurement);
+            } catch (Exception e) {
+                return handleException(e, res);
+            }
+
+            return _measurement;
 
         }, json());
     }
@@ -165,11 +173,18 @@ public class MeasurementRoutes {
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
     public void deleteMeasurement(@ApiParam(value = "Id of the measurement", required = true) @PathParam("id") String id) {
 
-        delete("/api/water/measurements", (req, res) -> {
+        delete("/api/tank/measurements/:id", (req, res) -> {
             res.type("application/json");
 
-            res.status(400);
-            return new ResponseError("Not implemented yet!");
+            String tid = req.params(":id");
+
+            try {
+                measurementService.deleteMeasurement(tid);
+            } catch (Exception e) {
+                return handleException(e, res);
+            }
+
+            return "Success, the measurement has been deleted";
 
         }, json());
     }

@@ -57,8 +57,8 @@ public class MeasurementService {
     /**
      * Read a measurement from the database.
      *
-     * @param id of temperature measurement
-     * @return the temperature measurement
+     * @param id of the measurement
+     * @return the the measurement
      * @throws PersistenceException in case of failure
      */
     public Measurement readMeasurement(String id) throws PersistenceException {
@@ -89,6 +89,36 @@ public class MeasurementService {
         Measurement[] measurements = dao.readMeasurementsWithQuery(queryParameters);
 
         return measurements;
+    }
+
+    /**
+     * Update a existing measurement in the database.
+     *
+     * @param measurement the measurement
+     * @return the measurement saved in the database
+     * @throws PersistenceException in case of failure
+     * @throws ModelException in case of failure
+     */
+    public Measurement updateMeasurement(Measurement measurement) throws PersistenceException, ModelException {
+
+        // validate id
+        if ((measurement.getId() == null) || ("".equals(measurement.getId()))) {
+            throw new ModelException("ID must not be empty");
+        }
+
+        validate(measurement);
+        Measurement updatedMeasurement = dao.updateMeasurement(measurement);
+        return updatedMeasurement;
+    }
+
+    /**
+     * Delete a measurement from the database.
+     *
+     * @param id of the measurement
+     * @throws PersistenceException in case of failure
+     */
+    public void deleteMeasurement(String id) throws PersistenceException {
+        dao.deleteMeasurement(id);
     }
 
     /**
