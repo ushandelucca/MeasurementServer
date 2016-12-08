@@ -157,7 +157,7 @@ public class MongoDaoIntTest {
         float newValue = 99.7654321f;
 
         measurement.setValue(newValue);
-        dao.updateMeasurement(measurement);
+        measurement = dao.updateMeasurement(measurement);
 
         measurementInDb = dao.readMeasurementById(measurement.getId());
         Assert.assertEquals(measurement, measurementInDb);

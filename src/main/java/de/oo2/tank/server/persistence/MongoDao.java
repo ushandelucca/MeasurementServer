@@ -198,8 +198,9 @@ public class MongoDao {
      * Update a measurement
      * @param measurement the measurement to be updated
      * @throws PersistenceException in case of failure
+     * @return the updated measurement
      */
-    public void updateMeasurement(Measurement measurement) throws PersistenceException {
+    public Measurement updateMeasurement(Measurement measurement) throws PersistenceException {
         MongoCollection measurements = getMeasurements();
 
         try {
@@ -212,6 +213,8 @@ public class MongoDao {
         } finally {
             closeMeasurements();
         }
+
+        return measurement;
     }
 
     /**
