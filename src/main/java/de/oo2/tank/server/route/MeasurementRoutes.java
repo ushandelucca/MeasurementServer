@@ -69,16 +69,16 @@ public class MeasurementRoutes {
             // TODO: check authorisation in POST request
             // String apiKey = req.headers("key");
 
-            Measurement _measurement = null;
+            Measurement m = null;
 
             try {
-                _measurement = new Gson().fromJson(req.body(), Measurement.class);
-                _measurement = measurementService.saveMeasurement(_measurement);
+                m = new Gson().fromJson(req.body(), Measurement.class);
+                m = measurementService.saveMeasurement(m);
             } catch (Exception e) {
                 return handleException(e, res);
             }
 
-            return _measurement;
+            return m;
 
         }, json());
     }
