@@ -18,7 +18,7 @@ public class PersistenceException extends Exception {
     /**
      * Constructor for the <code>PersistenceException</code>.
      *
-     * @param message   the message
+     * @param message the message
      * @param throwable the original exception
      */
     public PersistenceException(String message, Throwable throwable) {
