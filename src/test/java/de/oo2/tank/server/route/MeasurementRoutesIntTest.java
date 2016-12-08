@@ -225,5 +225,98 @@ public class MeasurementRoutesIntTest {
         Assert.assertTrue(readMeasurements.length > 0);
     }
 
+    @Test
+    public void testPutMeasurement_200() throws Exception {
+        // first save measurement 1
+        Measurement param = getMeasurement1();
+        String jsonString = gson.toJson(param);
+
+        Content content = Request.Post("http://localhost:8080/api/tank/measurements")
+                .bodyString(jsonString, ContentType.APPLICATION_JSON)
+                .execute()
+                .returnContent();
+
+        Measurement savedMeasurement = gson.fromJson(content.asString(), Measurement.class);
+
+        Assert.assertNotSame(param.getId(), savedMeasurement.getId());
+
+        // then update it
+        Measurement updatedMeasurement = savedMeasurement;
+        updatedMeasurement.setValue(savedMeasurement.getValue() + 2.5f);
+
+        float updatedValue = updatedMeasurement.getValue();
+
+        Assert.assertNotEquals(param.getValue(), updatedValue);
+
+        jsonString = gson.toJson(updatedMeasurement);
+
+        content = Request.Put("http://localhost:8080/api/tank/measurements")
+                .bodyString(jsonString, ContentType.APPLICATION_JSON)
+                .execute()
+                .returnContent();
+
+        Measurement result = gson.fromJson(content.asString(), Measurement.class);
+        Assert.assertEquals(new Double(updatedValue), new Double(result.getValue().floatValue()), 0d);
+    }
+
+    @Test
+    public void testPutMeasurement_400() throws Exception {
+        Measurement param = getMeasurement1();
+        setRandomId(param);
+        String jsonString = gson.toJson(param);
+
+        HttpResponse httpResponse = Request.Put("http://localhost:8080/api/tank/measurements")
+                .bodyString(jsonString, ContentType.APPLICATION_JSON)
+                .execute()
+                .returnResponse();
+
+        int code = httpResponse.getStatusLine().getStatusCode();
+
+        Assert.assertEquals(400, code);
+
+        Content content = new ContentResponseHandler().handleEntity(httpResponse.getEntity());
+        ResponseError errorMessage = gson.fromJson(content.toString(), ResponseError.class);
+
+        Assert.assertTrue(errorMessage.getMessage().contains("Error while updating the measurement"));
+    }
+
+    @Test
+    public void testDeleteMeasurement_200() throws Exception {
+        // first save a measurement
+        Measurement param = getMeasurement2();
+        String jsonString = gson.toJson(param);
+
+        Content content = Request.Post("http://localhost:8080/api/tank/measurements")
+                .bodyString(jsonString, ContentType.APPLICATION_JSON)
+                .execute()
+                .returnContent();
+
+        Measurement savedMeasurement = gson.fromJson(content.asString(), Measurement.class);
+
+        Assert.assertNotSame(param.getId(), savedMeasurement.getId());
+
+        // then delete it
+        content = Request.Delete("http://localhost:8080/api/tank/measurements/" + savedMeasurement.getId())
+                .execute()
+                .returnContent();
+
+        Assert.assertEquals("\"Success, the measurement has been deleted\"", content.toString());
+    }
+
+    @Test
+    public void testDeleteMeasurement_400() throws Exception {
+        HttpResponse httpResponse = Request.Delete("http://localhost:8080/api/tank/measurements/54651022bffebc03098b4567")
+                .execute()
+                .returnResponse();
+
+        int code = httpResponse.getStatusLine().getStatusCode();
+
+        Assert.assertEquals(400, code);
+
+        Content content = new ContentResponseHandler().handleEntity(httpResponse.getEntity());
+        ResponseError errorMessage = gson.fromJson(content.toString(), ResponseError.class);
+
+        Assert.assertTrue(errorMessage.getMessage().contains("Error while deleting the measurement"));
+    }
 }
 

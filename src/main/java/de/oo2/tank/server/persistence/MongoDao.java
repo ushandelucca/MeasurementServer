@@ -204,12 +204,16 @@ public class MongoDao {
         MongoCollection measurements = getMeasurements();
 
         try {
-            WriteResult writeResult = measurements.update(withOid(measurement.getId())).with(measurement);
+            try {
+                WriteResult writeResult = measurements.update(withOid(measurement.getId())).with(measurement);
 
-            if (writeResult.getN() != 1) {
-                handleException("Error while updating the measurement with id '" + measurement.getId() + "'", new Exception(""));
+                if (writeResult.getN() != 1) {
+                    throw new Exception("");
+                }
+
+            } catch (Exception e) {
+                handleException("Error while updating the measurement with id '" + measurement.getId() + "'", e);
             }
-
         } finally {
             closeMeasurements();
         }
@@ -226,12 +230,16 @@ public class MongoDao {
         MongoCollection measurements = getMeasurements();
 
         try {
-            WriteResult writeResult = measurements.remove(withOid(id));
+            try {
+                WriteResult writeResult = measurements.remove(withOid(id));
 
-            if (writeResult.getN() != 1) {
-                handleException("Error while removing the measurement with id '" + id + "'", new Exception(""));
+                if (writeResult.getN() != 1) {
+                    throw new Exception("");
+                }
+
+            } catch (Exception e) {
+                handleException("Error while deleting the measurement with id '" + id + "'", e);
             }
-
         } finally {
             closeMeasurements();
         }
