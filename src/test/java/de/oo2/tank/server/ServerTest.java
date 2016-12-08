@@ -3,6 +3,7 @@ package de.oo2.tank.server;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static spark.Spark.awaitInitialization;
 import static spark.Spark.stop;
 
 /**
@@ -16,7 +17,9 @@ public class ServerTest {
         try {
 
             Server.main(null);
+            awaitInitialization();
             stop();
+            Thread.sleep(2000); // allow the server to stop
 
         } catch (Exception e) {
             Assert.fail();
