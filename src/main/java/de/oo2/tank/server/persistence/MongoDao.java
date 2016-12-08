@@ -160,7 +160,7 @@ public class MongoDao {
                     find = measurements.find("{ }");
                 }
 
-                // TODO reduce cyclomatic complexity: too much nested conditions
+                // TODO: reduce cyclomatic complexity: too much nested conditions
                 if (queryParser.hasSort()) {
 
                     if (queryParser.isSortDateAsc()) {
@@ -171,7 +171,7 @@ public class MongoDao {
                     }
                 }
 
-                // TODO limit the result set with a default
+                // TODO: limit the result set with a default
                 if (queryParser.hasLimit()) {
                     find.limit(queryParser.getLimit());
                 }

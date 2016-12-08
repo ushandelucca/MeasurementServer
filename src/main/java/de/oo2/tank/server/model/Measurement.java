@@ -123,6 +123,7 @@ public class Measurement {
      * @return <code>true</code> or <code>false</code>
      */
     @NotNull(message = "The 'Valid' marker is mandatory")
+    // TODO: delete the member 'valid'
     public Boolean getValid() {
         return valid;
     }
