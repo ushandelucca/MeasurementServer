@@ -208,7 +208,7 @@ public class MongoDao {
                 WriteResult writeResult = measurements.update(withOid(measurement.getId())).with(measurement);
 
                 if (writeResult.getN() != 1) {
-                    throw new Exception("");
+                    throw new PersistenceException("");
                 }
 
             } catch (Exception e) {
@@ -234,7 +234,7 @@ public class MongoDao {
                 WriteResult writeResult = measurements.remove(withOid(id));
 
                 if (writeResult.getN() != 1) {
-                    throw new Exception("");
+                    throw new PersistenceException("");
                 }
 
             } catch (Exception e) {
