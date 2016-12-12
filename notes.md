@@ -18,7 +18,8 @@ resources
 - http://intercoolerjs.org
 - https://github.com/jakerella/jquery-mockjax
 - Badge champion: https://github.com/oshi/oshi/blob/master/README.md
-- Next project: https://github.com/cgarwood/hacontrolpoint based on https://www.behance.net/gallery/9080423/HEIMA-Smart-Home-Automation-UI 
+- Next project: https://github.com/cgarwood/hacontrolpoint based on https://www.behance.net/gallery/9080423/HEIMA-Smart-Home-Automation-UI
+- Using https://github.com/kevinswiber/siren or http://stateless.co/hal_specification.html instead of swagger 
 
 ## [Spark](http://sparkjava.com/)
 http://www.mscharhag.com/java/building-rest-api-with-spark
