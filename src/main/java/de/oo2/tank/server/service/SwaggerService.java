@@ -53,11 +53,10 @@ public class SwaggerService {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         String json = objectMapper.writeValueAsString(swagger);
 
-        // TODO: Workaround for the missing "Security" in the @SwaggerDefinition annotation
+        // TODO: remove this workaround for @SwaggerDefinition in MeasurementRoutes
         String securityDefinition = "\"securityDefinitions\": {\"tankauth\": {\"type\": \"apiKey\", \"in\": \"header\", \"name\": \"key\"}},";
         int beforePathSection = json.indexOf("\"paths\":");
         json = json.substring(0, beforePathSection) + securityDefinition + json.substring(beforePathSection, json.length());
-
         return json;
     }
 

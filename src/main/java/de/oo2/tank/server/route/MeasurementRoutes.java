@@ -11,6 +11,7 @@ import de.oo2.tank.server.service.MeasurementService;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import spark.Request;
 import spark.Response;
 
 import javax.ws.rs.*;
@@ -30,14 +31,23 @@ import static spark.Spark.*;
         schemes = {SwaggerDefinition.Scheme.HTTPS /*, SwaggerDefinition.Scheme.HTTP*/},
         consumes = {"application/json"},
         produces = {"application/json"},
-        tags = {@Tag(name = "Description")})
+        tags = {@Tag(name = "Description")}
+        // TODO: remove this comment when the @SwaggerDefinition works. See also SwaggerService for the workaround.
+        /* , // see workaround
+        securityDefinition = @SecurityDefinition(
+                apiKeyAuthDefintions = {
+                        @ApiKeyAuthDefinition(key = "tankauth", name = "key", in = ApiKeyAuthDefinition.ApiKeyLocation.HEADER)
+                } ) */
+)
 @Path("/api/tank/measurements")
 @Api(value = "/api/tank/measurements",
         description = "Operations for the tank measurements.")
+
 @Produces({"application/json"})
 public class MeasurementRoutes {
     private static final Logger logger = LoggerFactory.getLogger(MeasurementRoutes.class.getName());
     private final MeasurementService measurementService;
+    private String tankApiKey = null;
 
     /**
      * Constructor.
@@ -46,6 +56,8 @@ public class MeasurementRoutes {
      */
     public MeasurementRoutes(ServerContext serverContext) {
         this.measurementService = serverContext.getMeasurementService();
+
+        tankApiKey = serverContext.getConfiguration().getTankApiKey();
 
         // the method parameters are irrelevant for the execution. They are solely used to place the
         // annotations for the swagger documentation
@@ -66,12 +78,11 @@ public class MeasurementRoutes {
         post("/api/tank/measurements", (req, res) -> {
             res.type("application/json");
 
-            // TODO: check authorisation in POST request
-            // String apiKey = req.headers("key");
-
             Measurement m = null;
 
             try {
+                checkApiAccess(req);
+
                 m = new Gson().fromJson(req.body(), Measurement.class);
                 m = measurementService.saveMeasurement(m);
             } catch (Exception e) {
@@ -151,16 +162,18 @@ public class MeasurementRoutes {
         put("/api/tank/measurements", (req, res) -> {
             res.type("application/json");
 
-            Measurement _measurement = null;
+            Measurement m = null;
 
             try {
-                _measurement = new Gson().fromJson(req.body(), Measurement.class);
-                _measurement = measurementService.updateMeasurement(_measurement);
+                checkApiAccess(req);
+
+                m = new Gson().fromJson(req.body(), Measurement.class);
+                m = measurementService.updateMeasurement(m);
             } catch (Exception e) {
                 return handleException(e, res);
             }
 
-            return _measurement;
+            return m;
 
         }, json());
     }
@@ -179,6 +192,8 @@ public class MeasurementRoutes {
             String tid = req.params(":id");
 
             try {
+                checkApiAccess(req);
+
                 measurementService.deleteMeasurement(tid);
             } catch (Exception e) {
                 return handleException(e, res);
@@ -202,7 +217,7 @@ public class MeasurementRoutes {
 
             response.status(400);
             return new ResponseError("Error while parsing the measurement!");
-        } else if ((e instanceof PersistenceException) || (e instanceof ModelException)) {
+        } else if ((e instanceof PersistenceException) || (e instanceof ModelException || (e instanceof NotAuthorisedException))) {
             logger.error(e.getMessage(), e);
 
             response.status(400);
@@ -213,6 +228,20 @@ public class MeasurementRoutes {
 
             response.status(400);
             return new ResponseError("Error while processing the request!");
+        }
+    }
+
+    /**
+     * Check if the request is authorised to use the api.
+     *
+     * @param req the request
+     * @throws NotAuthorisedException in case of a not authoriesd request
+     */
+    private void checkApiAccess(Request req) throws NotAuthorisedException {
+        String reqKey = req.headers("key");
+
+        if (!tankApiKey.equals(reqKey)) {
+            throw new NotAuthorisedException("Not Authorised!");
         }
     }
 }
