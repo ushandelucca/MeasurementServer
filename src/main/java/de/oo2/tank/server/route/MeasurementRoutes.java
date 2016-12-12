@@ -2,6 +2,7 @@ package de.oo2.tank.server.route;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
+import de.oo2.tank.server.Configuration;
 import de.oo2.tank.server.model.Measurement;
 import de.oo2.tank.server.model.ModelException;
 import de.oo2.tank.server.model.ResponseError;
@@ -47,7 +48,7 @@ import static spark.Spark.*;
 public class MeasurementRoutes {
     private static final Logger logger = LoggerFactory.getLogger(MeasurementRoutes.class.getName());
     private final MeasurementService measurementService;
-    private String tankApiKey = null;
+    private String expectedTankApiKey = null;
 
     /**
      * Constructor.
@@ -57,11 +58,11 @@ public class MeasurementRoutes {
     public MeasurementRoutes(ServerContext serverContext) {
         this.measurementService = serverContext.getMeasurementService();
 
-        tankApiKey = serverContext.getConfiguration().getTankApiKey();
+        expectedTankApiKey = serverContext.getConfiguration().getTankApiKey();
 
         // the method parameters are irrelevant for the execution. They are solely used to place the
         // annotations for the swagger documentation
-        postTemperature(null);
+        postMeasurement(null);
         getMeasurementById("");
         getMeasurementByQuery();
         putMeasurement(null);
@@ -73,7 +74,7 @@ public class MeasurementRoutes {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success, the saved measurement", response = Measurement.class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
-    public void postTemperature(@ApiParam(value = "The measurement to save.", required = true) Measurement measurement) {
+    public void postMeasurement(@ApiParam(value = "The measurement to save.", required = true) Measurement measurement) {
 
         post("/api/tank/measurements", (req, res) -> {
             res.type("application/json");
@@ -238,9 +239,9 @@ public class MeasurementRoutes {
      * @throws NotAuthorisedException in case of a not authoriesd request
      */
     private void checkApiAccess(Request req) throws NotAuthorisedException {
-        String reqKey = req.headers("key");
+        String reqKey = req.headers(Configuration.ENV_TANK_API_KEY);
 
-        if (!tankApiKey.equals(reqKey)) {
+        if (!expectedTankApiKey.equals(reqKey)) {
             throw new NotAuthorisedException("Not Authorised!");
         }
     }

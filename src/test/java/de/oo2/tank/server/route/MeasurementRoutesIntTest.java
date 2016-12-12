@@ -45,6 +45,7 @@ public class MeasurementRoutesIntTest {
         String jsonString = gson.toJson(param);
 
         Content content = Request.Post("http://localhost:8080/api/tank/measurements")
+                .addHeader("TANK_API_KEY", "ABC123")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnContent();
@@ -59,6 +60,7 @@ public class MeasurementRoutesIntTest {
         String jsonString = gson.toJson(param);
 
         HttpResponse httpResponse = Request.Post("http://localhost:8080/api/tank/measurements")
+                .addHeader("TANK_API_KEY", "ABC123")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnResponse();
@@ -76,6 +78,7 @@ public class MeasurementRoutesIntTest {
         jsonString = "{\"timestamp\":\"\",\"sensor\":\"\",\"value\":0,\"unit\":\"\",\"valid\":false,\"id\":\"\"}";
 
         httpResponse = Request.Post("http://localhost:8080/api/tank/measurements")
+                .addHeader("TANK_API_KEY", "ABC123")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnResponse();
@@ -99,6 +102,7 @@ public class MeasurementRoutesIntTest {
         String jsonString = gson.toJson(param);
 
         Content content = Request.Post("http://localhost:8080/api/tank/measurements")
+                .addHeader("TANK_API_KEY", "ABC123")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnContent();
@@ -140,6 +144,7 @@ public class MeasurementRoutesIntTest {
         String jsonString = gson.toJson(param);
 
         Content content = Request.Post("http://localhost:8080/api/tank/measurements")
+                .addHeader("TANK_API_KEY", "ABC123")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnContent();
@@ -181,6 +186,7 @@ public class MeasurementRoutesIntTest {
         String jsonString = gson.toJson(param);
 
         Content content = Request.Post("http://localhost:8080/api/tank/measurements")
+                .addHeader("TANK_API_KEY", "ABC123")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnContent();
@@ -194,6 +200,7 @@ public class MeasurementRoutesIntTest {
         jsonString = gson.toJson(param);
 
         content = Request.Post("http://localhost:8080/api/tank/measurements")
+                .addHeader("TANK_API_KEY", "ABC123")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnContent();
@@ -207,6 +214,7 @@ public class MeasurementRoutesIntTest {
         jsonString = gson.toJson(param);
 
         content = Request.Post("http://localhost:8080/api/tank/measurements")
+                .addHeader("TANK_API_KEY", "ABC123")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnContent();
@@ -234,6 +242,7 @@ public class MeasurementRoutesIntTest {
         String jsonString = gson.toJson(param);
 
         Content content = Request.Post("http://localhost:8080/api/tank/measurements")
+                .addHeader("TANK_API_KEY", "ABC123")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnContent();
@@ -253,6 +262,7 @@ public class MeasurementRoutesIntTest {
         jsonString = gson.toJson(updatedMeasurement);
 
         content = Request.Put("http://localhost:8080/api/tank/measurements")
+                .addHeader("TANK_API_KEY", "ABC123")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnContent();
@@ -268,9 +278,12 @@ public class MeasurementRoutesIntTest {
         String jsonString = gson.toJson(param);
 
         HttpResponse httpResponse = Request.Put("http://localhost:8080/api/tank/measurements")
+                .addHeader("TANK_API_KEY", "ABC123")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnResponse();
+
+        // TODO: check what does .useExpectContinue() mean... using Request instead of HttpResponse?
 
         int code = httpResponse.getStatusLine().getStatusCode();
 
@@ -289,6 +302,7 @@ public class MeasurementRoutesIntTest {
         String jsonString = gson.toJson(param);
 
         Content content = Request.Post("http://localhost:8080/api/tank/measurements")
+                .addHeader("TANK_API_KEY", "ABC123")
                 .bodyString(jsonString, ContentType.APPLICATION_JSON)
                 .execute()
                 .returnContent();
@@ -299,6 +313,7 @@ public class MeasurementRoutesIntTest {
 
         // then delete it
         content = Request.Delete("http://localhost:8080/api/tank/measurements/" + savedMeasurement.getId())
+                .addHeader("TANK_API_KEY", "ABC123")
                 .execute()
                 .returnContent();
 
@@ -308,6 +323,7 @@ public class MeasurementRoutesIntTest {
     @Test
     public void testDeleteMeasurement_400() throws Exception {
         HttpResponse httpResponse = Request.Delete("http://localhost:8080/api/tank/measurements/54651022bffebc03098b4567")
+                .addHeader("TANK_API_KEY", "ABC123")
                 .execute()
                 .returnResponse();
 
