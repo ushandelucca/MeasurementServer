@@ -54,7 +54,7 @@ public class SwaggerService {
         String json = objectMapper.writeValueAsString(swagger);
 
         // TODO: remove this workaround for @SwaggerDefinition in MeasurementRoutes
-        String securityDefinition = "\"securityDefinitions\": {\"tankauth\": {\"type\": \"apiKey\", \"in\": \"header\", \"name\": \"key\"}},";
+        String securityDefinition = "\"securityDefinitions\": {\"api_key\": {\"type\": \"apiKey\", \"in\": \"header\", \"name\": \"" + MeasurementRoutes.HEADER_API_KEY + "\"}},";
         int beforePathSection = json.indexOf("\"paths\":");
         json = json.substring(0, beforePathSection) + securityDefinition + json.substring(beforePathSection, json.length());
         return json;

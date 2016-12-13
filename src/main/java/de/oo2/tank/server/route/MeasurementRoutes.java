@@ -2,7 +2,6 @@ package de.oo2.tank.server.route;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
-import de.oo2.tank.server.Configuration;
 import de.oo2.tank.server.model.Measurement;
 import de.oo2.tank.server.model.ModelException;
 import de.oo2.tank.server.model.ResponseError;
@@ -25,9 +24,9 @@ import static spark.Spark.*;
  * This class adds the route for the measurement service and handles the REST requests an responses.
  */
 @SwaggerDefinition(host = "www.oo2a.de",
-        info = @Info(description = "REST API for the tank in OO2a",
+        info = @Info(description = "REST API for storing and reporting the measurements of a rainwater tank.",
                 version = "V1.0",
-                title = "Tank measurement API",
+                title = "Measurement API",
                 contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/TankServer")),
         schemes = {SwaggerDefinition.Scheme.HTTPS /*, SwaggerDefinition.Scheme.HTTP*/},
         consumes = {"application/json"},
@@ -37,7 +36,7 @@ import static spark.Spark.*;
         /* , // see workaround
         securityDefinition = @SecurityDefinition(
                 apiKeyAuthDefintions = {
-                        @ApiKeyAuthDefinition(key = "tankauth", name = "key", in = ApiKeyAuthDefinition.ApiKeyLocation.HEADER)
+                        @ApiKeyAuthDefinition(key = "api_key", name = HEADER_API_KEY, in = ApiKeyAuthDefinition.ApiKeyLocation.HEADER)
                 } ) */
 )
 @Path("/api/tank/measurements")
@@ -46,9 +45,13 @@ import static spark.Spark.*;
 
 @Produces({"application/json"})
 public class MeasurementRoutes {
+    /**
+     * Name of the API authorisation key in the request header
+     */
+    public static final String HEADER_API_KEY = "ApiKey";
     private static final Logger logger = LoggerFactory.getLogger(MeasurementRoutes.class.getName());
     private final MeasurementService measurementService;
-    private String expectedTankApiKey = null;
+    private String expectedApiKey = null;
 
     /**
      * Constructor.
@@ -58,7 +61,7 @@ public class MeasurementRoutes {
     public MeasurementRoutes(ServerContext serverContext) {
         this.measurementService = serverContext.getMeasurementService();
 
-        expectedTankApiKey = serverContext.getConfiguration().getTankApiKey();
+        expectedApiKey = serverContext.getConfiguration().getTankApiKey();
 
         // the method parameters are irrelevant for the execution. They are solely used to place the
         // annotations for the swagger documentation
@@ -70,7 +73,7 @@ public class MeasurementRoutes {
     }
 
     @POST
-    @ApiOperation(value = "Save a measurement.", consumes = "application/json", authorizations = {@Authorization(value = "tankauth")})
+    @ApiOperation(value = "Save a measurement.", consumes = "application/json", authorizations = {@Authorization(value = "api_key")})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success, the saved measurement", response = Measurement.class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
@@ -154,7 +157,7 @@ public class MeasurementRoutes {
     }
 
     @PUT
-    @ApiOperation(value = "Update a measurement.", consumes = "application/json")
+    @ApiOperation(value = "Update a measurement.", consumes = "application/json", authorizations = {@Authorization(value = "api_key")})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success, the updated measurement", response = Measurement.class),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
@@ -181,7 +184,7 @@ public class MeasurementRoutes {
 
     @DELETE
     @Path("/{id}")
-    @ApiOperation(value = "Delete a measurement by id.")
+    @ApiOperation(value = "Delete a measurement by id.", authorizations = {@Authorization(value = "api_key")})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success, the measurement has been deleted"),
             @ApiResponse(code = 400, message = "Error message", response = ResponseError.class)})
@@ -239,9 +242,9 @@ public class MeasurementRoutes {
      * @throws NotAuthorisedException in case of a not authoriesd request
      */
     private void checkApiAccess(Request req) throws NotAuthorisedException {
-        String reqKey = req.headers(Configuration.ENV_TANK_API_KEY);
+        String reqKey = req.headers(HEADER_API_KEY);
 
-        if (!expectedTankApiKey.equals(reqKey)) {
+        if (!expectedApiKey.equals(reqKey)) {
             throw new NotAuthorisedException("Not Authorised!");
         }
     }
