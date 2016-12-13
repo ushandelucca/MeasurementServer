@@ -27,6 +27,8 @@ import static org.jongo.Oid.withOid;
 public class MongoDao {
     // private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
+    private static final int MAX_RESULT_COUNT = 1000;
+
     private static final Logger logger = LoggerFactory.getLogger(MongoDao.class.getName());
     private MongoClient mongoClient = null;
 
@@ -171,9 +173,11 @@ public class MongoDao {
                     }
                 }
 
-                // TODO: limit the result set with a default
+                // limit the result set to a maximum
                 if (queryParser.hasLimit()) {
-                    find.limit(queryParser.getLimit());
+                    find.limit(Math.min(queryParser.getLimit(), MAX_RESULT_COUNT));
+                } else {
+                    find.limit(MAX_RESULT_COUNT);
                 }
 
                 MongoCursor<Measurement> mongoCursor = find.as(Measurement.class);

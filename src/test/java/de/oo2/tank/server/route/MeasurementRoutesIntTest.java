@@ -252,14 +252,13 @@ public class MeasurementRoutesIntTest {
         Assert.assertNotSame(param.getId(), savedMeasurement.getId());
 
         // then update it
-        Measurement updatedMeasurement = savedMeasurement;
-        updatedMeasurement.setValue(savedMeasurement.getValue() + 2.5f);
+        savedMeasurement.setValue(savedMeasurement.getValue() + 2.5f);
 
-        float updatedValue = updatedMeasurement.getValue();
+        float updatedValue = savedMeasurement.getValue();
 
         Assert.assertNotEquals(param.getValue(), updatedValue);
 
-        jsonString = gson.toJson(updatedMeasurement);
+        jsonString = gson.toJson(savedMeasurement);
 
         content = Request.Put("http://localhost:8080/api/tank/measurements")
                 .addHeader("ApiKey", "ABC123")
@@ -268,7 +267,7 @@ public class MeasurementRoutesIntTest {
                 .returnContent();
 
         Measurement result = gson.fromJson(content.asString(), Measurement.class);
-        Assert.assertEquals(new Double(updatedValue), new Double(result.getValue().floatValue()), 0d);
+        Assert.assertEquals(updatedValue, result.getValue(), 0d);
     }
 
     @Test

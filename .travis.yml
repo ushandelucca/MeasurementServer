@@ -19,8 +19,14 @@ script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarQube analysis
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.login=$SONAR_TOKEN
 
+before_install:
+  - curl -sL https://github.com/jpm4j/jpm4j.installers/raw/master/dist/biz.aQute.jpm.run.jar >jpm4j.jar
+  - java -jar jpm4j.jar -u init
+  - ~/jpm/bin/jpm install com.codacy:codacy-coverage-reporter:assembly
+
 after_success:
 - mvn clean test jacoco:report coveralls:report
+- ~/jpm/bin/codacy-coverage-reporter -l Java -r /home/travis/build/ushandelucca/TankServer/target/site/jacoco/jacoco.xml
 - if [ "$TRAVIS_BRANCH" == "master" ]; then
      mvn clean package;
      docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";

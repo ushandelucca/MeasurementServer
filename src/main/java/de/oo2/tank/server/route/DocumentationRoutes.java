@@ -14,7 +14,6 @@ import static spark.Spark.get;
  */
 public class DocumentationRoutes {
     private static final Logger logger = LoggerFactory.getLogger(DocumentationRoutes.class.getName());
-    private SwaggerService swaggerService = null;
 
     /**
      * Constructor.
@@ -23,15 +22,14 @@ public class DocumentationRoutes {
      */
     public DocumentationRoutes(ServerContext serverContext) {
 
-        swaggerService = serverContext.getSwaggerService();
+        SwaggerService swaggerService = serverContext.getSwaggerService();
 
         // description a route
         get("/apidoc/swagger", (req, res) -> {
             res.type("text/json");
 
             try {
-                String swaggerJson = swaggerService.getSwaggerJson();
-                return swaggerJson;
+                return swaggerService.getSwaggerJson();
 
             } catch (JsonProcessingException e) {
                 logger.error(e.getMessage(), e);
