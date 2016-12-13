@@ -52,7 +52,7 @@ public class QueryParser {
      * @return <code>true</code> if the syntax is correct, otherwise <code>false</code>
      * @throws PersistenceException in case of failure
      */
-    public boolean checkQuery() throws PersistenceException {
+    boolean checkQuery() throws PersistenceException {
 
         if (!checked) {
 
@@ -145,7 +145,7 @@ public class QueryParser {
      *
      * @return <code>true</code> if the query contains a valid query command
      */
-    public boolean hasCommand() {
+    boolean hasCommand() {
         return !"".equals(command);
     }
 
@@ -154,7 +154,7 @@ public class QueryParser {
      *
      * @return the query command
      */
-    public String getCommand() {
+    String getCommand() {
         return command;
     }
 
@@ -163,7 +163,7 @@ public class QueryParser {
      *
      * @return <code>true</code> if the query contains a valid sensor name
      */
-    public boolean hasSensor() {
+    boolean hasSensor() {
         return sensor != null;
     }
 
@@ -181,7 +181,7 @@ public class QueryParser {
      *
      * @return <code>true</code> if the query contains a valid begin and end date
      */
-    public boolean hasDate() {
+    boolean hasDate() {
         return (beginDate != null) || (endDate != null);
     }
 
@@ -190,7 +190,7 @@ public class QueryParser {
      *
      * @return the begin date.
      */
-    public DateTime getBeginDate() {
+    DateTime getBeginDate() {
         return beginDate;
     }
 
@@ -199,7 +199,7 @@ public class QueryParser {
      *
      * @return the end date.
      */
-    public DateTime getEndDate() {
+    DateTime getEndDate() {
         return endDate;
     }
 
@@ -208,7 +208,7 @@ public class QueryParser {
      *
      * @return <code>true</code> if the query contains a valid sort parameter
      */
-    public boolean hasSort() {
+    boolean hasSort() {
         return sortDateAsc || sortDateDesc;
     }
 
@@ -217,7 +217,7 @@ public class QueryParser {
      *
      * @return <code>true</code> if the query contains a date asc command
      */
-    public boolean isSortDateAsc() {
+    boolean isSortDateAsc() {
         return sortDateAsc;
     }
 
@@ -226,7 +226,7 @@ public class QueryParser {
      *
      * @return <code>true</code> if the query contains a date desc command
      */
-    public boolean isSortDateDesc() {
+    boolean isSortDateDesc() {
         return sortDateDesc;
     }
 
@@ -235,7 +235,7 @@ public class QueryParser {
      *
      * @return <code>true</code> if the query contains a limit for the result
      */
-    public boolean hasLimit() {
+    boolean hasLimit() {
         return limit > 0;
     }
 
@@ -244,7 +244,7 @@ public class QueryParser {
      *
      * @return the limit for the result.
      */
-    public int getLimit() {
+    int getLimit() {
         return limit;
     }
 }
