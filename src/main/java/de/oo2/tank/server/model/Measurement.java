@@ -163,7 +163,7 @@ public class Measurement {
     @Override
     public String toString() {
         return "Measurement{" +
-                "_id='" + id + '\'' +
+                "id='" + id + '\'' +
                 ", timestamp=" + timestamp +
                 ", sensor='" + sensor + '\'' +
                 ", value=" + value +
