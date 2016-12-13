@@ -1,6 +1,7 @@
 package de.oo2.tank.server.model;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 import javax.validation.constraints.Max;
@@ -14,8 +15,9 @@ import java.util.Date;
  */
 public class Measurement {
 
+    @MongoId
     @MongoObjectId
-    private String _id;
+    private String id;
 
     private Date timestamp;
 
@@ -33,7 +35,7 @@ public class Measurement {
      * stored in the db.
      */
     public String getId() {
-        return _id;
+        return id;
     }
 
     /**
@@ -41,7 +43,7 @@ public class Measurement {
      * @param id the timestamp
      */
     void setId(String id) {
-        this._id = id;
+        this.id = id;
     }
 
     /**
@@ -143,13 +145,13 @@ public class Measurement {
 
         Measurement that = (Measurement) o;
 
-        return !(_id != null ? !_id.equals(that._id) : that._id != null) && !(sensor != null ? !sensor.equals(that.sensor) : that.sensor != null) && !(timestamp != null ? !timestamp.equals(that.timestamp) : that.timestamp != null) && !(unit != null ? !unit.equals(that.unit) : that.unit != null) && !(valid != null ? !valid.equals(that.valid) : that.valid != null) && !(value != null ? !value.equals(that.value) : that.value != null);
+        return !(id != null ? !id.equals(that.id) : that.id != null) && !(sensor != null ? !sensor.equals(that.sensor) : that.sensor != null) && !(timestamp != null ? !timestamp.equals(that.timestamp) : that.timestamp != null) && !(unit != null ? !unit.equals(that.unit) : that.unit != null) && !(valid != null ? !valid.equals(that.valid) : that.valid != null) && !(value != null ? !value.equals(that.value) : that.value != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = _id != null ? _id.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
         result = 31 * result + (sensor != null ? sensor.hashCode() : 0);
         result = 31 * result + (value != null ? value.hashCode() : 0);
@@ -161,7 +163,7 @@ public class Measurement {
     @Override
     public String toString() {
         return "Measurement{" +
-                "_id='" + _id + '\'' +
+                "_id='" + id + '\'' +
                 ", timestamp=" + timestamp +
                 ", sensor='" + sensor + '\'' +
                 ", value=" + value +
