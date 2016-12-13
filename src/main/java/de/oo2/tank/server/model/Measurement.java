@@ -29,7 +29,7 @@ public class Measurement {
 
     /**
      * Returns the unique id (primary key) of the measurement.
-     * @return the id if the measuremst is stored in the db. If the id == <code>null</code> the measurememt is not
+     * @return the id if the measurement is stored in the db. If the id == <code>null</code> the measurement is not
      * stored in the db.
      */
     public String getId() {
