@@ -120,24 +120,6 @@ public class Measurement {
         this.unit = unit;
     }
 
-    /**
-     * Returns <code>true</code> if the measurement is valid/consistent, otherwise <code>false</code>.
-     * @return <code>true</code> or <code>false</code>
-     */
-    @NotNull(message = "The 'Valid' marker is mandatory")
-    // TODO: delete the member 'valid'
-    public Boolean getValid() {
-        return valid;
-    }
-
-    /**
-     * Set <code>true</code> if the measurement is valid/consistent, otherwise <code>false</code>.
-     * @param valid <code>true</code> or <code>false</code>
-     */
-    public void setValid(Boolean valid) {
-        this.valid = valid;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -145,7 +127,7 @@ public class Measurement {
 
         Measurement that = (Measurement) o;
 
-        return !(id != null ? !id.equals(that.id) : that.id != null) && !(sensor != null ? !sensor.equals(that.sensor) : that.sensor != null) && !(timestamp != null ? !timestamp.equals(that.timestamp) : that.timestamp != null) && !(unit != null ? !unit.equals(that.unit) : that.unit != null) && !(valid != null ? !valid.equals(that.valid) : that.valid != null) && !(value != null ? !value.equals(that.value) : that.value != null);
+        return !(id != null ? !id.equals(that.id) : that.id != null) && !(sensor != null ? !sensor.equals(that.sensor) : that.sensor != null) && !(timestamp != null ? !timestamp.equals(that.timestamp) : that.timestamp != null) && !(unit != null ? !unit.equals(that.unit) : that.unit != null) && !(value != null ? !value.equals(that.value) : that.value != null);
 
     }
 
@@ -156,7 +138,6 @@ public class Measurement {
         result = 31 * result + (sensor != null ? sensor.hashCode() : 0);
         result = 31 * result + (value != null ? value.hashCode() : 0);
         result = 31 * result + (unit != null ? unit.hashCode() : 0);
-        result = 31 * result + (valid != null ? valid.hashCode() : 0);
         return result;
     }
 
@@ -168,7 +149,6 @@ public class Measurement {
                 ", sensor='" + sensor + '\'' +
                 ", value=" + value +
                 ", unit='" + unit + '\'' +
-                ", valid=" + valid +
                 '}';
     }
 }
