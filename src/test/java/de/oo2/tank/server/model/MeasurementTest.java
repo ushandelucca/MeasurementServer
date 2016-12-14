@@ -30,11 +30,10 @@ public class MeasurementTest {
         Assert.assertFalse(measurement1.equals(measurement2));
 
         measurement2.setUnit(measurement1.getUnit());
-        Assert.assertFalse(measurement1.equals(measurement2));
+        Assert.assertTrue(measurement1.equals(measurement2));
 
         Assert.assertFalse(measurement1.equals(null));
         Assert.assertFalse(measurement1.equals(""));
-        Assert.assertTrue(measurement1.equals(measurement2));
     }
 
     @Test

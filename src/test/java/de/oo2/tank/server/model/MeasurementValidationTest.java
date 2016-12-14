@@ -30,7 +30,7 @@ public class MeasurementValidationTest {
         Measurement measurement = new Measurement();
 
         Set<ConstraintViolation<Measurement>> violations = validator.validate(measurement);
-        Assert.assertEquals(5, violations.size());
+        Assert.assertEquals(4, violations.size());
     }
 
     @Test

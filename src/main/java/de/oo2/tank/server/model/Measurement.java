@@ -27,8 +27,6 @@ public class Measurement {
 
     private String unit;
 
-    private Boolean valid;
-
     /**
      * Returns the unique id (primary key) of the measurement.
      * @return the id if the measurement is stored in the db. If the id == <code>null</code> the measurement is not
