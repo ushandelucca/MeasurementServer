@@ -30,7 +30,7 @@ public class MeasurementValidationTest {
         Measurement measurement = new Measurement();
 
         Set<ConstraintViolation<Measurement>> violations = validator.validate(measurement);
-        Assert.assertEquals(5, violations.size());
+        Assert.assertEquals(4, violations.size());
     }
 
     @Test
@@ -115,26 +115,5 @@ public class MeasurementValidationTest {
 
         violations = validator.validate(measurement);
         Assert.assertEquals(1, violations.size());
-    }
-
-    @Test
-    public void testValid() throws Exception {
-        Measurement measurement = getMeasurement1();
-        measurement.setValid(null);
-
-        Set<ConstraintViolation<Measurement>> violations = validator.validate(measurement);
-        Assert.assertEquals(1, violations.size());
-
-        measurement = getMeasurement2();
-        measurement.setValid(true);
-
-        violations = validator.validate(measurement);
-        Assert.assertEquals(0, violations.size());
-
-        measurement = getMeasurement3();
-        measurement.setValid(false);
-
-        violations = validator.validate(measurement);
-        Assert.assertEquals(0, violations.size());
     }
 }

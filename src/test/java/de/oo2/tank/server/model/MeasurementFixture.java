@@ -26,7 +26,6 @@ public class MeasurementFixture {
         m.setSensor("Rain");
         m.setValue(1.2f);
         m.setUnit("mm");
-        m.setValid(true);
 
         return m;
     }
@@ -37,7 +36,6 @@ public class MeasurementFixture {
         m.setSensor("Rain");
         m.setValue(2.5f);
         m.setUnit("mm");
-        m.setValid(true);
 
         return m;
     }
@@ -48,7 +46,6 @@ public class MeasurementFixture {
         m.setSensor("Rain");
         m.setValue(3.5f);
         m.setUnit("mm");
-        m.setValid(true);
 
         return m;
     }
