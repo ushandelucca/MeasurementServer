@@ -108,7 +108,7 @@ public class MongoDaoIntTest {
 
         Map<String, String[]> params = new HashMap<>();
         params.put("query", new String[]{"return"});
-        params.put("sensor", new String[]{"Rain"});
+        params.put("sensor", new String[]{"Precipitation"});
 
         Measurement[] measurements = dao.readMeasurementsWithQuery(params);
 
@@ -123,7 +123,7 @@ public class MongoDaoIntTest {
 
         Map<String, String[]> params = new HashMap<>();
         params.put("query", new String[]{"return"});
-        params.put("sensor", new String[]{"Rain"});
+        params.put("sensor", new String[]{"Precipitation"});
         params.put("begin", new String[]{"2014-01-20"});
         params.put("end", new String[]{"2015-01-20"});
 

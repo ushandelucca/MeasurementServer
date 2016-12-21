@@ -252,7 +252,7 @@ $(document).ready(function () {
     if ( dataSource === 'server' ) {
       measurements = "Datum,Regen\n";
 
-        $.getJSON( "/api/tank/measurements?query=return&sensor=Rain&sort=-date", function( data ) {
+        $.getJSON( "/api/tank/measurements?query=return&sensor=Precipitation&sort=-date", function( data ) {
 
           $.each( data, function( key, val ) {
             var ts = new Date(val.timestamp);
