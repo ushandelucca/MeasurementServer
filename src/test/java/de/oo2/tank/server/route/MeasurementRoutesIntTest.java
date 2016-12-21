@@ -224,7 +224,7 @@ public class MeasurementRoutesIntTest {
         Assert.assertNotSame(param.getId(), savedMeasurement.getId());
 
         // then select it with the query
-        content = Request.Get("http://localhost:8080/api/tank/measurements?query=return&sensor=Rain&sort=-date")
+        content = Request.Get("http://localhost:8080/api/tank/measurements?query=return&sensor=Precipitation&sort=-date")
                 .execute()
                 .returnContent();
 
