@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8-jre-alpine
 
 # setting the variables
 ENV TANK_SERVER_PORT=80
