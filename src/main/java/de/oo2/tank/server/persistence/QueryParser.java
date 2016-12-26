@@ -76,7 +76,7 @@ public class QueryParser {
 
                 sensor = queryParams.get(PARAM_SENSOR)[0];
 
-                if (sensor.length() > 12) {
+                if (sensor.length() > 15) {
                     throw new PersistenceException("Syntax Error in the search criteria: 'sensor' wrong format!");
                 }
             }
