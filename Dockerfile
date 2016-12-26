@@ -12,4 +12,4 @@ ADD ./target/server-jar-with-dependencies.jar server-jar-with-dependencies.jar
 EXPOSE 80
 
 # start the server
-CMD ["/usr/lib/jvm/java-8-openjdk-amd64/bin/java", "-jar", "server-jar-with-dependencies.jar"]
+CMD ["java", "-jar", "server-jar-with-dependencies.jar"]
