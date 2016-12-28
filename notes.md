@@ -59,6 +59,13 @@ $ git merge --strategy=ours master    # keep the content of this branch, but rec
 $ git checkout master
 $ git merge better_branch             # fast-forward master up to the merge
 ```
+## Docker commands
+Build a image with tag
+```bash
+$ docker login -u=user -p=password
+$ docker build . -t oo2a/tankserver
+$ docker push oo2a/tankserver
+```
 ## Release workflow
 Adapted from an [article](https://dzone.com/articles/why-i-never-use-maven-release) by Lieven Doclo - thank you very much!
 
