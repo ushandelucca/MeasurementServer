@@ -1,6 +1,7 @@
 FROM openjdk:8-jre-alpine
 
 RUN apk add --update \
+		bash \
 		tini \
 	&& rm -rf /var/cache/apk/*
 
