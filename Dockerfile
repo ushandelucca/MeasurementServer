@@ -14,7 +14,7 @@ ENV TANK_API_KEY=ABC123
 ADD ./target/server-jar-with-dependencies.jar server-jar-with-dependencies.jar
 EXPOSE 80
 
-ENTRYPOINT ["/tini", "--"]
+ENTRYPOINT ["tini", "--"]
 
 # start the server
 CMD ["java", "-jar", "server-jar-with-dependencies.jar"]
