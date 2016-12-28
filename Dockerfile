@@ -1,9 +1,6 @@
 FROM openjdk:8-jre-alpine
 
-RUN apk add --update \
-		bash \
-		tini \
-	&& rm -rf /var/cache/apk/*
+RUN apk add --update tini
 
 # setting the variables
 ENV TANK_SERVER_PORT=80
@@ -16,7 +13,7 @@ ENV TANK_API_KEY=ABC123
 ADD ./target/server-jar-with-dependencies.jar server-jar-with-dependencies.jar
 EXPOSE 80
 
-ENTRYPOINT ["tini", "--"]
+ENTRYPOINT ["/tini", "--"]
 
 # start the server
 CMD ["java", "-jar", "server-jar-with-dependencies.jar"]
