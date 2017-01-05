@@ -278,7 +278,7 @@ public class MongoDao {
         for (Measurement measurement : measurements) {
             Date ts = measurement.getTimestamp();
             DateTime dt = new DateTime(ts);
-            dt.withZone(DateTimeZone.forID("CET"));
+            dt.withZone(DateTimeZone.forID("Europe/Berlin"));
             measurement.setTimestamp(dt.toDate());
         }
 
