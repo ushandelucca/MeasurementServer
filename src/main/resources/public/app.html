@@ -258,10 +258,8 @@ $(document).ready(function () {
         $.getJSON( "/api/tank/measurements?query=return&sensor=Precipitation&sort=-date", function( data ) {
 
           $.each( data, function( key, val ) {
-            var ts = new Date(val.timestamp);
-            var m = moment.tz(val.timestamp, "Europe/Berlin");
-
-            rainSeries.push({x:m.format("YYYY-MM-DD HH:mm:ss"), y:val.value});
+            var ts = moment(val.timestamp).format("YYYY-MM-DD HH:mm:ss");
+            rainSeries.push({x:ts, y:val.value});
           });
 
           chartData.datasets[1].data = rainSeries;
