@@ -18,7 +18,7 @@ after_success:
 - ~/jpm/bin/codacy-coverage-reporter -l Java -r /home/travis/build/ushandelucca/TankServer/target/site/jacoco/jacoco.xml
 - if [ "$TRAVIS_BRANCH" == "master" ]; then
      mvn clean package;
-     docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
      docker build . -t oo2a/tankserver;
      docker push oo2a/tankserver;
      fi
