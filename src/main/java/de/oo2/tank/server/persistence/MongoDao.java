@@ -15,7 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.UnknownHostException;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import static org.jongo.Oid.withOid;
 
@@ -266,9 +269,6 @@ public class MongoDao {
     }
 
     private Measurement[] setTimeZoneCET(Measurement[] measurements) {
-        TimeZone mez = TimeZone.getTimeZone("CET");
-        TimeZone.setDefault(mez);
-
         for (Measurement measurement : measurements) {
             Date ts = measurement.getTimestamp();
             DateTime dt = new DateTime(ts);
