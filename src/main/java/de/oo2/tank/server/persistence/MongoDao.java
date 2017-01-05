@@ -5,6 +5,8 @@ import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
 import de.oo2.tank.server.model.Measurement;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.jongo.Find;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
@@ -13,10 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.UnknownHostException;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.TimeZone;
+import java.util.*;
 
 import static org.jongo.Oid.withOid;
 
@@ -48,9 +47,6 @@ public class MongoDao {
         this.dbName = dbName;
         this.host = host;
         this.port = port;
-
-        TimeZone mez = TimeZone.getTimeZone("CET");
-        TimeZone.setDefault(mez);
 
         logger.info("Creating DAO for host: '" + host + "', port: '" + port + "', db name: '" + dbName + "'.");
     }
@@ -184,9 +180,6 @@ public class MongoDao {
                     find.limit(MAX_RESULT_COUNT);
                 }
 
-                TimeZone mez = TimeZone.getTimeZone("CET");
-                TimeZone.setDefault(mez);
-
                 MongoCursor<Measurement> mongoCursor = find.as(Measurement.class);
 
                 myList = Lists.newArrayList(mongoCursor.iterator());
@@ -202,7 +195,11 @@ public class MongoDao {
             return new Measurement[0];
         }
 
-        return myList.toArray(new Measurement[myList.size()]);
+        Measurement[] measurements1 = myList.toArray(new Measurement[myList.size()]);
+
+        measurements1 = setTimeZoneCET(measurements1);
+
+        return measurements1;
     }
 
     /**
@@ -266,6 +263,20 @@ public class MongoDao {
     private void handleException(String message, Throwable throwable) throws PersistenceException {
         logger.error(message, throwable);
         throw new PersistenceException(message, throwable);
+    }
+
+    private Measurement[] setTimeZoneCET(Measurement[] measurements) {
+        TimeZone mez = TimeZone.getTimeZone("CET");
+        TimeZone.setDefault(mez);
+
+        for (Measurement measurement : measurements) {
+            Date ts = measurement.getTimestamp();
+            DateTime dt = new DateTime(ts);
+            DateTime dtLondon = dt.withZone(DateTimeZone.forID("CET"));
+            measurement.setTimestamp(dt.toDate());
+        }
+
+        return measurements;
     }
 
 }
