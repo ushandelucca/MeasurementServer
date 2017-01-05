@@ -16,6 +16,7 @@ import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import static org.jongo.Oid.withOid;
 
@@ -47,6 +48,9 @@ public class MongoDao {
         this.dbName = dbName;
         this.host = host;
         this.port = port;
+
+        TimeZone mez = TimeZone.getTimeZone("CET");
+        TimeZone.setDefault(mez);
 
         logger.info("Creating DAO for host: '" + host + "', port: '" + port + "', db name: '" + dbName + "'.");
     }
