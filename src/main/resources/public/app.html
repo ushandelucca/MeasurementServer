@@ -197,6 +197,8 @@
 <script src="https://intercoolerreleases-leaddynocom.netdna-ssl.com/intercooler-1.0.0.min.js"></script>
 <link href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js"></script>
+
 <script src="js/bootstrap.min.js"></script>
 <script src="js/chartjs-plugin-zoom.min.js"></script>
 
@@ -256,7 +258,9 @@ $(document).ready(function () {
 
           $.each( data, function( key, val ) {
             var ts = new Date(val.timestamp);
-            rainSeries.push({x:ts.toISOString(), y:val.value});
+            var m = moment.tz("val.timestamp", "Europe/Berlin");
+
+            rainSeries.push({x:m.format("YYYY-MM-DD HH:mm:ss"), y:val.value});
           });
 
           chartData.datasets[1].data = rainSeries;
@@ -264,12 +268,12 @@ $(document).ready(function () {
         });
     }
     else {
-        rainSeries = [{ x: '2016-11-18 20:00:00.000Z', y: 20},
-                      { x: '2016-11-17 20:23:00.000Z', y: 19},
-                      { x: '2016-11-16 20:03:00.000Z', y: 18},
-                      { x: '2016-11-15 20:06:00.000Z', y: 17},
-                      { x: '2016-11-14 20:59:00.000Z', y: 16},
-                      { x: '2016-11-13 20:00:00.000Z', y: 18}];
+        rainSeries = [{ x: '2016-11-18 20:00:00', y: 20},
+                      { x: '2016-11-17 20:23:00', y: 19},
+                      { x: '2016-11-16 20:03:00', y: 18},
+                      { x: '2016-11-15 20:06:00', y: 17},
+                      { x: '2016-11-14 20:59:00', y: 16},
+                      { x: '2016-11-13 20:00:00', y: 18}];
         chartData.datasets[1].data = rainSeries;
     }
 

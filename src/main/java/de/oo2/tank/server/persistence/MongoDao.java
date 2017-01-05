@@ -197,7 +197,7 @@ public class MongoDao {
 
         Measurement[] measurements1 = myList.toArray(new Measurement[myList.size()]);
 
-        measurements1 = setTimeZoneCET(measurements1);
+        // measurements1 = setTimeZoneCET(measurements1);
 
         return measurements1;
     }
@@ -272,7 +272,7 @@ public class MongoDao {
      * @return the measurements with timestamps in TimeZone "CET"
      */
     private Measurement[] setTimeZoneCET(Measurement[] measurements) {
-        TimeZone mez = TimeZone.getTimeZone("CET");
+        TimeZone mez = TimeZone.getTimeZone("Europe/Berlin");
         TimeZone.setDefault(mez);
 
         for (Measurement measurement : measurements) {
