@@ -184,6 +184,9 @@ public class MongoDao {
                     find.limit(MAX_RESULT_COUNT);
                 }
 
+                TimeZone mez = TimeZone.getTimeZone("CET");
+                TimeZone.setDefault(mez);
+
                 MongoCursor<Measurement> mongoCursor = find.as(Measurement.class);
 
                 myList = Lists.newArrayList(mongoCursor.iterator());
