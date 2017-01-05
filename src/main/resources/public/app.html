@@ -259,7 +259,7 @@ $(document).ready(function () {
 
           $.each( data, function( key, val ) {
             var ts = new Date(val.timestamp);
-            var m = moment.tz("val.timestamp", "Europe/Berlin");
+            var m = moment.tz(val.timestamp, "Europe/Berlin");
 
             rainSeries.push({x:m.format("YYYY-MM-DD HH:mm:ss"), y:val.value});
           });
