@@ -1,6 +1,7 @@
 package de.oo2.tank.server;
 
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * This class provides the Server configuration.
@@ -37,6 +38,14 @@ public final class Configuration {
 
     private String logglyKey = null;
     private boolean isLogglyConfigured = false;
+
+    /**
+     * Constructor
+     */
+    public Configuration() {
+        TimeZone mez = TimeZone.getTimeZone("CET");
+        TimeZone.setDefault(mez);
+    }
 
     /**
      * Returns the server port. Default: "8080".
