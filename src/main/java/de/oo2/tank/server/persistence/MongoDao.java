@@ -265,6 +265,12 @@ public class MongoDao {
         throw new PersistenceException(message, throwable);
     }
 
+    /**
+     * Setting the TimeZone explicit to "CET".
+     *
+     * @param measurements the measurements
+     * @return the measurements with timestamps in TimeZone "CET"
+     */
     private Measurement[] setTimeZoneCET(Measurement[] measurements) {
         TimeZone mez = TimeZone.getTimeZone("CET");
         TimeZone.setDefault(mez);
@@ -272,7 +278,7 @@ public class MongoDao {
         for (Measurement measurement : measurements) {
             Date ts = measurement.getTimestamp();
             DateTime dt = new DateTime(ts);
-            DateTime dtLondon = dt.withZone(DateTimeZone.forID("CET"));
+            dt.withZone(DateTimeZone.forID("CET"));
             measurement.setTimestamp(dt.toDate());
         }
 
