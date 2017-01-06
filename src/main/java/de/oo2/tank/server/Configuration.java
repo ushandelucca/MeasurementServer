@@ -39,14 +39,6 @@ public final class Configuration {
     private boolean isLogglyConfigured = false;
 
     /**
-     * Constructor.
-     */
-    public Configuration() {
-        // TimeZone mez = TimeZone.getTimeZone("Europe/Berlin");
-        // TimeZone.setDefault(mez);
-    }
-
-    /**
      * Returns the server port. Default: "8080".
      *
      * @return the port
