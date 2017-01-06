@@ -245,6 +245,7 @@ $(document).ready(function () {
     if ( dataSource === 'server' ) {
       measurements = "Datum,Regen\n";
 
+        /*
         $.getJSON( "/api/tank/measurements?query=return&sensor=TankLevel&sort=-date", function( data ) {
 
           $.each( data, function( key, val ) {
@@ -255,6 +256,7 @@ $(document).ready(function () {
           chartData.datasets[0].data = levelSeries;
           chart.update();
         });
+        */
 
         $.getJSON( "/api/tank/measurements?query=return&sensor=Precipitation&sort=-date", function( data ) {
 
