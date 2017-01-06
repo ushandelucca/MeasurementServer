@@ -242,17 +242,19 @@ $(document).ready(function () {
         }]
     };
 
-    levelSeries = [{ x: '2016-11-19 20:00:00', y: 70},
-                   { x: '2016-11-17 19:05:00', y: 65},
-                   { x: '2016-11-14 20:00:00', y: 60},
-                   { x: '2016-11-13 19:00:00', y: 55},
-                   { x: '2016-11-12 18:59:00', y: 50},
-                   { x: '2016-11-11 17:00:00', y: 40}];
-
-    chartData.datasets[0].data = levelSeries;
-
     if ( dataSource === 'server' ) {
       measurements = "Datum,Regen\n";
+
+        $.getJSON( "/api/tank/measurements?query=return&sensor=TankLevel&sort=-date", function( data ) {
+
+          $.each( data, function( key, val ) {
+            var ts = moment(val.timestamp).format("YYYY-MM-DD HH:mm:ss");
+            levelSeries.push({x:ts, y:val.value});
+          });
+
+          chartData.datasets[0].data = levelSeries;
+          chart.update();
+        });
 
         $.getJSON( "/api/tank/measurements?query=return&sensor=Precipitation&sort=-date", function( data ) {
 
@@ -273,6 +275,14 @@ $(document).ready(function () {
                       { x: '2016-11-14 20:59:00', y: 16},
                       { x: '2016-11-13 20:00:00', y: 18}];
         chartData.datasets[1].data = rainSeries;
+
+        levelSeries = [{ x: '2016-11-19 20:00:00', y: 70},
+                       { x: '2016-11-17 19:05:00', y: 65},
+                       { x: '2016-11-14 20:00:00', y: 60},
+                       { x: '2016-11-13 19:00:00', y: 55},
+                       { x: '2016-11-12 18:59:00', y: 50},
+                       { x: '2016-11-11 17:00:00', y: 40}];
+        chartData.datasets[0].data = levelSeries;
     }
 
     var ctx = document.getElementById("canvas").getContext("2d");
