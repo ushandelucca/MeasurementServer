@@ -57,14 +57,13 @@ public class WebsiteRoutes {
      * @return the model
      */
     private Map<String, Object> initializeModel() {
-        Map<String, Object> attributes = new HashMap<>();
+        Map<String, Object> model = new HashMap<>();
 
-        attributes.put("dataSource", "server");
-        attributes.put("version", serverContext.getVersion());
-        attributes.put("hostname", serverContext.getHostname());
-        attributes.put("copyrightYear", Integer.toString(LocalDate.now().getYear()));
+        model.put("dataSource", "server");
+        model.put("version", serverContext.getVersion());
+        model.put("hostname", serverContext.getHostname());
 
-        return attributes;
+        return model;
     }
 
     /**
@@ -74,6 +73,9 @@ public class WebsiteRoutes {
      * @return the updated model
      */
     private Map<String, Object> updateModel(Map<String, Object> model) {
+
+        model.put("copyrightYear", Integer.toString(LocalDate.now().getYear()));
+
         return model;
     }
 }
