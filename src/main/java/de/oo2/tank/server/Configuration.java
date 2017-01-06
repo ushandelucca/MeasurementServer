@@ -1,7 +1,6 @@
 package de.oo2.tank.server;
 
 import java.util.Map;
-import java.util.TimeZone;
 
 /**
  * This class provides the Server configuration.
@@ -43,8 +42,8 @@ public final class Configuration {
      * Constructor.
      */
     public Configuration() {
-        TimeZone mez = TimeZone.getTimeZone("Europe/Berlin");
-        TimeZone.setDefault(mez);
+        // TimeZone mez = TimeZone.getTimeZone("Europe/Berlin");
+        // TimeZone.setDefault(mez);
     }
 
     /**
