@@ -200,7 +200,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
 
 <script src="js/bootstrap.min.js"></script>
+
 <script src="js/chartjs-plugin-zoom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="js/ie10-viewport-bug-workaround.js"></script>
@@ -249,7 +251,7 @@ $(document).ready(function () {
         $.getJSON( "/api/tank/measurements?query=return&sensor=TankLevel&sort=-date", function( data ) {
 
           $.each( data, function( key, val ) {
-            var ts = moment(val.timestamp).format("YYYY-MM-DD HH:mm:ss");
+            var ts = moment(val.timestamp, "MMM D, YYYY hh:mm:ss A").format("YYYY-MM-DD HH:mm:ss");
             levelSeries.push({x:ts, y:val.value});
           });
 
@@ -261,7 +263,6 @@ $(document).ready(function () {
         $.getJSON( "/api/tank/measurements?query=return&sensor=Precipitation&sort=-date", function( data ) {
 
           $.each( data, function( key, val ) {
-            // "Jan 5, 2017 12:00:00 AM"
             var ts = moment(val.timestamp, "MMM D, YYYY hh:mm:ss A").format("YYYY-MM-DD HH:mm:ss");
             rainSeries.push({x:ts, y:val.value});
           });
