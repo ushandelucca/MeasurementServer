@@ -5,8 +5,6 @@ import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
 import de.oo2.tank.server.model.Measurement;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.jongo.Find;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
@@ -15,7 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.UnknownHostException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import static org.jongo.Oid.withOid;
 
@@ -195,11 +195,7 @@ public class MongoDao {
             return new Measurement[0];
         }
 
-        Measurement[] measurements1 = myList.toArray(new Measurement[myList.size()]);
-
-        // measurements1 = setTimeZoneCET(measurements1);
-
-        return measurements1;
+        return myList.toArray(new Measurement[myList.size()]);
     }
 
     /**
@@ -263,26 +259,6 @@ public class MongoDao {
     private void handleException(String message, Throwable throwable) throws PersistenceException {
         logger.error(message, throwable);
         throw new PersistenceException(message, throwable);
-    }
-
-    /**
-     * Setting the TimeZone explicit to "CET".
-     *
-     * @param measurements the measurements
-     * @return the measurements with timestamps in TimeZone "CET"
-     */
-    private Measurement[] setTimeZoneCET(Measurement[] measurements) {
-        TimeZone mez = TimeZone.getTimeZone("Europe/Berlin");
-        TimeZone.setDefault(mez);
-
-        for (Measurement measurement : measurements) {
-            Date ts = measurement.getTimestamp();
-            DateTime dt = new DateTime(ts);
-            dt.withZone(DateTimeZone.forID("Europe/Berlin"));
-            measurement.setTimestamp(dt.toDate());
-        }
-
-        return measurements;
     }
 
 }
