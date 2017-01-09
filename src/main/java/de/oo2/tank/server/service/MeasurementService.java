@@ -62,7 +62,7 @@ public class MeasurementService {
      * @throws PersistenceException in case of failure
      */
     public Measurement readMeasurement(String id) throws PersistenceException {
-        Measurement measurement = dao.readMeasurementById(id);
+        Measurement measurement = dao.readMeasurementWithId(id);
 
         return measurement;
     }

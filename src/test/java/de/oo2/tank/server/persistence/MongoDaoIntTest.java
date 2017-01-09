@@ -59,13 +59,13 @@ public class MongoDaoIntTest {
         String id2 = dao.createMeasurement(getMeasurement2()).getId();
         String id3 = dao.createMeasurement(getMeasurement3()).getId();
 
-        Measurement measurement = dao.readMeasurementById(id3);
+        Measurement measurement = dao.readMeasurementWithId(id3);
         Assert.assertEquals(getMeasurement3().getTimestamp(), measurement.getTimestamp());
 
-        measurement = dao.readMeasurementById(id1);
+        measurement = dao.readMeasurementWithId(id1);
         Assert.assertEquals(getMeasurement1().getTimestamp(), measurement.getTimestamp());
 
-        measurement = dao.readMeasurementById(id2);
+        measurement = dao.readMeasurementWithId(id2);
         Assert.assertEquals(getMeasurement2().getTimestamp(), measurement.getTimestamp());
     }
 
@@ -151,7 +151,7 @@ public class MongoDaoIntTest {
 
         measurement = dao.createMeasurement(measurement);
 
-        Measurement measurementInDb = dao.readMeasurementById(measurement.getId());
+        Measurement measurementInDb = dao.readMeasurementWithId(measurement.getId());
         Assert.assertEquals(measurement, measurementInDb);
 
         float newValue = 99.7654321f;
@@ -159,7 +159,7 @@ public class MongoDaoIntTest {
         measurement.setValue(newValue);
         measurement = dao.updateMeasurement(measurement);
 
-        measurementInDb = dao.readMeasurementById(measurement.getId());
+        measurementInDb = dao.readMeasurementWithId(measurement.getId());
         Assert.assertEquals(measurement, measurementInDb);
     }
 

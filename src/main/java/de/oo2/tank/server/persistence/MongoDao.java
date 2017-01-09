@@ -114,7 +114,7 @@ public class MongoDao {
      * @return the measurement if the measurement is not found in the db the return value is <code>null</code>.
      * @throws PersistenceException in case of failure
      */
-    public Measurement readMeasurementById(String id) throws PersistenceException {
+    public Measurement readMeasurementWithId(String id) throws PersistenceException {
         MongoCollection measurements = getMeasurements();
         Measurement m = null;
 
@@ -153,9 +153,9 @@ public class MongoDao {
                 Find find;
 
                 if (queryParser.hasDate() && queryParser.hasSensor()) {
-                    find = measurements.find("{ timestamp: { $gte: #, $lt: # }, sensor: # }", queryParser.getBeginDate().toDate(), queryParser.getEndDate().toDate(), queryParser.getSensor());
+                    find = measurements.find("{ timestamp: { $gte: #, $lte: # }, sensor: # }", queryParser.getBeginDate().toDate(), queryParser.getEndDate().toDate(), queryParser.getSensor());
                 } else if (queryParser.hasDate() && !queryParser.hasSensor()) {
-                    find = measurements.find("{ timestamp: { $gte: #, $lt: # } }", queryParser.getBeginDate().toDate(), queryParser.getEndDate().toDate());
+                    find = measurements.find("{ timestamp: { $gte: #, $lte: # } }", queryParser.getBeginDate().toDate(), queryParser.getEndDate().toDate());
                 } else if (!queryParser.hasDate() && queryParser.hasSensor()) {
                     find = measurements.find("{ sensor: # }", queryParser.getSensor());
                 } else {

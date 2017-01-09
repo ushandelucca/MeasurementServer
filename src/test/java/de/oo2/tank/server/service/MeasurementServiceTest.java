@@ -53,7 +53,7 @@ public class MeasurementServiceTest {
         // setup the mock
         Measurement measurementToDb = getMeasurement2();
         Measurement measurementFromDb = setRandomId(measurementToDb);
-        when(daoMock.readMeasurementById(measurementFromDb.getId())).thenReturn(measurementFromDb);
+        when(daoMock.readMeasurementWithId(measurementFromDb.getId())).thenReturn(measurementFromDb);
 
         // test
         Measurement measurement = service.readMeasurement(measurementFromDb.getId());
