@@ -5,6 +5,7 @@ import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
 import de.oo2.tank.server.model.Measurement;
+import org.joda.time.DateTime;
 import org.jongo.Find;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
@@ -153,9 +154,29 @@ public class MongoDao {
                 Find find;
 
                 if (queryParser.hasDate() && queryParser.hasSensor()) {
-                    find = measurements.find("{ timestamp: { $gte: #, $lte: # }, sensor: # }", queryParser.getBeginDate().toDate(), queryParser.getEndDate().toDate(), queryParser.getSensor());
+                    DateTime dtBegin = new DateTime(queryParser.getBeginDate().toDate());
+                    dtBegin = dtBegin.hourOfDay().setCopy(0);
+                    dtBegin = dtBegin.minuteOfHour().setCopy(0);
+                    dtBegin = dtBegin.secondOfMinute().setCopy(0);
+
+                    DateTime dtEnd = new DateTime(queryParser.getEndDate().toDate());
+                    dtEnd = dtEnd.hourOfDay().setCopy(23);
+                    dtEnd = dtEnd.minuteOfHour().setCopy(59);
+                    dtEnd = dtEnd.secondOfMinute().setCopy(59);
+
+                    find = measurements.find("{ timestamp: { $gte: #, $lte: # }, sensor: # }", dtBegin.toDate(), dtEnd.toDate(), queryParser.getSensor());
                 } else if (queryParser.hasDate() && !queryParser.hasSensor()) {
-                    find = measurements.find("{ timestamp: { $gte: #, $lte: # } }", queryParser.getBeginDate().toDate(), queryParser.getEndDate().toDate());
+                    DateTime dtBegin = new DateTime(queryParser.getBeginDate().toDate());
+                    dtBegin = dtBegin.hourOfDay().setCopy(0);
+                    dtBegin = dtBegin.minuteOfHour().setCopy(0);
+                    dtBegin = dtBegin.secondOfMinute().setCopy(0);
+
+                    DateTime dtEnd = new DateTime(queryParser.getEndDate().toDate());
+                    dtEnd = dtEnd.hourOfDay().setCopy(23);
+                    dtEnd = dtEnd.minuteOfHour().setCopy(59);
+                    dtEnd = dtEnd.secondOfMinute().setCopy(59);
+
+                    find = measurements.find("{ timestamp: { $gte: #, $lte: # } }", dtBegin.toDate(), dtEnd.toDate());
                 } else if (!queryParser.hasDate() && queryParser.hasSensor()) {
                     find = measurements.find("{ sensor: # }", queryParser.getSensor());
                 } else {
