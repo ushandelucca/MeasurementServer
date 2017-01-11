@@ -67,7 +67,12 @@
                              ic-get-from="/api/tank/measurements?query=return&sensor=Precipitation&sort=-date&max_result=1"
                              ic-trigger-on="scrolled-into-view"
                              ic-indicator="#indicatorPrecipitation"
-                             ic-on-success="$('#currentPrecipitation').text(JSON.parse(data)[0].value); return false;">
+                             ic-on-error="$('#currentPrecipitation').text('?')"
+                             ic-on-success="var measurements = JSON.parse(data);
+                                            var value = '?';
+                                            if (measurements.length > 0) {value = measurements[0].value;}
+                                            $('#currentPrecipitation').text(value);
+                                            return false;">
                             <h1>Regen <span id="currentPrecipitation"></span><i id="indicatorPrecipitation"
                                                                                 class="fa fa-spinner fa-spin"
                                                                                 style="display:none"></i> l/m²</h1>
@@ -352,7 +357,6 @@ $(document).ready(function () {
             }
         }
     });
-
-});
+})
 </script>
 </html>
