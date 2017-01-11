@@ -7,7 +7,6 @@ import de.oo2.tank.server.model.ModelException;
 import de.oo2.tank.server.model.ResponseError;
 import de.oo2.tank.server.model.ServerContext;
 import de.oo2.tank.server.persistence.PersistenceException;
-import de.oo2.tank.server.service.MeasurementService;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +49,7 @@ public class MeasurementRoutes {
      */
     public static final String HEADER_API_KEY = "ApiKey";
     private static final Logger logger = LoggerFactory.getLogger(MeasurementRoutes.class.getName());
-    private final MeasurementService measurementService;
+    private ServerContext serverContext;
     private String expectedApiKey = null;
 
     /**
@@ -59,7 +58,7 @@ public class MeasurementRoutes {
      * @param serverContext the server context
      */
     public MeasurementRoutes(ServerContext serverContext) {
-        this.measurementService = serverContext.getMeasurementService();
+        this.serverContext = serverContext;
 
         expectedApiKey = serverContext.getConfiguration().getTankApiKey();
 
@@ -88,7 +87,7 @@ public class MeasurementRoutes {
                 checkApiAccess(req);
 
                 m = new Gson().fromJson(req.body(), Measurement.class);
-                m = measurementService.saveMeasurement(m);
+                m = serverContext.getMeasurementService().saveMeasurement(m);
             } catch (Exception e) {
                 return handleException(e, res);
             }
@@ -111,7 +110,7 @@ public class MeasurementRoutes {
 
             String tid = req.params(":id");
 
-            Measurement measurement = measurementService.readMeasurement(tid);
+            Measurement measurement = serverContext.getMeasurementService().readMeasurement(tid);
 
             if (measurement != null) {
                 return measurement;
@@ -146,7 +145,7 @@ public class MeasurementRoutes {
             Measurement[] measurements;
 
             try {
-                measurements = measurementService.selectMeasurements(query);
+                measurements = serverContext.getMeasurementService().selectMeasurements(query);
             } catch (Exception e) {
                 return handleException(e, res);
             }
@@ -172,7 +171,7 @@ public class MeasurementRoutes {
                 checkApiAccess(req);
 
                 m = new Gson().fromJson(req.body(), Measurement.class);
-                m = measurementService.updateMeasurement(m);
+                m = serverContext.getMeasurementService().updateMeasurement(m);
             } catch (Exception e) {
                 return handleException(e, res);
             }
@@ -198,7 +197,7 @@ public class MeasurementRoutes {
             try {
                 checkApiAccess(req);
 
-                measurementService.deleteMeasurement(tid);
+                serverContext.getMeasurementService().deleteMeasurement(tid);
             } catch (Exception e) {
                 return handleException(e, res);
             }
