@@ -42,8 +42,14 @@
                         <div class="col-xs-3">
                             <i class="fa fa-tint fa-5x"></i>
                         </div>
-                        <div class="col-xs-9 text-right">
-                            <h1>Wasserstand 15%</h1>
+                        <div class="col-xs-9 text-right"
+                             ic-get-from="/api/tank/measurements?query=return&sensor=TankLevel&sort=-date&max_result=1"
+                             ic-trigger-on="scrolled-into-view" ic-indicator="#indicatorTankLevel"
+                             ic-on-error="$('#currentTankLevel').text('?')"
+                             ic-on-success="var measurements = JSON.parse(data); var value = '?'; if (measurements.length > 0) {value = measurements[0].value;} $('#currentTankLevel').text(value); return false;">
+                            <h1>Wasserstand <span id="currentTankLevel"></span><i id="indicatorTankLevel"
+                                                                                  class="fa fa-spinner fa-spin"
+                                                                                  style="display:none"></i> %</h1>
                         </div>
                     </div>
                 </div>
@@ -65,14 +71,9 @@
                         </div>
                         <div class="col-xs-9 text-right"
                              ic-get-from="/api/tank/measurements?query=return&sensor=Precipitation&sort=-date&max_result=1"
-                             ic-trigger-on="scrolled-into-view"
-                             ic-indicator="#indicatorPrecipitation"
+                             ic-trigger-on="scrolled-into-view" ic-indicator="#indicatorPrecipitation"
                              ic-on-error="$('#currentPrecipitation').text('?')"
-                             ic-on-success="var measurements = JSON.parse(data);
-                                            var value = '?';
-                                            if (measurements.length > 0) {value = measurements[0].value;}
-                                            $('#currentPrecipitation').text(value);
-                                            return false;">
+                             ic-on-success="var measurements = JSON.parse(data); var value = '?'; if (measurements.length > 0) {value = measurements[0].value;} $('#currentPrecipitation').text(value); return false;">
                             <h1>Regen <span id="currentPrecipitation"></span><i id="indicatorPrecipitation"
                                                                                 class="fa fa-spinner fa-spin"
                                                                                 style="display:none"></i> l/m²</h1>
@@ -257,7 +258,6 @@ $(document).ready(function () {
       var begin = moment().subtract(3, 'days').format("YYYY-MM-DD");
       var end = moment().format("YYYY-MM-DD");
 
-        /*
         $.getJSON( "/api/tank/measurements?query=return&sensor=TankLevel&sort=-date", function( data ) {
 
           $.each( data, function( key, val ) {
@@ -268,7 +268,6 @@ $(document).ready(function () {
           chartData.datasets[0].data = levelSeries;
           chart.update();
         });
-        */
 
         $.getJSON( "/api/tank/measurements?query=return&sensor=Precipitation&begin=" + begin + "&end=" + end + "&sort=-date", function( data ) {
 
