@@ -24,10 +24,6 @@ public class ServerContext {
     private String version = null;
     private String hostname = null;
 
-    // services
-    private MeasurementService measurementService = null;
-    private SwaggerService swaggerService = null;
-
     /**
      * Returns the configuration.
      *
@@ -74,11 +70,9 @@ public class ServerContext {
      *
      * @return the measurement service
      */
+    // TODO: remove
     public MeasurementService getMeasurementService() {
-        if (measurementService == null) {
-            measurementService = new MeasurementService(getConfiguration());
-        }
-        return measurementService;
+        return new MeasurementService(getConfiguration());
     }
 
     /**
@@ -86,10 +80,8 @@ public class ServerContext {
      *
      * @return the Swagger service
      */
+    // TODO: remove
     public SwaggerService getSwaggerService() {
-        if (swaggerService == null) {
-            swaggerService = new SwaggerService();
-        }
-        return swaggerService;
+        return new SwaggerService();
     }
 }

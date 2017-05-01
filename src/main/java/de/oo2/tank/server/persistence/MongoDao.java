@@ -154,27 +154,13 @@ public class MongoDao {
                 Find find;
 
                 if (queryParser.hasDate() && queryParser.hasSensor()) {
-                    DateTime dtBegin = new DateTime(queryParser.getBeginDate().toDate());
-                    dtBegin = dtBegin.hourOfDay().setCopy(0);
-                    dtBegin = dtBegin.minuteOfHour().setCopy(0);
-                    dtBegin = dtBegin.secondOfMinute().setCopy(0);
-
-                    DateTime dtEnd = new DateTime(queryParser.getEndDate().toDate());
-                    dtEnd = dtEnd.hourOfDay().setCopy(23);
-                    dtEnd = dtEnd.minuteOfHour().setCopy(59);
-                    dtEnd = dtEnd.secondOfMinute().setCopy(59);
+                    DateTime dtBegin = setBeginOfDay(queryParser.getBeginDate());
+                    DateTime dtEnd = setEndOfDay(queryParser.getEndDate());
 
                     find = measurements.find("{ timestamp: { $gte: #, $lte: # }, sensor: # }", dtBegin.toDate(), dtEnd.toDate(), queryParser.getSensor());
                 } else if (queryParser.hasDate() && !queryParser.hasSensor()) {
-                    DateTime dtBegin = new DateTime(queryParser.getBeginDate().toDate());
-                    dtBegin = dtBegin.hourOfDay().setCopy(0);
-                    dtBegin = dtBegin.minuteOfHour().setCopy(0);
-                    dtBegin = dtBegin.secondOfMinute().setCopy(0);
-
-                    DateTime dtEnd = new DateTime(queryParser.getEndDate().toDate());
-                    dtEnd = dtEnd.hourOfDay().setCopy(23);
-                    dtEnd = dtEnd.minuteOfHour().setCopy(59);
-                    dtEnd = dtEnd.secondOfMinute().setCopy(59);
+                    DateTime dtBegin = setBeginOfDay(queryParser.getBeginDate());
+                    DateTime dtEnd = setEndOfDay(queryParser.getEndDate());
 
                     find = measurements.find("{ timestamp: { $gte: #, $lte: # } }", dtBegin.toDate(), dtEnd.toDate());
                 } else if (!queryParser.hasDate() && queryParser.hasSensor()) {
@@ -280,6 +266,32 @@ public class MongoDao {
     private void handleException(String message, Throwable throwable) throws PersistenceException {
         logger.error(message, throwable);
         throw new PersistenceException(message, throwable);
+    }
+
+    /**
+     * Modify the time of the given day to 00:00:00.
+     *
+     * @param begin the date to modify
+     * @return the modified date
+     */
+    private DateTime setBeginOfDay(DateTime begin) {
+        begin = begin.hourOfDay().setCopy(0);
+        begin = begin.minuteOfHour().setCopy(0);
+        begin = begin.secondOfMinute().setCopy(0);
+        return begin;
+    }
+
+    /**
+     * Modify the time of the given day to 23:59:59.
+     *
+     * @param end the date to modify
+     * @return the modified date
+     */
+    private DateTime setEndOfDay(DateTime end) {
+        end = end.hourOfDay().setCopy(23);
+        end = end.minuteOfHour().setCopy(59);
+        end = end.secondOfMinute().setCopy(59);
+        return end;
     }
 
 }
