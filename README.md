@@ -1,5 +1,5 @@
-# TankServer
-[![Build Status](https://travis-ci.org/ushandelucca/TankServer.png?branch=master)](https://travis-ci.org/ushandelucca/TankServer) [![Dependency Status](https://dependencyci.com/github/ushandelucca/TankServer/badge)](https://dependencyci.com/github/ushandelucca/TankServer) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/01cca042e7634b28adc64ef068977d5b)](https://www.codacy.com/app/ushandelucca/TankServer?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ushandelucca/TankServer&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/01cca042e7634b28adc64ef068977d5b)](https://www.codacy.com/app/ushandelucca/TankServer?utm_source=github.com&utm_medium=referral&utm_content=ushandelucca/TankServer&utm_campaign=Badge_Coverage) [![www.oo2a.de](https://img.shields.io/website-up-down-green-red/http/www.oo2a.de.svg)](https://www.oo2a.de)
+# MeasurementServer
+[![Build Status](https://travis-ci.org/ushandelucca/MeasurementServer.png?branch=master)](https://travis-ci.org/ushandelucca/MeasurementServer) [![Dependency Status](https://dependencyci.com/github/ushandelucca/MeasurementServer/badge)](https://dependencyci.com/github/ushandelucca/MeasurementServer) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/01cca042e7634b28adc64ef068977d5b)](https://www.codacy.com/app/ushandelucca/MeasurementServer?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ushandelucca/MeasurementServer&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/01cca042e7634b28adc64ef068977d5b)](https://www.codacy.com/app/ushandelucca/MeasurementServer?utm_source=github.com&utm_medium=referral&utm_content=ushandelucca/MeasurementServer&utm_campaign=Badge_Coverage) [![www.oo2a.de](https://img.shields.io/website-up-down-green-red/http/www.oo2a.de.svg)](https://www.oo2a.de)
 
 This small REST server is used to store measurements of a water tank. Moreover, it has also the capabilities to evaluate measurements and represent with nice reports. 
 
@@ -17,15 +17,15 @@ This small REST server is used to store measurements of a water tank. Moreover, 
 * Navigate to ```localhost:8080``` or ```http://localhost:8080/swagger-ui```
 
 ## Usage with Docker
-Build a docker image an tag it (e. g. oo2a/tankserver):
+Build a docker image an tag it (e. g. oo2a/MeasurementServer):
 ```bash
-$ docker build . -t oo2a/tankserver
+$ docker build . -t oo2a/MeasurementServer
 ```    
 Start this image with a linked mongo database:
 ```bash
-$ docker run --name tankserver --link a-mongodb-container:mongodb oo2a/tankserver
+$ docker run --name MeasurementServer --link a-mongodb-container:mongodb oo2a/MeasurementServer
 ```
 Or use it with a indication of a mongo db host
 ```bash
-$ docker run --name tankserver -e "TANK_DATABASE_HOST=a-mongodb-host" oo2a/tankserver
+$ docker run --name MeasurementServer -e "TANK_DATABASE_HOST=a-mongodb-host" oo2a/MeasurementServer
 ```
