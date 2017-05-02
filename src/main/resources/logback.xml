@@ -6,7 +6,7 @@
             <level>WARN</level>
         </filter>
 
-        <file>TankServer.log</file>
+      <file>MeasurementServer.log</file>
         <append>true</append>
 
         <encoder>

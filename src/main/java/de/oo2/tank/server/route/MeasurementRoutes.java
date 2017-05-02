@@ -26,7 +26,7 @@ import static spark.Spark.*;
         info = @Info(description = "REST API for storing and reporting the measurements of a rainwater tank.",
                 version = "V1.0",
                 title = "Measurement API",
-                contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/TankServer")),
+                contact = @Contact(name = "ushandelucca", url = "https://github.com/ushandelucca/MeasurementServer")),
         schemes = {SwaggerDefinition.Scheme.HTTPS /*, SwaggerDefinition.Scheme.HTTP*/},
         consumes = {"application/json"},
         produces = {"application/json"},
