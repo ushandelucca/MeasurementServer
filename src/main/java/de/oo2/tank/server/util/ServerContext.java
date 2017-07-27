@@ -3,6 +3,7 @@ package de.oo2.tank.server.util;
 import de.oo2.tank.server.Configuration;
 import de.oo2.tank.server.measurement.MeasurementService;
 import de.oo2.tank.server.swagger.SwaggerService;
+import de.oo2.tank.server.website.MavenVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +43,7 @@ public class ServerContext {
      */
     public String getVersion() {
         if (version == null) {
-            version = MavenUtil.getVersion();
+            version = MavenVersion.getVersion();
         }
         return version;
     }

@@ -7,7 +7,7 @@ import de.oo2.tank.server.util.ServerContext;
 import de.oo2.tank.server.swagger.DocumentationRoutes;
 import de.oo2.tank.server.measurement.MeasurementRoutes;
 import de.oo2.tank.server.website.WebsiteRoutes;
-import de.oo2.tank.server.util.MavenUtil;
+import de.oo2.tank.server.website.MavenVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public class Server {
         ServerContext serverContext = new ServerContext();
         Configuration configuration = serverContext.getConfiguration();
 
-        logger.info("Starting the server. Version: " + MavenUtil.getVersion());
+        logger.info("Starting the server. Version: " + MavenVersion.getVersion());
 
         // set the server configuration
         port(configuration.getServerPort());

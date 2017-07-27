@@ -1,4 +1,4 @@
-package de.oo2.tank.server.util;
+package de.oo2.tank.server.website;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,10 +8,10 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * Maven utilities.
+ * Helper for the Maven version.
  */
-public class MavenUtil {
-    private static final Logger logger = LoggerFactory.getLogger(MavenUtil.class.getName());
+public class MavenVersion {
+    private static final Logger logger = LoggerFactory.getLogger(MavenVersion.class.getName());
 
     private static final String UNKNOWN = "unknown";
     private static final String PATH = "META-INF/maven/de.oo2a.tank/server/pom.properties";
@@ -19,7 +19,7 @@ public class MavenUtil {
     /**
      * Constructor.
      */
-    private MavenUtil() {
+    private MavenVersion() {
         throw new IllegalAccessError("Utility class");
     }
 
