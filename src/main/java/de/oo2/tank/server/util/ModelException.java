@@ -1,4 +1,4 @@
-package de.oo2.tank.server.model;
+package de.oo2.tank.server.util;
 
 /**
  * This checked exception is thrown to report errors in the model.

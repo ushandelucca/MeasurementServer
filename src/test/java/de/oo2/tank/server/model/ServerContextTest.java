@@ -1,5 +1,6 @@
 package de.oo2.tank.server.model;
 
+import de.oo2.tank.server.util.ServerContext;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,5 +1,6 @@
 package de.oo2.tank.server.model;
 
+import de.oo2.tank.server.util.ResponseError;
 import org.junit.Assert;
 import org.junit.Test;
 
