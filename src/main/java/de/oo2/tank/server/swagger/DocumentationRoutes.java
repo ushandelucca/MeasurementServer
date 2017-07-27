@@ -1,9 +1,8 @@
-package de.oo2.tank.server.route;
+package de.oo2.tank.server.swagger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import de.oo2.tank.server.model.ResponseError;
-import de.oo2.tank.server.model.ServerContext;
-import de.oo2.tank.server.service.SwaggerService;
+import de.oo2.tank.server.util.ResponseError;
+import de.oo2.tank.server.util.ServerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

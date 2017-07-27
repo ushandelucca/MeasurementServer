@@ -2,8 +2,8 @@ package de.oo2.tank.server.route;
 
 import com.google.gson.Gson;
 import de.oo2.tank.server.Server;
-import de.oo2.tank.server.model.Measurement;
-import de.oo2.tank.server.model.ResponseError;
+import de.oo2.tank.server.measurement.Measurement;
+import de.oo2.tank.server.util.ResponseError;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.ContentResponseHandler;

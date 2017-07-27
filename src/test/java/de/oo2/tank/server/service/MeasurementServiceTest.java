@@ -1,9 +1,10 @@
 package de.oo2.tank.server.service;
 
-import de.oo2.tank.server.model.Measurement;
-import de.oo2.tank.server.model.ModelException;
-import de.oo2.tank.server.persistence.MongoDao;
-import de.oo2.tank.server.persistence.PersistenceException;
+import de.oo2.tank.server.measurement.Measurement;
+import de.oo2.tank.server.measurement.MeasurementService;
+import de.oo2.tank.server.util.ModelException;
+import de.oo2.tank.server.measurement.MongoDao;
+import de.oo2.tank.server.util.PersistenceException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

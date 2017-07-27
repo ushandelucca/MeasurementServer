@@ -1,10 +1,8 @@
-package de.oo2.tank.server.service;
+package de.oo2.tank.server.measurement;
 
 import de.oo2.tank.server.Configuration;
-import de.oo2.tank.server.model.Measurement;
-import de.oo2.tank.server.model.ModelException;
-import de.oo2.tank.server.persistence.MongoDao;
-import de.oo2.tank.server.persistence.PersistenceException;
+import de.oo2.tank.server.util.ModelException;
+import de.oo2.tank.server.util.PersistenceException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

@@ -1,4 +1,4 @@
-package de.oo2.tank.server.model;
+package de.oo2.tank.server.measurement;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.jongo.marshall.jackson.oid.MongoId;

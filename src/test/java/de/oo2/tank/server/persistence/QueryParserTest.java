@@ -1,5 +1,7 @@
 package de.oo2.tank.server.persistence;
 
+import de.oo2.tank.server.measurement.QueryParser;
+import de.oo2.tank.server.util.PersistenceException;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Assert;

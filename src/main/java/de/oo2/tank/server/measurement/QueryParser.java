@@ -1,5 +1,6 @@
-package de.oo2.tank.server.persistence;
+package de.oo2.tank.server.measurement;
 
+import de.oo2.tank.server.util.PersistenceException;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;

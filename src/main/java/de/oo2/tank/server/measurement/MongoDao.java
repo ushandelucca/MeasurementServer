@@ -1,10 +1,10 @@
-package de.oo2.tank.server.persistence;
+package de.oo2.tank.server.measurement;
 
 import com.google.common.collect.Lists;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
-import de.oo2.tank.server.model.Measurement;
+import de.oo2.tank.server.util.PersistenceException;
 import org.joda.time.DateTime;
 import org.jongo.Find;
 import org.jongo.Jongo;

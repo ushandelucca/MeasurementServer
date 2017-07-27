@@ -1,12 +1,12 @@
-package de.oo2.tank.server.route;
+package de.oo2.tank.server.measurement;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
-import de.oo2.tank.server.model.Measurement;
-import de.oo2.tank.server.model.ModelException;
-import de.oo2.tank.server.model.ResponseError;
-import de.oo2.tank.server.model.ServerContext;
-import de.oo2.tank.server.persistence.PersistenceException;
+import de.oo2.tank.server.util.ModelException;
+import de.oo2.tank.server.util.ResponseError;
+import de.oo2.tank.server.util.ServerContext;
+import de.oo2.tank.server.util.PersistenceException;
+import de.oo2.tank.server.util.NotAuthorisedException;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

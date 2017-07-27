@@ -1,9 +1,9 @@
-package de.oo2.tank.server.service;
+package de.oo2.tank.server.swagger;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.oo2.tank.server.route.MeasurementRoutes;
+import de.oo2.tank.server.measurement.MeasurementRoutes;
 import io.swagger.annotations.Api;
 import io.swagger.jaxrs.Reader;
 import io.swagger.jaxrs.config.BeanConfig;

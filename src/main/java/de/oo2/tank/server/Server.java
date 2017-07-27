@@ -2,11 +2,11 @@ package de.oo2.tank.server;
 
 import com.brsanthu.googleanalytics.GoogleAnalytics;
 import com.brsanthu.googleanalytics.PageViewHit;
-import de.oo2.tank.server.model.ResponseError;
-import de.oo2.tank.server.model.ServerContext;
-import de.oo2.tank.server.route.DocumentationRoutes;
-import de.oo2.tank.server.route.MeasurementRoutes;
-import de.oo2.tank.server.route.WebsiteRoutes;
+import de.oo2.tank.server.util.ResponseError;
+import de.oo2.tank.server.util.ServerContext;
+import de.oo2.tank.server.swagger.DocumentationRoutes;
+import de.oo2.tank.server.measurement.MeasurementRoutes;
+import de.oo2.tank.server.website.WebsiteRoutes;
 import de.oo2.tank.server.util.MavenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

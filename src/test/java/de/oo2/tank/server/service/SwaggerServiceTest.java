@@ -1,5 +1,6 @@
 package de.oo2.tank.server.service;
 
+import de.oo2.tank.server.swagger.SwaggerService;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
