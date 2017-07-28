@@ -1,4 +1,4 @@
-package de.oo2.tank.server.persistence;
+package de.oo2.tank.server.measurement;
 
 import de.oo2.tank.server.measurement.Measurement;
 import de.oo2.tank.server.measurement.MongoDao;
@@ -11,7 +11,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static de.oo2.tank.server.model.MeasurementFixture.*;
+import static de.oo2.tank.server.measurement.MeasurementFixture.*;
 
 /**
  * Integration tests for the persistence.

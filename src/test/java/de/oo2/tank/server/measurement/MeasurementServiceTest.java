@@ -1,4 +1,4 @@
-package de.oo2.tank.server.service;
+package de.oo2.tank.server.measurement;
 
 import de.oo2.tank.server.measurement.Measurement;
 import de.oo2.tank.server.measurement.MeasurementService;
@@ -14,7 +14,7 @@ import org.mockito.Mockito;
 import java.util.HashMap;
 import java.util.Map;
 
-import static de.oo2.tank.server.model.MeasurementFixture.*;
+import static de.oo2.tank.server.measurement.MeasurementFixture.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

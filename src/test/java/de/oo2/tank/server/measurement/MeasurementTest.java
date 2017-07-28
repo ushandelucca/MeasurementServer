@@ -1,10 +1,9 @@
-package de.oo2.tank.server.model;
+package de.oo2.tank.server.measurement;
 
-import de.oo2.tank.server.measurement.Measurement;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static de.oo2.tank.server.model.MeasurementFixture.getMeasurement1;
+import static de.oo2.tank.server.measurement.MeasurementFixture.getMeasurement1;
 
 /**
  * Tests for the <code>Measurement</code> class.

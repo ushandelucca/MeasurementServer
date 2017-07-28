@@ -1,4 +1,4 @@
-package de.oo2.tank.server.route;
+package de.oo2.tank.server.measurement;
 
 import com.google.gson.Gson;
 import de.oo2.tank.server.Server;
@@ -14,7 +14,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static de.oo2.tank.server.model.MeasurementFixture.*;
+import static de.oo2.tank.server.measurement.MeasurementFixture.*;
 import static spark.Spark.awaitInitialization;
 import static spark.Spark.stop;
 

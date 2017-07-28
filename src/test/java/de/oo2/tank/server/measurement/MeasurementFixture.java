@@ -1,4 +1,4 @@
-package de.oo2.tank.server.model;
+package de.oo2.tank.server.measurement;
 
 import de.oo2.tank.server.measurement.Measurement;
 

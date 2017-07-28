@@ -1,4 +1,4 @@
-package de.oo2.tank.server.service;
+package de.oo2.tank.server.swagger;
 
 import de.oo2.tank.server.swagger.SwaggerService;
 import org.junit.After;

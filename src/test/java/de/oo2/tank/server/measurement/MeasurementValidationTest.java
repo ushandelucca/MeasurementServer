@@ -1,6 +1,5 @@
-package de.oo2.tank.server.model;
+package de.oo2.tank.server.measurement;
 
-import de.oo2.tank.server.measurement.Measurement;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,7 +10,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
 
-import static de.oo2.tank.server.model.MeasurementFixture.*;
+import static de.oo2.tank.server.measurement.MeasurementFixture.*;
 
 /**
  * Tests for the measurement validation.
