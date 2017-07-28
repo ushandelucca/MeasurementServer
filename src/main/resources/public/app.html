@@ -252,8 +252,8 @@ $(document).ready(function () {
     };
 
     if ( dataSource === 'server' ) {
-      measurements = "Datum,Regen\n";2000-01-01
-      var begin = moment().subtract(3, 'days').format("YYYY-MM-DD");
+      measurements = "Datum,Regen\n";
+      var begin = moment().subtract(90, 'days').format("YYYY-MM-DD");
       var end = moment().format("YYYY-MM-DD");
 
         $.getJSON( "/api/tank/measurements?query=return&sensor=TankLevel&sort=-date", function( data ) {
