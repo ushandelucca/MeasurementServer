@@ -8,12 +8,12 @@ import org.junit.Test;
 /**
  * Test class.
  */
-public class ConfigurationTest {
-    private Configuration config;
+public class ServerConfigurationTest {
+    private ServerConfiguration config;
 
     @Before
     public void setUp() {
-        config = new Configuration();
+        config = new ServerConfiguration();
     }
 
     @After

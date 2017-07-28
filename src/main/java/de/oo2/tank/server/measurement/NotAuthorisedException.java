@@ -1,4 +1,4 @@
-package de.oo2.tank.server.util;
+package de.oo2.tank.server.measurement;
 
 /**
  * This checked exception is thrown to report errors when a request is not authorised.

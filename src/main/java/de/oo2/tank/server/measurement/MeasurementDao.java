@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
-import de.oo2.tank.server.util.PersistenceException;
 import org.joda.time.DateTime;
 import org.jongo.Find;
 import org.jongo.Jongo;
@@ -56,9 +55,9 @@ public class MeasurementDao {
      * Opens and returns the connection to the measurement db.
      *
      * @return the DB connection
-     * @throws PersistenceException in case of failure
+     * @throws MeasurementDaoException in case of failure
      */
-    protected MongoCollection getMeasurements() throws PersistenceException {
+    protected MongoCollection getMeasurements() throws MeasurementDaoException {
         MongoCollection measurements = null;
 
         try {
@@ -95,9 +94,9 @@ public class MeasurementDao {
      *
      * @param measurement data to store
      * @return the stored measurement
-     * @throws PersistenceException in case of failure
+     * @throws MeasurementDaoException in case of failure
      */
-    public Measurement createMeasurement(Measurement measurement) throws PersistenceException {
+    public Measurement createMeasurement(Measurement measurement) throws MeasurementDaoException {
         try {
             MongoCollection measurements = getMeasurements();
             measurements.save(measurement);
@@ -113,9 +112,9 @@ public class MeasurementDao {
      *
      * @param id of the measurement
      * @return the measurement if the measurement is not found in the db the return value is <code>null</code>.
-     * @throws PersistenceException in case of failure
+     * @throws MeasurementDaoException in case of failure
      */
-    public Measurement readMeasurementWithId(String id) throws PersistenceException {
+    public Measurement readMeasurementWithId(String id) throws MeasurementDaoException {
         MongoCollection measurements = getMeasurements();
         Measurement m = null;
 
@@ -138,9 +137,9 @@ public class MeasurementDao {
      * @param queryParameters the parameters for the query
      * @return An array of the matching <code>Measurement</code> objects. If no <code>Measurement</code> matches
      * the period an empty array will be returned.
-     * @throws PersistenceException in case of failure
+     * @throws MeasurementDaoException in case of failure
      */
-    public Measurement[] readMeasurementsWithQuery(Map<String, String[]> queryParameters) throws PersistenceException {
+    public Measurement[] readMeasurementsWithQuery(Map<String, String[]> queryParameters) throws MeasurementDaoException {
         MeasurementQueryParser measurementQueryParser = new MeasurementQueryParser();
         measurementQueryParser.setQuery(queryParameters);
 
@@ -208,10 +207,10 @@ public class MeasurementDao {
     /**
      * Update a measurement
      * @param measurement the measurement to be updated
-     * @throws PersistenceException in case of failure
+     * @throws MeasurementDaoException in case of failure
      * @return the updated measurement
      */
-    public Measurement updateMeasurement(Measurement measurement) throws PersistenceException {
+    public Measurement updateMeasurement(Measurement measurement) throws MeasurementDaoException {
         MongoCollection measurements = getMeasurements();
 
         try {
@@ -219,7 +218,7 @@ public class MeasurementDao {
                 WriteResult writeResult = measurements.update(withOid(measurement.getId())).with(measurement);
 
                 if (writeResult.getN() != 1) {
-                    throw new PersistenceException("");
+                    throw new MeasurementDaoException("");
                 }
 
             } catch (Exception e) {
@@ -235,9 +234,9 @@ public class MeasurementDao {
     /**
      * Delete a measurement
      * @param id the id of the measurement to be deleted
-     * @throws PersistenceException in case of failure
+     * @throws MeasurementDaoException in case of failure
      */
-    public void deleteMeasurement(String id) throws PersistenceException {
+    public void deleteMeasurement(String id) throws MeasurementDaoException {
         MongoCollection measurements = getMeasurements();
 
         try {
@@ -245,7 +244,7 @@ public class MeasurementDao {
                 WriteResult writeResult = measurements.remove(withOid(id));
 
                 if (writeResult.getN() != 1) {
-                    throw new PersistenceException("");
+                    throw new MeasurementDaoException("");
                 }
 
             } catch (Exception e) {
@@ -261,11 +260,11 @@ public class MeasurementDao {
      *
      * @param message   the exception message
      * @param throwable the original exception
-     * @throws PersistenceException in case of failure
+     * @throws MeasurementDaoException in case of failure
      */
-    private void handleException(String message, Throwable throwable) throws PersistenceException {
+    private void handleException(String message, Throwable throwable) throws MeasurementDaoException {
         logger.error(message, throwable);
-        throw new PersistenceException(message, throwable);
+        throw new MeasurementDaoException(message, throwable);
     }
 
     /**

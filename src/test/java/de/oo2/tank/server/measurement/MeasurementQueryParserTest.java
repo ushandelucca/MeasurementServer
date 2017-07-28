@@ -1,6 +1,5 @@
 package de.oo2.tank.server.measurement;
 
-import de.oo2.tank.server.util.PersistenceException;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Assert;
@@ -41,7 +40,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.fail();
         }
 
@@ -76,7 +75,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.fail();
         }
 
@@ -108,7 +107,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.fail();
         }
 
@@ -132,7 +131,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.assertTrue(e.getMessage().contains("No search query"));
             return;
         }
@@ -153,7 +152,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.assertTrue(e.getMessage().contains("query without 'return'"));
             return;
         }
@@ -174,7 +173,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.assertTrue(e.getMessage().contains("'begin'"));
             return;
         }
@@ -195,7 +194,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.assertTrue(e.getMessage().contains("'end'"));
             return;
         }
@@ -213,7 +212,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.assertTrue(e.getMessage().contains("'max_result' wrong format or not a positive number"));
             return;
         }
@@ -229,7 +228,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.assertTrue(e.getMessage().contains(" 'query' wrong format or not defined!"));
             return;
         }
@@ -245,7 +244,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.assertTrue(e.getMessage().contains("'begin' without 'end'!"));
             return;
         }
@@ -261,7 +260,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.assertTrue(e.getMessage().contains("end' without 'begin'!"));
             return;
         }
@@ -276,7 +275,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.assertTrue(e.getMessage().contains("No search criteria defined!"));
             return;
         }
@@ -292,7 +291,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.assertTrue(e.getMessage().contains("'sort' wrong format!"));
             return;
         }
@@ -308,7 +307,7 @@ public class MeasurementQueryParserTest {
         parser.setQuery(query);
         try {
             parser.checkQuery();
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.assertTrue(e.getMessage().contains("'sensor' wrong format!"));
             return;
         }

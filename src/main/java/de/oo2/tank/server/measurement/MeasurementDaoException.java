@@ -1,27 +1,27 @@
-package de.oo2.tank.server.util;
+package de.oo2.tank.server.measurement;
 
 /**
  * This checked exception is thrown to report errors in the persistence layer.
  * For example: database is not accessible.
  */
-public class PersistenceException extends Exception {
+public class MeasurementDaoException extends Exception {
 
     /**
-     * Constructor for the <code>PersistenceException</code>.
+     * Constructor for the <code>MeasurementDaoException</code>.
      *
      * @param message the message
      */
-    public PersistenceException(String message) {
+    public MeasurementDaoException(String message) {
         super(message);
     }
 
     /**
-     * Constructor for the <code>PersistenceException</code>.
+     * Constructor for the <code>MeasurementDaoException</code>.
      *
      * @param message the message
      * @param throwable the original exception
      */
-    public PersistenceException(String message, Throwable throwable) {
+    public MeasurementDaoException(String message, Throwable throwable) {
         super(message, throwable);
     }
 

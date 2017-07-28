@@ -1,6 +1,6 @@
 package de.oo2.tank.server.website;
 
-import de.oo2.tank.server.util.ServerContext;
+import de.oo2.tank.server.ServerContext;
 import freemarker.template.Configuration;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;

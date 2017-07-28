@@ -1,6 +1,6 @@
-package de.oo2.tank.server.util;
+package de.oo2.tank.server;
 
-import de.oo2.tank.server.util.ServerContext;
+import de.oo2.tank.server.ServerContext;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

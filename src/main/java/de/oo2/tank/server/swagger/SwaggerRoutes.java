@@ -2,7 +2,7 @@ package de.oo2.tank.server.swagger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import de.oo2.tank.server.util.ResponseError;
-import de.oo2.tank.server.util.ServerContext;
+import de.oo2.tank.server.ServerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

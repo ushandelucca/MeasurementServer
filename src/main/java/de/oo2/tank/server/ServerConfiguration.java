@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * This class provides the Server configuration.
  */
-public final class Configuration {
+public final class ServerConfiguration {
 
     // keys for the environment variables
     public static final String ENV_SERVER_PORT = "TANK_SERVER_PORT";

@@ -1,13 +1,13 @@
-package de.oo2.tank.server.util;
+package de.oo2.tank.server.website;
 
 import de.oo2.tank.server.website.MavenVersion;
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test class for the maven utilities.
+ * Test class for the maven version utilities.
  */
-public class MavenUtilTest {
+public class MavenVersionTest {
 
     @Test
     public void testVersion() {

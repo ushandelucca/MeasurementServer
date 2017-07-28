@@ -1,8 +1,6 @@
 package de.oo2.tank.server.measurement;
 
-import de.oo2.tank.server.Configuration;
-import de.oo2.tank.server.util.ModelException;
-import de.oo2.tank.server.util.PersistenceException;
+import de.oo2.tank.server.ServerConfiguration;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -25,7 +23,7 @@ public class MeasurementController {
      *
      * @param config the configuration
      */
-    public MeasurementController(Configuration config) {
+    public MeasurementController(ServerConfiguration config) {
         this.dao = new MeasurementDao(config.getDbName(), config.getDbHost(), config.getDbPort());
     }
 
@@ -43,10 +41,10 @@ public class MeasurementController {
      *
      * @param measurement the measurement
      * @return the measurement saved in the database
-     * @throws PersistenceException in case of failure
-     * @throws ModelException in case of failure
+     * @throws MeasurementDaoException in case of failure
+     * @throws MeasurementException in case of failure
      */
-    public Measurement saveMeasurement(Measurement measurement) throws PersistenceException, ModelException {
+    public Measurement saveMeasurement(Measurement measurement) throws MeasurementDaoException, MeasurementException {
         validate(measurement);
         Measurement createdMeasurement = dao.createMeasurement(measurement);
         return createdMeasurement;
@@ -57,9 +55,9 @@ public class MeasurementController {
      *
      * @param id of the measurement
      * @return the the measurement
-     * @throws PersistenceException in case of failure
+     * @throws MeasurementDaoException in case of failure
      */
-    public Measurement readMeasurement(String id) throws PersistenceException {
+    public Measurement readMeasurement(String id) throws MeasurementDaoException {
         Measurement measurement = dao.readMeasurementWithId(id);
 
         return measurement;
@@ -80,9 +78,9 @@ public class MeasurementController {
      *
      * @param queryParameters the query parameters
      * @return the queried measurements
-     * @throws PersistenceException in case of failure
+     * @throws MeasurementDaoException in case of failure
      */
-    public Measurement[] selectMeasurements(Map<String, String[]> queryParameters) throws PersistenceException {
+    public Measurement[] selectMeasurements(Map<String, String[]> queryParameters) throws MeasurementDaoException {
 
         Measurement[] measurements = dao.readMeasurementsWithQuery(queryParameters);
 
@@ -94,14 +92,14 @@ public class MeasurementController {
      *
      * @param measurement the measurement
      * @return the measurement saved in the database
-     * @throws PersistenceException in case of failure
-     * @throws ModelException in case of failure
+     * @throws MeasurementDaoException in case of failure
+     * @throws MeasurementException in case of failure
      */
-    public Measurement updateMeasurement(Measurement measurement) throws PersistenceException, ModelException {
+    public Measurement updateMeasurement(Measurement measurement) throws MeasurementDaoException, MeasurementException {
 
         // validate id
         if ((measurement.getId() == null) || ("".equals(measurement.getId()))) {
-            throw new ModelException("ID must not be empty");
+            throw new MeasurementException("ID must not be empty");
         }
 
         validate(measurement);
@@ -113,9 +111,9 @@ public class MeasurementController {
      * Delete a measurement from the database.
      *
      * @param id of the measurement
-     * @throws PersistenceException in case of failure
+     * @throws MeasurementDaoException in case of failure
      */
-    public void deleteMeasurement(String id) throws PersistenceException {
+    public void deleteMeasurement(String id) throws MeasurementDaoException {
         dao.deleteMeasurement(id);
     }
 
@@ -124,9 +122,9 @@ public class MeasurementController {
      *
      * @param measurement the measurement
      * @return true when the measurement kis valid
-     * @throws ModelException in case of failure
+     * @throws MeasurementException in case of failure
      */
-    private boolean validate(Measurement measurement) throws ModelException {
+    private boolean validate(Measurement measurement) throws MeasurementException {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
 
@@ -135,7 +133,7 @@ public class MeasurementController {
         if (violations.isEmpty()) {
             return true;
         } else if (violations.size() == 1) {
-            throw new ModelException("Error during validation of the measurement: " + violations.iterator().next().getMessage());
+            throw new MeasurementException("Error during validation of the measurement: " + violations.iterator().next().getMessage());
         } else if (violations.size() > 1) {
             StringBuilder message = new StringBuilder("Multiple Errors during validation of the measurement: ");
 
@@ -149,7 +147,7 @@ public class MeasurementController {
                 }
             }
 
-            throw new ModelException(message.toString());
+            throw new MeasurementException(message.toString());
         }
 
         return true;

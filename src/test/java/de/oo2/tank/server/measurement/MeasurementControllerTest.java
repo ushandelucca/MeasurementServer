@@ -1,7 +1,5 @@
 package de.oo2.tank.server.measurement;
 
-import de.oo2.tank.server.util.ModelException;
-import de.oo2.tank.server.util.PersistenceException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -82,12 +80,12 @@ public class MeasurementControllerTest {
 
         try {
             service.saveMeasurement(measurement);
-        } catch (ModelException e) {
+        } catch (MeasurementException e) {
             Assert.assertNotNull(e.getMessage());
             return;
         }
 
-        Assert.fail("ModelException expected");
+        Assert.fail("MeasurementException expected");
     }
 
     @Test
@@ -111,12 +109,12 @@ public class MeasurementControllerTest {
 
         try {
             service.updateMeasurement(measurement);
-        } catch (ModelException e) {
+        } catch (MeasurementException e) {
             Assert.assertNotNull(e.getMessage());
             return;
         }
 
-        Assert.fail("ModelException expected");
+        Assert.fail("MeasurementException expected");
     }
 
     @Test
@@ -135,16 +133,16 @@ public class MeasurementControllerTest {
         // setup the mock
         Measurement measurement = getMeasurement1();
         measurement = setRandomId(measurement);
-        Mockito.doThrow(new PersistenceException("")).when(daoMock).deleteMeasurement(measurement.getId());
+        Mockito.doThrow(new MeasurementDaoException("")).when(daoMock).deleteMeasurement(measurement.getId());
 
         // test
         try {
             service.deleteMeasurement(measurement.getId());
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             Assert.assertNotNull(e.getMessage());
             return;
         }
 
-        Assert.fail("PersistenceException expected");
+        Assert.fail("MeasurementDaoException expected");
     }
 }

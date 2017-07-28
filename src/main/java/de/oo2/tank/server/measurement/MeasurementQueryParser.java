@@ -1,6 +1,5 @@
 package de.oo2.tank.server.measurement;
 
-import de.oo2.tank.server.util.PersistenceException;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -51,24 +50,24 @@ public class MeasurementQueryParser {
      * Checks the syntax of the query.
      *
      * @return <code>true</code> if the syntax is correct, otherwise <code>false</code>
-     * @throws PersistenceException in case of failure
+     * @throws MeasurementDaoException in case of failure
      */
-    boolean checkQuery() throws PersistenceException {
+    boolean checkQuery() throws MeasurementDaoException {
 
         if (!checked) {
 
             if (queryParams.isEmpty()) {
-                throw new PersistenceException("No search query defined!");
+                throw new MeasurementDaoException("No search query defined!");
             }
 
             // check the query parameter combination
             if (queryParams.get(PARAM_QUERY) == null) {
-                throw new PersistenceException("Syntax Error in the search criteria: 'query' wrong format or not defined!");
+                throw new MeasurementDaoException("Syntax Error in the search criteria: 'query' wrong format or not defined!");
             } else {
                 if (queryParams.get(PARAM_QUERY)[0].equals(PARAM_RETURN)) {
                     command = queryParams.get(PARAM_QUERY)[0];
                 } else {
-                    throw new PersistenceException("Syntax Error in the search criteria: query without 'return'!");
+                    throw new MeasurementDaoException("Syntax Error in the search criteria: query without 'return'!");
                 }
             }
 
@@ -78,32 +77,32 @@ public class MeasurementQueryParser {
                 sensor = queryParams.get(PARAM_SENSOR)[0];
 
                 if (sensor.length() > 15) {
-                    throw new PersistenceException("Syntax Error in the search criteria: 'sensor' wrong format!");
+                    throw new MeasurementDaoException("Syntax Error in the search criteria: 'sensor' wrong format!");
                 }
             }
 
             // check begin and end
             if (queryParams.get(PARAM_BEGIN) != null) {
                 if (queryParams.get(PARAM_END) == null) {
-                    throw new PersistenceException("Syntax Error in the search criteria: 'begin' without 'end'!");
+                    throw new MeasurementDaoException("Syntax Error in the search criteria: 'begin' without 'end'!");
                 }
                 try {
                     beginDate = DateTime.parse(queryParams.get(PARAM_BEGIN)[0], dateFormat);
                 } catch (Exception e) {
                     beginDate = null;
-                    throw new PersistenceException("Syntax Error in the search criteria: 'begin' wrong format!", e);
+                    throw new MeasurementDaoException("Syntax Error in the search criteria: 'begin' wrong format!", e);
                 }
             }
 
             if (queryParams.get(PARAM_END) != null) {
                 if (queryParams.get(PARAM_BEGIN) == null) {
-                    throw new PersistenceException("Syntax Error in the search criteria: 'end' without 'begin'!");
+                    throw new MeasurementDaoException("Syntax Error in the search criteria: 'end' without 'begin'!");
                 }
                 try {
                     endDate = DateTime.parse(queryParams.get(PARAM_END)[0], dateFormat);
                 } catch (Exception e) {
                     endDate = null;
-                    throw new PersistenceException("Syntax Error in the search criteria: 'end' wrong 'format'!", e);
+                    throw new MeasurementDaoException("Syntax Error in the search criteria: 'end' wrong 'format'!", e);
                 }
             }
 
@@ -115,7 +114,7 @@ public class MeasurementQueryParser {
                 sortDateDesc = PARAM_DATE_DESC.equals(sort);
 
                 if (!sortDateAsc && !sortDateDesc) {
-                    throw new PersistenceException("Syntax Error in the search criteria: 'sort' wrong format!");
+                    throw new MeasurementDaoException("Syntax Error in the search criteria: 'sort' wrong format!");
                 }
             }
 
@@ -127,12 +126,12 @@ public class MeasurementQueryParser {
 
                 if (limit < 1) {
                     limit = 0;
-                    throw new PersistenceException("Syntax Error in the search criteria: 'max_result' wrong format or not a positive number!");
+                    throw new MeasurementDaoException("Syntax Error in the search criteria: 'max_result' wrong format or not a positive number!");
                 }
             }
 
             if ((beginDate == null) && (endDate == null) && (!hasSensor()) && (!hasSort()) && (limit == 0)) {
-                throw new PersistenceException("No search criteria defined!");
+                throw new MeasurementDaoException("No search criteria defined!");
             }
 
             checked = true;

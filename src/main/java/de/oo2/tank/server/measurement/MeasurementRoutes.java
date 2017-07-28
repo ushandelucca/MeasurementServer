@@ -2,11 +2,8 @@ package de.oo2.tank.server.measurement;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
-import de.oo2.tank.server.util.ModelException;
 import de.oo2.tank.server.util.ResponseError;
-import de.oo2.tank.server.util.ServerContext;
-import de.oo2.tank.server.util.PersistenceException;
-import de.oo2.tank.server.util.NotAuthorisedException;
+import de.oo2.tank.server.ServerContext;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +57,7 @@ public class MeasurementRoutes {
     public MeasurementRoutes(ServerContext serverContext) {
         this.serverContext = serverContext;
 
-        expectedApiKey = serverContext.getConfiguration().getTankApiKey();
+        expectedApiKey = serverContext.getServerConfiguration().getTankApiKey();
 
         // the method parameters are irrelevant for the execution. They are solely used to place the
         // annotations for the swagger documentation
@@ -220,7 +217,7 @@ public class MeasurementRoutes {
 
             response.status(400);
             return new ResponseError("Error while parsing the measurement!");
-        } else if ((e instanceof PersistenceException) || (e instanceof ModelException || (e instanceof NotAuthorisedException))) {
+        } else if ((e instanceof MeasurementDaoException) || (e instanceof MeasurementException || (e instanceof NotAuthorisedException))) {
             logger.error(e.getMessage(), e);
 
             response.status(400);

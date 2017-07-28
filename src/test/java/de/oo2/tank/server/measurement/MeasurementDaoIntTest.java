@@ -1,6 +1,5 @@
 package de.oo2.tank.server.measurement;
 
-import de.oo2.tank.server.util.PersistenceException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -138,7 +137,7 @@ public class MeasurementDaoIntTest {
 
         try {
             dao.readMeasurementsWithQuery(params);
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             return;
         }
 
@@ -171,7 +170,7 @@ public class MeasurementDaoIntTest {
 
         try {
             dao.updateMeasurement(measurement);
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             return;
         }
 
@@ -193,7 +192,7 @@ public class MeasurementDaoIntTest {
 
         try {
             dao.deleteMeasurement(measurement.getId());
-        } catch (PersistenceException e) {
+        } catch (MeasurementDaoException e) {
             return;
         }
 

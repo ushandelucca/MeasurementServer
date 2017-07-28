@@ -1,6 +1,5 @@
-package de.oo2.tank.server.util;
+package de.oo2.tank.server;
 
-import de.oo2.tank.server.Configuration;
 import de.oo2.tank.server.measurement.MeasurementController;
 import de.oo2.tank.server.swagger.SwaggerController;
 import de.oo2.tank.server.website.MavenVersion;
@@ -17,23 +16,23 @@ public class ServerContext {
     private static final Logger logger = LoggerFactory.getLogger(ServerContext.class.getName());
 
 
-    // configuration
-    private Configuration configuration = null;
+    // serverConfiguration
+    private ServerConfiguration serverConfiguration = null;
 
     // properties
     private String version = null;
     private String hostname = null;
 
     /**
-     * Returns the configuration.
+     * Returns the serverConfiguration.
      *
-     * @return the configuration
+     * @return the serverConfiguration
      */
-    public Configuration getConfiguration() {
-        if (configuration == null) {
-            configuration = new Configuration();
+    public ServerConfiguration getServerConfiguration() {
+        if (serverConfiguration == null) {
+            serverConfiguration = new ServerConfiguration();
         }
-        return configuration;
+        return serverConfiguration;
     }
 
     /**
@@ -72,7 +71,7 @@ public class ServerContext {
      */
     // TODO: remove
     public MeasurementController getMeasurementService() {
-        return new MeasurementController(getConfiguration());
+        return new MeasurementController(getServerConfiguration());
     }
 
     /**
