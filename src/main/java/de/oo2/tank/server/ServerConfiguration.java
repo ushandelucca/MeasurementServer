@@ -8,17 +8,16 @@ import java.util.Map;
 public final class ServerConfiguration {
 
     // keys for the environment variables
-    public static final String ENV_SERVER_PORT = "TANK_SERVER_PORT";
+    private static final String ENV_SERVER_PORT = "TANK_SERVER_PORT";
+    private static final String ENV_DATABASE_TYPE = "TANK_DATABASE_TYPE";
+    private static final String ENV_DATABASE_HOST = "TANK_DATABASE_HOST";
+    private static final String ENV_DATABASE_PORT = "TANK_DATABASE_PORT";
+    private static final String ENV_DATABASE_NAME = "TANK_DATABASE_NAME";
 
-    public static final String ENV_DATABASE_TYPE = "TANK_DATABASE_TYPE";
-    public static final String ENV_DATABASE_HOST = "TANK_DATABASE_HOST";
-    public static final String ENV_DATABASE_PORT = "TANK_DATABASE_PORT";
-    public static final String ENV_DATABASE_NAME = "TANK_DATABASE_NAME";
+    private static final String ENV_TANK_API_KEY = "TANK_API_KEY";
 
-    public static final String ENV_TANK_API_KEY = "TANK_API_KEY";
-
-    public static final String ENV_GOOGLE_ANALYTICS_KEY = "GOOGLE_ANALYTICS_KEY";
-    public static final String ENV_LOGGLY_KEY = "LOGGLY_KEY";
+    private static final String ENV_GOOGLE_ANALYTICS_KEY = "GOOGLE_ANALYTICS_KEY";
+    private static final String ENV_LOGGLY_KEY = "LOGGLY_KEY";
 
     // properties
     private Map<String, String> env = System.getenv();

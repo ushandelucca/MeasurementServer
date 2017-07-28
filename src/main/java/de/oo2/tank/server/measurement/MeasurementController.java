@@ -39,9 +39,7 @@ public class MeasurementController {
 
         validate(measurement);
 
-        Measurement createdMeasurement = getDao().createMeasurement(measurement);
-
-        return createdMeasurement;
+        return getDao().createMeasurement(measurement);
     }
 
     /**
@@ -53,9 +51,7 @@ public class MeasurementController {
      */
     public Measurement readMeasurement(String id) throws MeasurementDaoException {
 
-        Measurement measurement = getDao().readMeasurementWithId(id);
-
-        return measurement;
+        return getDao().readMeasurementWithId(id);
     }
 
     /**
@@ -77,9 +73,7 @@ public class MeasurementController {
      */
     public Measurement[] selectMeasurements(Map<String, String[]> queryParameters) throws MeasurementDaoException {
 
-        Measurement[] measurements = getDao().readMeasurementsWithQuery(queryParameters);
-
-        return measurements;
+        return getDao().readMeasurementsWithQuery(queryParameters);
     }
 
     /**
@@ -99,9 +93,7 @@ public class MeasurementController {
 
         validate(measurement);
 
-        Measurement updatedMeasurement = getDao().updateMeasurement(measurement);
-
-        return updatedMeasurement;
+        return getDao().updateMeasurement(measurement);
     }
 
     /**
@@ -119,36 +111,34 @@ public class MeasurementController {
      * Returns the result of the measurement validation.
      *
      * @param measurement the measurement
-     * @return true when the measurement kis valid
      * @throws MeasurementException in case of failure
      */
-    private boolean validate(Measurement measurement) throws MeasurementException {
+    private void validate(Measurement measurement) throws MeasurementException {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
 
         Set<ConstraintViolation<Measurement>> violations = validator.validate(measurement);
 
-        if (violations.isEmpty()) {
-            return true;
-        } else if (violations.size() == 1) {
-            throw new MeasurementException("Error during validation of the measurement: " + violations.iterator().next().getMessage());
-        } else if (violations.size() > 1) {
-            StringBuilder message = new StringBuilder("Multiple Errors during validation of the measurement: ");
+        if (! violations.isEmpty()) {
+            if (violations.size() == 1) {
+                throw new MeasurementException("Error during validation of the measurement: " + violations.iterator().next().getMessage());
+            } else {
+                StringBuilder message = new StringBuilder("Multiple Errors during validation of the measurement: ");
 
-            Iterator<ConstraintViolation<Measurement>> iter = violations.iterator();
+                Iterator<ConstraintViolation<Measurement>> iter = violations.iterator();
 
-            while (iter.hasNext()) {
-                message.append(iter.next().getMessage());
+                while (iter.hasNext()) {
+                    message.append(iter.next().getMessage());
 
-                if (iter.hasNext()) {
-                    message.append(", ");
+                    if (iter.hasNext()) {
+                        message.append(", ");
+                    }
                 }
+
+                throw new MeasurementException(message.toString());
             }
 
-            throw new MeasurementException(message.toString());
         }
-
-        return true;
     }
 
     /**

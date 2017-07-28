@@ -1,7 +1,5 @@
 package de.oo2.tank.server;
 
-import de.oo2.tank.server.measurement.MeasurementController;
-import de.oo2.tank.server.swagger.SwaggerController;
 import de.oo2.tank.server.website.MavenVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +13,8 @@ import java.net.UnknownHostException;
 public class ServerContext {
     private static final Logger logger = LoggerFactory.getLogger(ServerContext.class.getName());
 
-    private ServerConfiguration serverConfiguration = null;
-    private SwaggerController swaggerController = null;
-
-
     // properties
+    private ServerConfiguration serverConfiguration = null;
     private String version = null;
     private String hostname = null;
 

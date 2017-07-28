@@ -38,10 +38,9 @@ public class Server {
         staticFiles.location("/public");
 
         new MeasurementRoutes(serverContext);
-        new SwaggerRoutes(serverContext);
+        new SwaggerRoutes();
         new WebsiteRoutes(serverContext);
 
-        // TODO: Move the routes in separate class
         // after each route
         after((req, res) -> {
 

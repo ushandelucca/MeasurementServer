@@ -1,6 +1,5 @@
 package de.oo2.tank.server.website;
 
-import de.oo2.tank.server.website.MavenVersion;
 import org.junit.Assert;
 import org.junit.Test;
 

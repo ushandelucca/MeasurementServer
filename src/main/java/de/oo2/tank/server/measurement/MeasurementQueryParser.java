@@ -49,10 +49,9 @@ public class MeasurementQueryParser {
     /**
      * Checks the syntax of the query.
      *
-     * @return <code>true</code> if the syntax is correct, otherwise <code>false</code>
      * @throws MeasurementDaoException in case of failure
      */
-    boolean checkQuery() throws MeasurementDaoException {
+    void checkQuery() throws MeasurementDaoException {
 
         if (!checked) {
 
@@ -136,8 +135,6 @@ public class MeasurementQueryParser {
 
             checked = true;
         }
-
-        return true;
     }
 
     /**

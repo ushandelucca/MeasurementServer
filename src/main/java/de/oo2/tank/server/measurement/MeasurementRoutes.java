@@ -48,7 +48,6 @@ public class MeasurementRoutes {
 
     // properties
     private static final Logger logger = LoggerFactory.getLogger(MeasurementRoutes.class.getName());
-    private ServerContext serverContext;
     private String expectedApiKey = null;
     private MeasurementController controller = null;
 
@@ -58,7 +57,6 @@ public class MeasurementRoutes {
      * @param serverContext the server context
      */
     public MeasurementRoutes(ServerContext serverContext) {
-        this.serverContext = serverContext;
 
         controller = new MeasurementController(serverContext.getServerConfiguration());
 

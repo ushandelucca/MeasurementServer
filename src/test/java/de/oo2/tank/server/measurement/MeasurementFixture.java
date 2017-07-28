@@ -1,7 +1,5 @@
 package de.oo2.tank.server.measurement;
 
-import de.oo2.tank.server.measurement.Measurement;
-
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;

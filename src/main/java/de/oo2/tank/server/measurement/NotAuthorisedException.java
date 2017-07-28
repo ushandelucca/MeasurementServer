@@ -14,14 +14,4 @@ public class NotAuthorisedException extends Exception {
         super(message);
     }
 
-    /**
-     * Constructor for the <code>NotAuthorisedException</code>.
-     *
-     * @param message   the message
-     * @param throwable the original exception
-     */
-    public NotAuthorisedException(String message, Throwable throwable) {
-        super(message, throwable);
-    }
-
 }
