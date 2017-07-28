@@ -1,6 +1,8 @@
 package de.oo2.tank.server.measurement;
 
 import de.oo2.tank.server.ServerConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -14,6 +16,7 @@ import java.util.Set;
  * This class provides the functionality for the management of the measurements.
  */
 public class MeasurementController {
+    private static final Logger logger = LoggerFactory.getLogger(MeasurementController.class.getName());
 
     private ServerConfiguration config = null;
     private MeasurementDao dao = null;
@@ -39,6 +42,8 @@ public class MeasurementController {
 
         validate(measurement);
 
+        logger.info("Saving measurement with ID: '" + measurement.getId() + "'");
+
         return getDao().createMeasurement(measurement);
     }
 
@@ -50,6 +55,8 @@ public class MeasurementController {
      * @throws MeasurementDaoException in case of failure
      */
     public Measurement readMeasurement(String id) throws MeasurementDaoException {
+
+        logger.info("Reading measurement with ID: '" + id + "'");
 
         return getDao().readMeasurementWithId(id);
     }
@@ -73,6 +80,8 @@ public class MeasurementController {
      */
     public Measurement[] selectMeasurements(Map<String, String[]> queryParameters) throws MeasurementDaoException {
 
+        logger.info("Querying measurements");
+
         return getDao().readMeasurementsWithQuery(queryParameters);
     }
 
@@ -93,6 +102,8 @@ public class MeasurementController {
 
         validate(measurement);
 
+        logger.info("Updating measurement with ID: '" + measurement.getId() + "'");
+
         return getDao().updateMeasurement(measurement);
     }
 
@@ -103,6 +114,8 @@ public class MeasurementController {
      * @throws MeasurementDaoException in case of failure
      */
     public void deleteMeasurement(String id) throws MeasurementDaoException {
+
+        logger.info("Deleting measurement with ID: '" + id + "'");
 
         getDao().deleteMeasurement(id);
     }
