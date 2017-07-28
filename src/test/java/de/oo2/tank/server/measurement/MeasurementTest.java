@@ -32,8 +32,8 @@ public class MeasurementTest {
         measurement2.setUnit(measurement1.getUnit());
         Assert.assertTrue(measurement1.equals(measurement2));
 
-        Assert.assertFalse(measurement1.equals(null));
-        Assert.assertFalse(measurement1.equals(""));
+        Assert.assertNotNull(measurement1);
+        Assert.assertNotEquals("", measurement1.toString());
     }
 
     @Test

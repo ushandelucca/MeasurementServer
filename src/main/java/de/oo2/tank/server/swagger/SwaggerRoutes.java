@@ -11,24 +11,24 @@ import static spark.Spark.get;
 /**
  * This class adds the route for the api documentation.
  */
-public class DocumentationRoutes {
-    private static final Logger logger = LoggerFactory.getLogger(DocumentationRoutes.class.getName());
+public class SwaggerRoutes {
+    private static final Logger logger = LoggerFactory.getLogger(SwaggerRoutes.class.getName());
 
     /**
      * Constructor.
      *
      * @param serverContext the server context
      */
-    public DocumentationRoutes(ServerContext serverContext) {
+    public SwaggerRoutes(ServerContext serverContext) {
 
-        SwaggerService swaggerService = serverContext.getSwaggerService();
+        SwaggerController swaggerController = serverContext.getSwaggerService();
 
         // description a route
         get("/apidoc/swagger", (req, res) -> {
             res.type("text/json");
 
             try {
-                return swaggerService.getSwaggerJson();
+                return swaggerController.getSwaggerJson();
 
             } catch (JsonProcessingException e) {
                 logger.error(e.getMessage(), e);

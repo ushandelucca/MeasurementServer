@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * This class parses the search query for the measurements and provides the criteria as a members and methods.
  */
-public class QueryParser {
+public class MeasurementQueryParser {
     private static final String PARAM_QUERY = "query";
     private static final String PARAM_RETURN = "return";
     private static final String PARAM_SENSOR = "sensor";

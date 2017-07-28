@@ -1,6 +1,5 @@
 package de.oo2.tank.server.swagger;
 
-import de.oo2.tank.server.swagger.SwaggerService;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,11 +9,11 @@ import org.junit.Test;
  * Tests class.
  */
 public class SwaggerServiceTest {
-    private SwaggerService service = null;
+    private SwaggerController service = null;
 
     @Before
     public void setUp() throws Exception {
-        service = new SwaggerService();
+        service = new SwaggerController();
     }
 
     @After

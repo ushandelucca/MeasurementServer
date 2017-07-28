@@ -1,4 +1,4 @@
-package de.oo2.tank.server.swagger;
+package de.oo2.tank.server.util;
 
 import de.oo2.tank.server.Server;
 import org.apache.http.client.fluent.Content;
@@ -12,16 +12,16 @@ import static spark.Spark.awaitInitialization;
 import static spark.Spark.stop;
 
 /**
- * Tests for the <code>DocumentationRoutes</code>.
+ * Tests class.
  */
-public class DocumentationRoutesTest {
+public class ServerContextRoutesTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
         // start the server
         Server.main(null);
         awaitInitialization();
-//         Thread.sleep(2000); // allow the server to start
+        // Thread.sleep(2000); // allow the server to start
     }
 
     @AfterClass
@@ -32,12 +32,11 @@ public class DocumentationRoutesTest {
     }
 
     @Test
-    public void testGetSwagger() throws Exception {
-        Content content = Request.Get("http://localhost:8080/apidoc/swagger")
+    public void testWebsite() throws Exception {
+        Content content = Request.Get("http://localhost:8080/")
                 .execute()
                 .returnContent();
 
         Assert.assertNotSame("", content.asString());
     }
-
 }

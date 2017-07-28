@@ -18,7 +18,7 @@ import java.util.Set;
  * https://srlk.github.io/posts/2016/swagger_sparkjava/
  * https://github.com/swagger-api/swagger-core/wiki/Annotations
  */
-public class SwaggerService {
+public class SwaggerController {
     private String swaggerJson = null;
 
     /**

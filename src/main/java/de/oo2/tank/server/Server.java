@@ -4,7 +4,7 @@ import com.brsanthu.googleanalytics.GoogleAnalytics;
 import com.brsanthu.googleanalytics.PageViewHit;
 import de.oo2.tank.server.util.ResponseError;
 import de.oo2.tank.server.util.ServerContext;
-import de.oo2.tank.server.swagger.DocumentationRoutes;
+import de.oo2.tank.server.swagger.SwaggerRoutes;
 import de.oo2.tank.server.measurement.MeasurementRoutes;
 import de.oo2.tank.server.website.WebsiteRoutes;
 import de.oo2.tank.server.website.MavenVersion;
@@ -39,7 +39,7 @@ public class Server {
         staticFiles.location("/public");
 
         new MeasurementRoutes(serverContext);
-        new DocumentationRoutes(serverContext);
+        new SwaggerRoutes(serverContext);
         new WebsiteRoutes(serverContext);
 
         // TODO: Move the routes in separate class

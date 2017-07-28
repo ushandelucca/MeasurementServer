@@ -25,12 +25,12 @@ import static org.jongo.Oid.withOid;
  * See: https://www.mongodb.com/
  * Implemented with http://jongo.org
  */
-public class MongoDao {
+public class MeasurementDao {
     // private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
     private static final int MAX_RESULT_COUNT = 1000;
 
-    private static final Logger logger = LoggerFactory.getLogger(MongoDao.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(MeasurementDao.class.getName());
     private MongoClient mongoClient = null;
 
     private String dbName;
@@ -44,7 +44,7 @@ public class MongoDao {
      * @param host the host of the database
      * @param port the port of the database
      */
-    public MongoDao(String dbName, String host, int port) {
+    public MeasurementDao(String dbName, String host, int port) {
         this.dbName = dbName;
         this.host = host;
         this.port = port;
@@ -141,10 +141,10 @@ public class MongoDao {
      * @throws PersistenceException in case of failure
      */
     public Measurement[] readMeasurementsWithQuery(Map<String, String[]> queryParameters) throws PersistenceException {
-        QueryParser queryParser = new QueryParser();
-        queryParser.setQuery(queryParameters);
+        MeasurementQueryParser measurementQueryParser = new MeasurementQueryParser();
+        measurementQueryParser.setQuery(queryParameters);
 
-        queryParser.checkQuery();
+        measurementQueryParser.checkQuery();
 
         MongoCollection measurements = getMeasurements();
         List<Measurement> myList = null;
@@ -153,36 +153,36 @@ public class MongoDao {
             try {
                 Find find;
 
-                if (queryParser.hasDate() && queryParser.hasSensor()) {
-                    DateTime dtBegin = setBeginOfDay(queryParser.getBeginDate());
-                    DateTime dtEnd = setEndOfDay(queryParser.getEndDate());
+                if (measurementQueryParser.hasDate() && measurementQueryParser.hasSensor()) {
+                    DateTime dtBegin = setBeginOfDay(measurementQueryParser.getBeginDate());
+                    DateTime dtEnd = setEndOfDay(measurementQueryParser.getEndDate());
 
-                    find = measurements.find("{ timestamp: { $gte: #, $lte: # }, sensor: # }", dtBegin.toDate(), dtEnd.toDate(), queryParser.getSensor());
-                } else if (queryParser.hasDate() && !queryParser.hasSensor()) {
-                    DateTime dtBegin = setBeginOfDay(queryParser.getBeginDate());
-                    DateTime dtEnd = setEndOfDay(queryParser.getEndDate());
+                    find = measurements.find("{ timestamp: { $gte: #, $lte: # }, sensor: # }", dtBegin.toDate(), dtEnd.toDate(), measurementQueryParser.getSensor());
+                } else if (measurementQueryParser.hasDate() && !measurementQueryParser.hasSensor()) {
+                    DateTime dtBegin = setBeginOfDay(measurementQueryParser.getBeginDate());
+                    DateTime dtEnd = setEndOfDay(measurementQueryParser.getEndDate());
 
                     find = measurements.find("{ timestamp: { $gte: #, $lte: # } }", dtBegin.toDate(), dtEnd.toDate());
-                } else if (!queryParser.hasDate() && queryParser.hasSensor()) {
-                    find = measurements.find("{ sensor: # }", queryParser.getSensor());
+                } else if (!measurementQueryParser.hasDate() && measurementQueryParser.hasSensor()) {
+                    find = measurements.find("{ sensor: # }", measurementQueryParser.getSensor());
                 } else {
                     find = measurements.find("{ }");
                 }
 
                 // TODO: reduce cyclomatic complexity: too much nested conditions
-                if (queryParser.hasSort()) {
+                if (measurementQueryParser.hasSort()) {
 
-                    if (queryParser.isSortDateAsc()) {
+                    if (measurementQueryParser.isSortDateAsc()) {
                         find = find.sort("{ \"timestamp\": 1 }");
                     }
-                    if (queryParser.isSortDateDesc()) {
+                    if (measurementQueryParser.isSortDateDesc()) {
                         find = find.sort("{ \"timestamp\": -1 }");
                     }
                 }
 
                 // limit the result set to a maximum
-                if (queryParser.hasLimit()) {
-                    find.limit(Math.min(queryParser.getLimit(), MAX_RESULT_COUNT));
+                if (measurementQueryParser.hasLimit()) {
+                    find.limit(Math.min(measurementQueryParser.getLimit(), MAX_RESULT_COUNT));
                 } else {
                     find.limit(MAX_RESULT_COUNT);
                 }

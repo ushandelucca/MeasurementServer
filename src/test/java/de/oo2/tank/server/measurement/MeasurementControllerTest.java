@@ -1,9 +1,6 @@
 package de.oo2.tank.server.measurement;
 
-import de.oo2.tank.server.measurement.Measurement;
-import de.oo2.tank.server.measurement.MeasurementService;
 import de.oo2.tank.server.util.ModelException;
-import de.oo2.tank.server.measurement.MongoDao;
 import de.oo2.tank.server.util.PersistenceException;
 import org.junit.After;
 import org.junit.Assert;
@@ -19,16 +16,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Tests for <code>MeasurementService</code>
+ * Tests for <code>MeasurementController</code>
  */
-public class MeasurementServiceTest {
-    private MeasurementService service = null;
-    private MongoDao daoMock = null;
+public class MeasurementControllerTest {
+    private MeasurementController service = null;
+    private MeasurementDao daoMock = null;
 
     @Before
     public void setUp() throws Exception {
-        daoMock = mock(MongoDao.class);
-        service = new MeasurementService(daoMock);
+        daoMock = mock(MeasurementDao.class);
+        service = new MeasurementController(daoMock);
     }
 
     @After

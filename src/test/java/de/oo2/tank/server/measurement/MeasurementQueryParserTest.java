@@ -1,6 +1,5 @@
 package de.oo2.tank.server.measurement;
 
-import de.oo2.tank.server.measurement.QueryParser;
 import de.oo2.tank.server.util.PersistenceException;
 import org.joda.time.DateTime;
 import org.junit.After;
@@ -14,8 +13,8 @@ import java.util.Map;
 /**
  * Test for the query parser.
  */
-public class QueryParserTest {
-    private QueryParser parser = new QueryParser();
+public class MeasurementQueryParserTest {
+    private MeasurementQueryParser parser = new MeasurementQueryParser();
     private Map<String, String[]> query;
 
     @Before

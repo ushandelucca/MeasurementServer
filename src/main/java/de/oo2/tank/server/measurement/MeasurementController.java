@@ -15,18 +15,18 @@ import java.util.Set;
 /**
  * This class provides the functionality for the management of the measurements.
  */
-public class MeasurementService {
+public class MeasurementController {
 
     // the data access
-    private MongoDao dao = null;
+    private MeasurementDao dao = null;
 
     /**
      * Constructor for the service.
      *
      * @param config the configuration
      */
-    public MeasurementService(Configuration config) {
-        this.dao = new MongoDao(config.getDbName(), config.getDbHost(), config.getDbPort());
+    public MeasurementController(Configuration config) {
+        this.dao = new MeasurementDao(config.getDbName(), config.getDbHost(), config.getDbPort());
     }
 
     /**
@@ -34,7 +34,7 @@ public class MeasurementService {
      *
      * @param dao the data access object
      */
-    public MeasurementService(MongoDao dao) {
+    public MeasurementController(MeasurementDao dao) {
         this.dao = dao;
     }
 

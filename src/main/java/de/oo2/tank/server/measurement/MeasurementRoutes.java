@@ -31,7 +31,7 @@ import static spark.Spark.*;
         consumes = {"application/json"},
         produces = {"application/json"},
         tags = {@Tag(name = "Description")}
-        // TODO: remove this comment when the @SwaggerDefinition works. See also SwaggerService for the workaround.
+        // TODO: remove this comment when the @SwaggerDefinition works. See also SwaggerController for the workaround.
         /* , // see workaround
         securityDefinition = @SecurityDefinition(
                 apiKeyAuthDefintions = {

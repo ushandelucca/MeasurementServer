@@ -1,7 +1,5 @@
 package de.oo2.tank.server.measurement;
 
-import de.oo2.tank.server.measurement.Measurement;
-import de.oo2.tank.server.measurement.MongoDao;
 import de.oo2.tank.server.util.PersistenceException;
 import org.junit.After;
 import org.junit.Assert;
@@ -16,13 +14,13 @@ import static de.oo2.tank.server.measurement.MeasurementFixture.*;
 /**
  * Integration tests for the persistence.
  */
-public class MongoDaoIntTest {
+public class MeasurementDaoIntTest {
 
-    private MongoDao dao;
+    private MeasurementDao dao;
 
     @Before
     public void setUp() throws Exception {
-        dao = new MongoDao("intTest", "localhost", 27017);
+        dao = new MeasurementDao("intTest", "localhost", 27017);
     }
 
     @After
