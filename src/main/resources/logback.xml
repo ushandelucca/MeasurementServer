@@ -1,4 +1,4 @@
-<configuration>
+<serverConfiguration>
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <!-- deny all events with a level below WARN
              level hierarchy: TRACE, DEBUG, INFO, WARN, ERROR -->
@@ -32,4 +32,4 @@
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
     </root>
-</configuration>
+</serverConfiguration>

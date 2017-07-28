@@ -2,12 +2,11 @@ package de.oo2.tank.server;
 
 import com.brsanthu.googleanalytics.GoogleAnalytics;
 import com.brsanthu.googleanalytics.PageViewHit;
-import de.oo2.tank.server.model.ResponseError;
-import de.oo2.tank.server.model.ServerContext;
-import de.oo2.tank.server.route.DocumentationRoutes;
-import de.oo2.tank.server.route.MeasurementRoutes;
-import de.oo2.tank.server.route.WebsiteRoutes;
-import de.oo2.tank.server.util.MavenUtil;
+import de.oo2.tank.server.util.ResponseError;
+import de.oo2.tank.server.swagger.SwaggerRoutes;
+import de.oo2.tank.server.measurement.MeasurementRoutes;
+import de.oo2.tank.server.website.WebsiteRoutes;
+import de.oo2.tank.server.website.MavenVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,27 +27,26 @@ public class Server {
     public static void main(String[] args) {
         // create the context
         ServerContext serverContext = new ServerContext();
-        Configuration configuration = serverContext.getConfiguration();
+        ServerConfiguration serverConfiguration = serverContext.getServerConfiguration();
 
-        logger.info("Starting the server. Version: " + MavenUtil.getVersion());
+        logger.info("Starting the server. Version: " + MavenVersion.getVersion());
 
-        // set the server configuration
-        port(configuration.getServerPort());
+        // set the server serverConfiguration
+        port(serverConfiguration.getServerPort());
 
         // define the routes
         staticFiles.location("/public");
 
         new MeasurementRoutes(serverContext);
-        new DocumentationRoutes(serverContext);
+        new SwaggerRoutes();
         new WebsiteRoutes(serverContext);
 
-        // TODO: Move the routes in separate class
         // after each route
         after((req, res) -> {
 
             // enable Google Analytics
-            if (configuration.getGoogleAnalyticsKey() != null) {
-                GoogleAnalytics ga = new GoogleAnalytics(configuration.getGoogleAnalyticsKey());
+            if (serverConfiguration.getGoogleAnalyticsKey() != null) {
+                GoogleAnalytics ga = new GoogleAnalytics(serverConfiguration.getGoogleAnalyticsKey());
                 ga.postAsync(new PageViewHit(req.url(), req.requestMethod()));
             }
 
