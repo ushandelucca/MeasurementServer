@@ -45,9 +45,12 @@ public class MeasurementRoutes {
      * Name of the API authorisation key in the request header
      */
     public static final String HEADER_API_KEY = "ApiKey";
+
+    // properties
     private static final Logger logger = LoggerFactory.getLogger(MeasurementRoutes.class.getName());
     private ServerContext serverContext;
     private String expectedApiKey = null;
+    private MeasurementController controller = null;
 
     /**
      * Constructor.
@@ -56,6 +59,8 @@ public class MeasurementRoutes {
      */
     public MeasurementRoutes(ServerContext serverContext) {
         this.serverContext = serverContext;
+
+        controller = new MeasurementController(serverContext.getServerConfiguration());
 
         expectedApiKey = serverContext.getServerConfiguration().getTankApiKey();
 
@@ -84,7 +89,7 @@ public class MeasurementRoutes {
                 checkApiAccess(req);
 
                 m = new Gson().fromJson(req.body(), Measurement.class);
-                m = serverContext.getMeasurementController().saveMeasurement(m);
+                m = controller.saveMeasurement(m);
             } catch (Exception e) {
                 return handleException(e, res);
             }
@@ -107,7 +112,7 @@ public class MeasurementRoutes {
 
             String tid = req.params(":id");
 
-            Measurement measurement = serverContext.getMeasurementController().readMeasurement(tid);
+            Measurement measurement = controller.readMeasurement(tid);
 
             if (measurement != null) {
                 return measurement;
@@ -142,7 +147,7 @@ public class MeasurementRoutes {
             Measurement[] measurements;
 
             try {
-                measurements = serverContext.getMeasurementController().selectMeasurements(query);
+                measurements = controller.selectMeasurements(query);
             } catch (Exception e) {
                 return handleException(e, res);
             }
@@ -168,7 +173,7 @@ public class MeasurementRoutes {
                 checkApiAccess(req);
 
                 m = new Gson().fromJson(req.body(), Measurement.class);
-                m = serverContext.getMeasurementController().updateMeasurement(m);
+                m = controller.updateMeasurement(m);
             } catch (Exception e) {
                 return handleException(e, res);
             }
@@ -194,7 +199,7 @@ public class MeasurementRoutes {
             try {
                 checkApiAccess(req);
 
-                serverContext.getMeasurementController().deleteMeasurement(tid);
+                controller.deleteMeasurement(tid);
             } catch (Exception e) {
                 return handleException(e, res);
             }

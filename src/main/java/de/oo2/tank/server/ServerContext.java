@@ -64,14 +64,4 @@ public class ServerContext {
         return hostname;
     }
 
-    /**
-     * Returns the measurement controller.
-     *
-     * @return the measurement controller
-     */
-    // TODO: remove
-    public MeasurementController getMeasurementController() {
-        return new MeasurementController(getServerConfiguration());
-    }
-
 }

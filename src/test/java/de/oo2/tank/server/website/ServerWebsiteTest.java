@@ -1,4 +1,4 @@
-package de.oo2.tank.server;
+package de.oo2.tank.server.website;
 
 import de.oo2.tank.server.Server;
 import org.apache.http.client.fluent.Content;
@@ -14,7 +14,7 @@ import static spark.Spark.stop;
 /**
  * Tests class.
  */
-public class ServerRoutesTest {
+public class ServerWebsiteTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {

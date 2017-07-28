@@ -38,10 +38,4 @@ public class ServerContextTest {
         Assert.assertNotNull(serverContext.getHostname());
     }
 
-    @Test
-    public void testGetMeasurementController() throws Exception {
-        Assert.assertNotNull(serverContext.getMeasurementController());
-        Assert.assertNotNull(serverContext.getMeasurementController());
-    }
-
 }
