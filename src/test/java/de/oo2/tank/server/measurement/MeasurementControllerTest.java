@@ -1,5 +1,6 @@
 package de.oo2.tank.server.measurement;
 
+import de.oo2.tank.server.ServerConfiguration;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,18 +18,19 @@ import static org.mockito.Mockito.when;
  * Tests for <code>MeasurementController</code>
  */
 public class MeasurementControllerTest {
-    private MeasurementController service = null;
+    private MeasurementController controller = null;
     private MeasurementDao daoMock = null;
 
     @Before
     public void setUp() throws Exception {
         daoMock = mock(MeasurementDao.class);
-        service = new MeasurementController(daoMock);
+        controller = new MeasurementController(new ServerConfiguration());
+        controller.setDao(daoMock);
     }
 
     @After
     public void tearDown() throws Exception {
-        service = null;
+        controller = null;
     }
 
     @Test
@@ -39,7 +41,7 @@ public class MeasurementControllerTest {
         when(daoMock.createMeasurement(measurementToDb)).thenReturn(measurementFromDb);
 
         // test
-        Measurement measurement = service.saveMeasurement(measurementToDb);
+        Measurement measurement = controller.saveMeasurement(measurementToDb);
 
         Assert.assertNotNull(measurement.getId());
     }
@@ -52,7 +54,7 @@ public class MeasurementControllerTest {
         when(daoMock.readMeasurementWithId(measurementFromDb.getId())).thenReturn(measurementFromDb);
 
         // test
-        Measurement measurement = service.readMeasurement(measurementFromDb.getId());
+        Measurement measurement = controller.readMeasurement(measurementFromDb.getId());
 
         Assert.assertEquals(measurementFromDb.getId(), measurement.getId());
     }
@@ -68,7 +70,7 @@ public class MeasurementControllerTest {
         when(daoMock.readMeasurementsWithQuery(params)).thenReturn(measurementsFromDb);
 
         // test
-        Measurement[] measurements = service.selectMeasurements(params);
+        Measurement[] measurements = controller.selectMeasurements(params);
 
         Assert.assertNotNull(measurements);
         Assert.assertTrue(measurements.length > 0);
@@ -79,7 +81,7 @@ public class MeasurementControllerTest {
         Measurement measurement = new Measurement();
 
         try {
-            service.saveMeasurement(measurement);
+            controller.saveMeasurement(measurement);
         } catch (MeasurementException e) {
             Assert.assertNotNull(e.getMessage());
             return;
@@ -96,7 +98,7 @@ public class MeasurementControllerTest {
         when(daoMock.updateMeasurement(measurement)).thenReturn(measurement);
 
         // test
-        Measurement updatedMeasurement = service.updateMeasurement(measurement);
+        Measurement updatedMeasurement = controller.updateMeasurement(measurement);
 
         Assert.assertEquals(measurement, updatedMeasurement);
     }
@@ -108,7 +110,7 @@ public class MeasurementControllerTest {
         when(daoMock.updateMeasurement(measurement)).thenReturn(measurement);
 
         try {
-            service.updateMeasurement(measurement);
+            controller.updateMeasurement(measurement);
         } catch (MeasurementException e) {
             Assert.assertNotNull(e.getMessage());
             return;
@@ -125,7 +127,7 @@ public class MeasurementControllerTest {
         when(daoMock.updateMeasurement(measurement)).thenReturn(measurement);
 
         // test
-        service.deleteMeasurement(measurement.getId());
+        controller.deleteMeasurement(measurement.getId());
     }
 
     @Test
@@ -137,7 +139,7 @@ public class MeasurementControllerTest {
 
         // test
         try {
-            service.deleteMeasurement(measurement.getId());
+            controller.deleteMeasurement(measurement.getId());
         } catch (MeasurementDaoException e) {
             Assert.assertNotNull(e.getMessage());
             return;

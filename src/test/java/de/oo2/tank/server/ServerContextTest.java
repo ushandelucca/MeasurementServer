@@ -1,6 +1,5 @@
 package de.oo2.tank.server;
 
-import de.oo2.tank.server.ServerContext;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,14 +39,9 @@ public class ServerContextTest {
     }
 
     @Test
-    public void testGetMeasurementService() throws Exception {
-        Assert.assertNotNull(serverContext.getMeasurementService());
-        Assert.assertNotNull(serverContext.getMeasurementService());
+    public void testGetMeasurementController() throws Exception {
+        Assert.assertNotNull(serverContext.getMeasurementController());
+        Assert.assertNotNull(serverContext.getMeasurementController());
     }
 
-    @Test
-    public void testGetSwaggerService() throws Exception {
-        Assert.assertNotNull(serverContext.getSwaggerService());
-        Assert.assertNotNull(serverContext.getSwaggerService());
-    }
 }

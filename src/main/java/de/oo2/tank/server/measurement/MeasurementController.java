@@ -15,25 +15,16 @@ import java.util.Set;
  */
 public class MeasurementController {
 
-    // the data access
+    private ServerConfiguration config = null;
     private MeasurementDao dao = null;
 
     /**
      * Constructor for the service.
      *
-     * @param config the configuration
+     * @param serverConfiguration the configuration
      */
-    public MeasurementController(ServerConfiguration config) {
-        this.dao = new MeasurementDao(config.getDbName(), config.getDbHost(), config.getDbPort());
-    }
-
-    /**
-     * Constructor for the service.
-     *
-     * @param dao the data access object
-     */
-    public MeasurementController(MeasurementDao dao) {
-        this.dao = dao;
+    public MeasurementController(ServerConfiguration serverConfiguration) {
+        config = serverConfiguration;
     }
 
     /**
@@ -45,8 +36,11 @@ public class MeasurementController {
      * @throws MeasurementException in case of failure
      */
     public Measurement saveMeasurement(Measurement measurement) throws MeasurementDaoException, MeasurementException {
+
         validate(measurement);
-        Measurement createdMeasurement = dao.createMeasurement(measurement);
+
+        Measurement createdMeasurement = getDao().createMeasurement(measurement);
+
         return createdMeasurement;
     }
 
@@ -58,7 +52,8 @@ public class MeasurementController {
      * @throws MeasurementDaoException in case of failure
      */
     public Measurement readMeasurement(String id) throws MeasurementDaoException {
-        Measurement measurement = dao.readMeasurementWithId(id);
+
+        Measurement measurement = getDao().readMeasurementWithId(id);
 
         return measurement;
     }
@@ -82,7 +77,7 @@ public class MeasurementController {
      */
     public Measurement[] selectMeasurements(Map<String, String[]> queryParameters) throws MeasurementDaoException {
 
-        Measurement[] measurements = dao.readMeasurementsWithQuery(queryParameters);
+        Measurement[] measurements = getDao().readMeasurementsWithQuery(queryParameters);
 
         return measurements;
     }
@@ -103,7 +98,9 @@ public class MeasurementController {
         }
 
         validate(measurement);
-        Measurement updatedMeasurement = dao.updateMeasurement(measurement);
+
+        Measurement updatedMeasurement = getDao().updateMeasurement(measurement);
+
         return updatedMeasurement;
     }
 
@@ -114,7 +111,8 @@ public class MeasurementController {
      * @throws MeasurementDaoException in case of failure
      */
     public void deleteMeasurement(String id) throws MeasurementDaoException {
-        dao.deleteMeasurement(id);
+
+        getDao().deleteMeasurement(id);
     }
 
     /**
@@ -153,4 +151,25 @@ public class MeasurementController {
         return true;
     }
 
+    /**
+     * Returns the DAO.
+     *
+     * @return the DAO
+     */
+    private MeasurementDao getDao() {
+        if (this.dao == null) {
+            return new MeasurementDao(config.getDbName(), config.getDbHost(), config.getDbPort());
+        }
+
+        return this.dao;
+    }
+
+    /**
+     * Sets the DAO for testing.
+     *
+     * @param dao the DAO
+     */
+    void setDao(MeasurementDao dao) {
+        this.dao = dao;
+    }
 }

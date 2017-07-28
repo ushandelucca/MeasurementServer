@@ -21,7 +21,7 @@ public class SwaggerRoutes {
      */
     public SwaggerRoutes(ServerContext serverContext) {
 
-        SwaggerController swaggerController = serverContext.getSwaggerService();
+        SwaggerController swaggerController = new SwaggerController();
 
         // description a route
         get("/apidoc/swagger", (req, res) -> {

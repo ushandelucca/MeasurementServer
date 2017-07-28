@@ -15,9 +15,9 @@ import java.net.UnknownHostException;
 public class ServerContext {
     private static final Logger logger = LoggerFactory.getLogger(ServerContext.class.getName());
 
-
-    // serverConfiguration
     private ServerConfiguration serverConfiguration = null;
+    private SwaggerController swaggerController = null;
+
 
     // properties
     private String version = null;
@@ -65,22 +65,13 @@ public class ServerContext {
     }
 
     /**
-     * Returns the measurement service.
+     * Returns the measurement controller.
      *
-     * @return the measurement service
+     * @return the measurement controller
      */
     // TODO: remove
-    public MeasurementController getMeasurementService() {
+    public MeasurementController getMeasurementController() {
         return new MeasurementController(getServerConfiguration());
     }
 
-    /**
-     * Returns the Swagger service.
-     *
-     * @return the Swagger service
-     */
-    // TODO: remove
-    public SwaggerController getSwaggerService() {
-        return new SwaggerController();
-    }
 }
