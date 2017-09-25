@@ -102,16 +102,16 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu pull-right" role="menu">
-                                <li><a href="#" class="selected">3 Tage</a>
+                                <li><a href="#" id="action-3-days" class="selected">3 Tage</a>
                                 </li>
-                                <li><a href="#">1 Woche</a>
+                                <li><a href="#" id="action-1-week" >1 Woche</a>
                                 </li>
-                                <li><a href="#">1 Monat</a>
+                                <li><a href="#" id="action-1-month" >1 Monat</a>
                                 </li>
-                                <li><a href="#">6 Monate</a>
+                                <li><a href="#" id="action-6-months" >6 Monate</a>
                                 </li>
                                 <li class="divider"></li>
-                                <li><a href="#">Alle Werte</a>
+                                <li><a href="#" id="action-all-values" >Alle Werte</a>
                                 </li>
                             </ul>
                         </div>
@@ -210,6 +210,8 @@
 <script src="js/chartjs-plugin-zoom.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
+<script src="js/app.js"></script>
+
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 
@@ -219,41 +221,10 @@
 $(document).ready(function () {
 
     var dataSource = '${dataSource}'; // whether the page is delivered by a server or static (dev mode)
-    var chart;
-    var rainSeries = [];
-    var levelSeries = [];
-
-    window.chartColors = {
-        red: 'rgb(255, 99, 132)',
-        orange: 'rgb(255, 159, 64)',
-        yellow: 'rgb(255, 205, 86)',
-        green: 'rgb(92, 184, 92)',
-        blue: 'rgb(51, 122, 183)',
-        purple: 'rgb(153, 102, 255)',
-        grey: 'rgb(231,233,237)'
-    };
-
-    var color = Chart.helpers.color;
-    var chartData = {
-        datasets: [{
-            label: "Wasserstand",
-            borderColor: window.chartColors.green,
-            backgroundColor: color(window.chartColors.green).alpha(0.2).rgbString(),
-            yAxisID: "y-axis-1",
-            data: []
-            },
-            {
-            label: "Regen",
-            borderColor: window.chartColors.blue,
-            backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
-            yAxisID: "y-axis-2",
-            data: []
-        }]
-    };
 
     if ( dataSource === 'server' ) {
       measurements = "Datum,Regen\n";
-      var begin = moment().subtract(90, 'days').format("YYYY-MM-DD");
+      var begin = moment().subtract(3, 'days').format("YYYY-MM-DD");
       var end = moment().format("YYYY-MM-DD");
 
         $.getJSON( "/api/tank/measurements?query=return&sensor=TankLevel&sort=-date", function( data ) {
@@ -355,5 +326,6 @@ $(document).ready(function () {
         }
     });
 })
+
 </script>
 </html>
