@@ -227,7 +227,7 @@ $(document).ready(function () {
       var begin = moment().subtract(3, 'days').format("YYYY-MM-DD");
       var end = moment().format("YYYY-MM-DD");
 
-        $.getJSON( "/api/tank/measurements?query=return&sensor=TankLevel&sort=-date", function( data ) {
+        $.getJSON( "/api/tank/measurements?query=return&sensor=TankLevel&begin=" + begin + "&end=" + end + "&sort=-date", function( data ) {
 
           $.each( data, function( key, val ) {
             var ts = moment(val.timestamp, "MMM D, YYYY hh:mm:ss A").format("YYYY-MM-DD HH:mm:ss");
