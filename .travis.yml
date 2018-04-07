@@ -18,6 +18,6 @@ after_success:
 - if [ "$TRAVIS_BRANCH" == "master" ]; then
      mvn clean package;
      docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-     docker build . -t oo2a/tankserver;
-     docker push oo2a/tankserver;
+     docker build . -t oo2a/measurementserver;
+     docker push oo2a/measurementserver;
      fi
