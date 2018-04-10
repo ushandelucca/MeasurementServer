@@ -14,7 +14,7 @@ public class MavenVersion {
     private static final Logger logger = LoggerFactory.getLogger(MavenVersion.class.getName());
 
     private static final String UNKNOWN = "unknown";
-    private static final String PATH = "META-INF/maven/de/oo2a/m/server/pom.properties";
+    private static final String PATH = "META-INF/maven/de.oo2a.m/server/pom.properties";
 
     /**
      * Constructor.
