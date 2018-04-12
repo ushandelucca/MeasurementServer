@@ -1,7 +1,7 @@
 # Notes
- 
+
 ## Web Client
-- Switch to https://github.com/rajasegar/JADE-Bootstrap
+- Switch to https://bootstrapious.com/p/bootstrap-4-dark-admin
 - display the swagger.json on the website (nice formatted) and make it downloadable with [Javascript](http://stackoverflow.com/questions/4184944/javascript-download-data-to-file-from-content-within-the-page)
     - do not generate a temporary file
     - keep the route ```/apidoc/swagger```
@@ -9,9 +9,9 @@
 Example for the static resources:
 ```bash
 resources
-+ - index.html  --> plaxceholder that redirects to website (jade)  
++ - index.html  --> plaxceholder that redirects to website (jade)
 + - swagger-ui
-    + - swagger-ui files 
+    + - swagger-ui files
 ```
 
 ### More interesting things
@@ -19,7 +19,7 @@ resources
 - https://github.com/jakerella/jquery-mockjax
 - Badge champion: https://github.com/oshi/oshi/blob/master/README.md
 - Next project: https://github.com/cgarwood/hacontrolpoint based on https://www.behance.net/gallery/9080423/HEIMA-Smart-Home-Automation-UI
-- Using https://github.com/kevinswiber/siren or http://stateless.co/hal_specification.html instead of swagger 
+- Using https://github.com/kevinswiber/siren or http://stateless.co/hal_specification.html instead of swagger
 
 ## [Spark](http://sparkjava.com/)
 http://www.mscharhag.com/java/building-rest-api-with-spark
@@ -32,7 +32,7 @@ https://srlk.github.io/posts/2016/swagger_sparkjava/
 Accidentally committed .idea directory files into git
 http://stackoverflow.com/questions/11124053/accidentally-committed-idea-directory-files-into-git
 ```bash
-$ echo '.idea' >> .gitignore  
+$ echo '.idea' >> .gitignore
 $ git rm -r --cached .idea
 $ git add .gitignore
 $ git commit -m "removed .idea directory"
