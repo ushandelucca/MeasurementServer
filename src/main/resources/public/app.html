@@ -108,10 +108,8 @@
                                 </li>
                                 <li><a href="#" id="action-1-month" >1 Monat</a>
                                 </li>
-                                <li><a href="#" id="action-6-months" >6 Monate</a>
-                                </li>
                                 <li class="divider"></li>
-                                <li><a href="#" id="action-all-values" >Alle Werte</a>
+                                <li><a href="#" id="action-6-months" >6 Monate</a>
                                 </li>
                             </ul>
                         </div>
@@ -221,33 +219,13 @@
 $(document).ready(function () {
 
     var dataSource = '${dataSource}'; // whether the page is delivered by a server or static (dev mode)
+    measurements = "Datum,Regen\n";
 
     if ( dataSource === 'server' ) {
-      measurements = "Datum,Regen\n";
-      var begin = moment().subtract(3, 'days').format("YYYY-MM-DD");
-      var end = moment().format("YYYY-MM-DD");
+        var begin = moment().subtract(3, 'days').format("YYYY-MM-DD");
+        var end = moment().format("YYYY-MM-DD");
 
-        $.getJSON( "/api/tank/measurements?query=return&sensor=TankLevel&begin=" + begin + "&end=" + end + "&sort=-date", function( data ) {
-
-          $.each( data, function( key, val ) {
-            var ts = moment(val.timestamp, "MMM D, YYYY hh:mm:ss A").format("YYYY-MM-DD HH:mm:ss");
-            levelSeries.push({x:ts, y:val.value});
-          });
-
-          chartData.datasets[0].data = levelSeries;
-          chart.update();
-        });
-
-        $.getJSON( "/api/tank/measurements?query=return&sensor=Precipitation&begin=" + begin + "&end=" + end + "&sort=-date", function( data ) {
-
-          $.each( data, function( key, val ) {
-            var ts = moment(val.timestamp, "MMM D, YYYY hh:mm:ss A").format("YYYY-MM-DD HH:mm:ss");
-            rainSeries.push({x:ts, y:val.value});
-          });
-
-          chartData.datasets[1].data = rainSeries;
-          chart.update();
-        });
+        updateChart(begin, end);
     }
     else {
         rainSeries = [{ x: '2016-11-18 20:00:00', y: 20},
