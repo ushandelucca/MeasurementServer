@@ -2,6 +2,7 @@
 
 ## Web Client
 - Switch to https://bootstrapious.com/p/bootstrap-4-dark-admin
+- and prometheus.io und grafana.com. See: https://community.grafana.com/t/embed-grafana-dashboard-in-web-application/3142/30
 - display the swagger.json on the website (nice formatted) and make it downloadable with [Javascript](http://stackoverflow.com/questions/4184944/javascript-download-data-to-file-from-content-within-the-page)
     - do not generate a temporary file
     - keep the route ```/apidoc/swagger```
