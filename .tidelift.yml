@@ -1,0 +1,4 @@
+ci:
+  # don't run outdated test on any dependencies
+  tests:
+    outdated: skip
