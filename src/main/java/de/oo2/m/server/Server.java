@@ -1,5 +1,10 @@
 package de.oo2.m.server;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.FileAppender;
 import com.brsanthu.googleanalytics.GoogleAnalytics;
 import com.brsanthu.googleanalytics.PageViewHit;
 import de.oo2.m.server.measurement.MeasurementRoutes;
@@ -28,6 +33,28 @@ public class Server {
         // create the context
         ServerContext serverContext = new ServerContext();
         ServerConfiguration serverConfiguration = serverContext.getServerConfiguration();
+
+        // TODO: add loggly configuration
+        // https://stackoverflow.com/questions/47299109/programatically-add-appender-in-logback-slf4j
+        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+        PatternLayoutEncoder ple = new PatternLayoutEncoder();
+        ple.setPattern("%date %level [%thread] %logger{10} [%file:%line] %msg%n");
+        ple.setContext(lc);
+        ple.start();
+        FileAppender<ILoggingEvent> fileAppender = new FileAppender<ILoggingEvent>();
+        String logFile = "new.log";
+        fileAppender.setFile(logFile);
+        fileAppender.setEncoder(ple);
+        fileAppender.setContext(lc);
+        fileAppender.start();
+
+        ch.qos.logback.classic.Logger logbackLogger = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(Server.class);
+        logbackLogger.addAppender(fileAppender);
+        logbackLogger.setLevel(Level.DEBUG);
+        logbackLogger.setAdditive(false);
+
+        logbackLogger = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        logbackLogger.addAppender(fileAppender);
 
         logger.info("Starting the server. Version: " + MavenVersion.getVersion());
 
