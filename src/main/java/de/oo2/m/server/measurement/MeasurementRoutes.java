@@ -87,6 +87,11 @@ public class MeasurementRoutes {
                 checkApiAccess(req);
 
                 m = new Gson().fromJson(req.body(), Measurement.class);
+
+                // make sure the id is empty to create an new measurement
+                // reason: in some cases the json contained a empty string ""
+                m.resetId();
+
                 m = controller.saveMeasurement(m);
             } catch (Exception e) {
                 return handleException(e, res);

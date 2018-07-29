@@ -45,6 +45,13 @@ public class Measurement {
     }
 
     /**
+     * Set the id to <code>null</code>
+     */
+    void resetId() {
+        this.id = null;
+    }
+
+    /**
      * Returns the timestamp of the measurement
      * @return the timestamp
      */
