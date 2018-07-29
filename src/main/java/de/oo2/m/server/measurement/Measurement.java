@@ -112,7 +112,7 @@ public class Measurement {
      */
     // @NotNull(message = "Unit is mandatory.")
     @NotBlank(message = "Unit is mandatory")
-    @Pattern(regexp = "[a-z-A-Z]*", message = "Unit contains invalid characters")
+    @Pattern(regexp = "[a-zA-Z%]*", message = "Unit contains invalid characters")
     public String getUnit() {
         return unit;
     }
