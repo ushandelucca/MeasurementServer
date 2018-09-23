@@ -15,7 +15,7 @@ import static spark.Spark.get;
  * This class adds the route for the website.
  */
 public class WebsiteRoutes {
-    private ServerContext serverContext = null;
+    private ServerContext serverContext;
     private Map<String, Object> model = null;
 
     /**
@@ -27,7 +27,7 @@ public class WebsiteRoutes {
         this.serverContext = serverContext;
 
         // Freemarker configuration
-        Configuration configuration = new Configuration();
+        Configuration configuration = new Configuration(Configuration.VERSION_2_3_26);
         configuration.setClassForTemplateLoading(configuration.getClass(), "/public/");
 
         get("/", (request, response) -> {
