@@ -2,7 +2,7 @@ sudo: required
 
 language: java
 jdk:
-- openjdk9
+- openjdk8
 
 services:
   - mongodb
