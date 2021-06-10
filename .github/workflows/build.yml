@@ -38,6 +38,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         uses: docker/build-push-action@v2
         with:
+          context: .
           push: true
           tags: oo2a/measurement-server:latest
 
