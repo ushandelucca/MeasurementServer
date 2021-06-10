@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-alpine
+FROM adoptopenjdk/openjdk15:alpine-jre
 
 RUN apk add --update tini
 
