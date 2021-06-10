@@ -15,9 +15,9 @@ before_install:
 after_success:
 # - mvn test jacoco:report
 # - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r /home/travis/build/ushandelucca/MeasurementServer/target/site/jacoco/jacoco.xml
-- if [ "$TRAVIS_BRANCH" == "master" ]; then
-     mvn clean package;
-     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-     docker build . -t oo2a/measurement-server;
-     docker push oo2a/measurement-server;
-     fi
+#- if [ "$TRAVIS_BRANCH" == "master" ]; then
+#     mvn clean package;
+#     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+#     docker build . -t oo2a/measurement-server;
+#     docker push oo2a/measurement-server;
+#     fi
