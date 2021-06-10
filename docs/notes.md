@@ -69,6 +69,12 @@ git push origin --force --all
 ## Docker commands
 Build a image with tag
 ```bash
+$ docker pull mongo
+$ docker run --name my-mongo -d mongo
+```
+
+Build a image with tag
+```bash
 $ docker login -u=user -p=password
 $ docker build . -t oo2a/MeasurementServer
 $ docker push oo2a/MeasurementServer
