@@ -10,7 +10,7 @@ ENV TANK_DATABASE_NAME=test
 ENV TANK_API_KEY=ABC123
 
 # Adding the server as a fat jar
-ADD ./target/server-jar-with-dependencies.jar /
+ADD ./target/measurementserver-jar-with-dependencies.jar /
 EXPOSE 80
 
 ENTRYPOINT ["tini", "--"]
