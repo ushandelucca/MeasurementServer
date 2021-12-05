@@ -1,4 +1,4 @@
-FROM openjdk/openjdk:16-slim
+FROM eclipse-temurin:17-alpine
 
 RUN apk add --update tini
 
