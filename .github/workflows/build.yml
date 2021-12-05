@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout source code 
+      # Checkout source code
       - name: Git checkout
         uses: actions/checkout@v2
 
@@ -18,7 +18,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Start a MongoDB for the test 
+      # Start a MongoDB for the test
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.6.0
         with:
@@ -48,5 +48,3 @@ jobs:
           context: .
           push: true
           tags: oo2a/measurement-server:latest
-
-
