@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk15:alpine-jre
+FROM adoptopenjdk/openjdk16:alpine-jre
 
 RUN apk add --update tini
 
@@ -16,4 +16,4 @@ EXPOSE 80
 ENTRYPOINT ["tini", "--"]
 
 # start the server
-CMD ["java", "-jar", "server-jar-with-dependencies.jar"]
+CMD ["java", "-jar", "measurementserver-jar-with-dependencies.jar"]
