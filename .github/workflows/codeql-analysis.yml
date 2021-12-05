@@ -42,7 +42,6 @@ jobs:
       uses: actions/checkout@v2
 
     # Prepare JDK
-    # - uses: actions/checkout@v2
     - name: Set up JDK
       uses: actions/setup-java@v1
       with:
@@ -71,7 +70,6 @@ jobs:
     # ✏️ If the Autobuild fails above, remove it and uncomment the following three lines
     #    and modify them (or add more) to build your code if your project
     #    uses a compiled language
-
     #- run: |
     #   make bootstrap
     #   make release
