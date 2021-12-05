@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk16:alpine-jre
+FROM openjdk/openjdk:16-slim
 
 RUN apk add --update tini
 
