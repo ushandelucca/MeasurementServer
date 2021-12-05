@@ -23,7 +23,7 @@ public class ServerConfigurationTest {
 
     @Test
     public void testServerPort() {
-        Assert.assertEquals(new Integer(8080), config.getServerPort());
+        Assert.assertEquals(Integer.valueOf(8080), config.getServerPort());
     }
 
     @Test
@@ -38,7 +38,7 @@ public class ServerConfigurationTest {
 
     @Test
     public void testDbPort() {
-        Assert.assertEquals(new Integer(27017), config.getDbPort());
+        Assert.assertEquals(Integer.valueOf(27017), config.getDbPort());
     }
 
     @Test
