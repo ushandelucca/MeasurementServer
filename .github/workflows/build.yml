@@ -20,7 +20,7 @@ jobs:
 
       # Start a MongoDB for the test
       - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.6.0
+        uses: supercharge/mongodb-github-action@1.7.0
         with:
           mongodb-version: 4.4
 
