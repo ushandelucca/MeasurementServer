@@ -28,6 +28,9 @@ jobs:
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
 
+      - name: Set Release version env variable
+        run: echo "RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
       # Docker build
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -47,4 +50,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: oo2a/measurement-server:latest
+          tags: oo2a/measurement-server:${{ env.RELEASE_VERSION }}

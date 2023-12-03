@@ -43,7 +43,7 @@ function updateChart(begin, end) {
     levelSeries = [];
 
     $.each(data, function (key, val) {
-      var ts = moment.utc(val.timestamp).format("YYYY-MM-DD HH:mm:ss");
+      var ts = moment(val.timestamp).format("YYYY-MM-DD HH:mm:ss");
       levelSeries.push({ x: ts, y: val.value });
     });
 
@@ -56,7 +56,7 @@ function updateChart(begin, end) {
     rainSeries = [];
 
     $.each(data, function (key, val) {
-      var ts = moment.utc(val.timestamp).format("YYYY-MM-DD HH:mm:ss");
+      var ts = moment(val.timestamp).format("YYYY-MM-DD HH:mm:ss");
       rainSeries.push({ x: ts, y: val.value });
     });
 
