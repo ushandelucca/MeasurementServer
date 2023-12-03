@@ -36,25 +36,26 @@ public class Server {
 
         // TODO: add loggly configuration
         // https://stackoverflow.com/questions/47299109/programatically-add-appender-in-logback-slf4j
-//        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
-//        PatternLayoutEncoder ple = new PatternLayoutEncoder();
-//        ple.setPattern("%date %level [%thread] %logger{10} [%file:%line] %msg%n");
-//        ple.setContext(lc);
-//        ple.start();
-//        FileAppender<ILoggingEvent> fileAppender = new FileAppender<ILoggingEvent>();
-//        String logFile = "new.log";
-//        fileAppender.setFile(logFile);
-//        fileAppender.setEncoder(ple);
-//        fileAppender.setContext(lc);
-//        fileAppender.start();
+        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+        PatternLayoutEncoder ple = new PatternLayoutEncoder();
+        ple.setPattern("%date %level [%thread] %logger{10} [%file:%line] %msg%n");
+        ple.setContext(lc);
+        ple.start();
+        FileAppender<ILoggingEvent> fileAppender = new FileAppender<ILoggingEvent>();
+        String logFile = "new.log";
+        fileAppender.setFile(logFile);
+        fileAppender.setEncoder(ple);
+        fileAppender.setContext(lc);
+        fileAppender.start();
 
-//        ch.qos.logback.classic.Logger logbackLogger = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(Server.class);
-//      logbackLogger.addAppender(fileAppender);
-//        logbackLogger.setLevel(Level.DEBUG);
-//        logbackLogger.setAdditive(false);
+        ch.qos.logback.classic.Logger logbackLogger = (ch.qos.logback.classic.Logger) LoggerFactory
+                .getLogger(Server.class);
+        logbackLogger.addAppender(fileAppender);
+        logbackLogger.setLevel(Level.DEBUG);
+        logbackLogger.setAdditive(false);
 
-//        logbackLogger = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-//        logbackLogger.addAppender(fileAppender);
+        logbackLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        logbackLogger.addAppender(fileAppender);
 
         logger.info("Starting the server. Version: " + MavenVersion.getVersion());
 
