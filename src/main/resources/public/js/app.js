@@ -41,19 +41,9 @@ function updateChart(begin, end) {
   $.getJSON("/api/tank/measurements?query=return&sensor=TankLevel&begin=" + begin + "&end=" + end + "&sort=-date", function (data) {
 
     levelSeries = [];
-   console.log("Start");
-//    data = [{"id":"656cd221e4b0e100005f6347","timestamp":"2023-12-03T20:08:16.000Z","sensor":"TankLevel","value":56.0,"unit":"%"},{"id":"656cc411e4b027a622f28d0c","timestamp":"2023-12-03T19:08:16.000Z","sensor":"TankLevel","value":57.0,"unit":"%"},{"id":"656cb601e4b027a622f28d0a","timestamp":"2023-12-03T18:08:16.000Z","sensor":"TankLevel","value":57.0,"unit":"%"},{"id":"656ca7f1e4b027a622f28d08","timestamp":"2023-12-03T17:08:16.000Z","sensor":"TankLevel","value":56.0,"unit":"%"}]
-    console.log(data);
-//    console.log("TS 1");
-//      var ts = moment(data[0].timestamp).format("DD.MM.YYYY HH:mm:ss");
-//    console.log("TS 2");
-//      console.log(ts);
-//    console.log("TS 3");
 
     $.each(data, function (key, val) {
-      //      var ts = moment(val.timestamp, "MMM D, YYYY hh:mm:ss A").format("YYYY-MM-DD HH:mm:ss");
-      var ts = moment(val.timestamp).format("DD.MM.YYYY HH:mm:ss");
-      console.log(ts);
+      var ts = moment.utc(val.timestamp).format("YYYY-MM-DD HH:mm:ss");
       levelSeries.push({ x: ts, y: val.value });
     });
 
@@ -66,8 +56,7 @@ function updateChart(begin, end) {
     rainSeries = [];
 
     $.each(data, function (key, val) {
-      //      var ts = moment(val.timestamp, "MMM D, YYYY hh:mm:ss A").format("YYYY-MM-DD HH:mm:ss");
-      var ts = moment(val.timestamp, "MMM D, YYYY hh:mm:ss A").format("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+      var ts = moment.utc(val.timestamp).format("YYYY-MM-DD HH:mm:ss");
       rainSeries.push({ x: ts, y: val.value });
     });
 
