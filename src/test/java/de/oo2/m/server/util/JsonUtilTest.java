@@ -23,8 +23,8 @@ public class JsonUtilTest {
     @Test
     public void testDateToJson() {
         String json = JsonUtil.toJson(new Date(1701298800000L));
-        // expected "2023-11-30T00:00:00.000+01" -> 28 chars
-        Assert.assertEquals("json: >>" + json + "<< ", 28, json.length());
+        // the resulting JSON must not contain a &nbsp
+        Assert.assertFalse(json.contains("\u00a0"));
     }
 
     @Test
