@@ -50,4 +50,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: oo2a/measurement-server:${{ env.RELEASE_VERSION }}
+          tags: oo2a/measurement-server:${{ env.RELEASE_VERSION }},oo2a/measurement-server:latest
