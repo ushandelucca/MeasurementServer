@@ -24,7 +24,7 @@ public class JsonUtilTest {
     public void testDateToJson() {
         String json = JsonUtil.toJson(new Date(1701298800000L));
         // expected "2023-11-30T00:00:00.000+01" -> 28 chars
-        Assert.assertEquals(28, json.length());
+        Assert.assertEquals("json: >>" + json + "<< ", 28, json.length());
     }
 
     @Test
