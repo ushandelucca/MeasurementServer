@@ -34,7 +34,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: 17
+          java-version: 21
           distribution: 'temurin'
 
       # Initializes the CodeQL tools for scanning.
@@ -49,8 +49,8 @@ jobs:
 
       # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
       # If this step fails, then you should remove it and run the build manually (see below)
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v2
+      #- name: Autobuild
+      #  uses: github/codeql-action/autobuild@v2
 
       # ℹ️ Command-line programs to run using the OS shell.
       # 📚 https://git.io/JvXDl
@@ -61,6 +61,17 @@ jobs:
       #- run: |
       #   make bootstrap
       #   make release
+
+      # Start a MongoDB for the test
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.10.0
+        with:
+          mongodb-version: 5.0
+
+      # Maven build
+      - name: Build with Maven
+        run: mvn --batch-mode --update-snapshots verify
+
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
