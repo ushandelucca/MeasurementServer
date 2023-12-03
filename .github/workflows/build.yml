@@ -9,13 +9,13 @@ jobs:
     steps:
       # Checkout source code
       - name: Git checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       # Set up JDK
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: 17
+          java-version: 21
           distribution: 'temurin'
 
       # Start a MongoDB for the test
