@@ -21,20 +21,26 @@ This small REST server is used to store measurements of a water tank. Moreover, 
 
 ## Usage with Docker
 
-Build a docker image an tag it (e. g. oo2a//measurement-server):
+Build a image and start it with a linked mongo db. then navigate to <http://localhost:8082>:
 
 ```bash
-docker build . -t oo2a//measurement-server
+docker compose up
+```
+
+Build a docker image and tag it (e. g. oo2a//measurement-server):
+
+```bash
+docker build . -t oo2a/measurement-server
 ```
 
 Start this image with a linked mongo database:
 
 ```bash
-docker run --name MeasurementServer --link a-mongodb-container:mongodb oo2a//measurement-server
+docker run --name MeasurementServer --link a-mongodb-container:mongodb oo2a/measurement-server
 ```
 
 Or use it with a indication of a mongo db host
 
 ```bash
-docker run --name MeasurementServer -e "TANK_DATABASE_HOST=a-mongodb-host" oo2a//measurement-server
+docker run --name MeasurementServer -e "TANK_DATABASE_HOST=a-mongodb-host" oo2a/measurement-server
 ```
