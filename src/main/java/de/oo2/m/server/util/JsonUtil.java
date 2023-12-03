@@ -30,7 +30,7 @@ public class JsonUtil {
         Gson gson = new GsonBuilder()
                 // .setPrettyPrinting()
                 // .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX")
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
                 // .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 
