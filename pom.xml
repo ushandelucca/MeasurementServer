@@ -5,7 +5,7 @@
 
   <groupId>de.oo2a.m</groupId>
   <artifactId>measurementserver</artifactId>
-  <version>2.6</version>
+  <version>2.6.1</version>
 
   <properties>
     <!-- JAVA VERSION -->
