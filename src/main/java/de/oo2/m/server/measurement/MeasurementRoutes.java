@@ -19,7 +19,7 @@ import static spark.Spark.*;
 /**
  * This class adds the route for the measurement service and handles the REST requests an responses.
  */
-@SwaggerDefinition(host = "oo2a.de",
+@SwaggerDefinition(host = "www.oo2a.de",
         info = @Info(description = "REST API for storing and reporting the measurements of a rainwater tank.",
                 version = "V1.0",
                 title = "Measurement API",
